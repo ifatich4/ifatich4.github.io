@@ -1,0 +1,13 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon product/Sub-Menu/Gadai/Barang Gudang">
+<g id="Group">
+<rect id="Rectangle" x="8" y="10" width="32" height="28" rx="2" fill="#00AB4E"/>
+<path id="Rectangle_2" d="M31 10H38C39.1046 10 40 10.8954 40 12V36C40 37.1046 39.1046 38 38 38H31V10Z" fill="#00883E"/>
+<path id="Rectangle_3" fill-rule="evenodd" clip-rule="evenodd" d="M31 10H39.307C39.7238 10 40.097 10.2586 40.2433 10.6489L42.4933 16.6489C42.7385 17.3026 42.2552 18 41.557 18H35.386C34.5523 18 33.8061 17.4829 33.5133 16.7022L31 10Z" fill="#00AB4E"/>
+<path id="Rectangle_4" fill-rule="evenodd" clip-rule="evenodd" d="M7.75667 10.6489C7.90304 10.2586 8.27616 10 8.693 10H31L28.4867 16.7022C28.1939 17.4829 27.4477 18 26.614 18H6.443C5.7448 18 5.26151 17.3026 5.50667 16.6489L7.75667 10.6489Z" fill="#40BD63"/>
+<rect id="Rectangle_5" x="11" y="27" width="12" height="8" rx="2" fill="#BFD730"/>
+<rect id="Rectangle_6" x="12.5" y="29" width="6" height="1.5" rx="0.75" fill="#98AC26"/>
+<rect id="Rectangle Copy" x="12.5" y="32" width="7" height="1.5" rx="0.75" fill="#98AC26"/>
+</g>
+</g>
+</svg>

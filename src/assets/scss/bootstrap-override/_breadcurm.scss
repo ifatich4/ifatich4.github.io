@@ -1,0 +1,41 @@
+.breadcrumb {
+	--bs-breadcrumb-margin-bottom: unset;
+	--bs-breadcrumb-divider-color: var(--g-kit-black-40);
+	--bs-breadcrumb-item-padding-x: 0.75rem;
+	--bs-breadcrumb-item-active-color: var(--g-kit-black-80);
+    --bs-breadcrumb-divider: url("data:image/svg+xml,%3csvg fill='%23BBBDC0' xmlns=%27http://www.w3.org/2000/svg%27 %3e%3cpath fill-rule=%27evenodd%27 clip-rule=%27evenodd%27 d=%27M7.49766 13.2292L10.731 9.99583L7.49766 6.7625C7.17266 6.4375 7.17266 5.9125 7.49766 5.5875C7.82266 5.2625 8.34766 5.2625 8.67266 5.5875L12.4977 9.4125C12.8227 9.7375 12.8227 10.2625 12.4977 10.5875L8.67266 14.4125C8.34766 14.7375 7.82266 14.7375 7.49766 14.4125C7.18099 14.0875 7.17266 13.5542 7.49766 13.2292Z%27/%3e%3c/svg%3e");
+	font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
+    font-style: normal;
+	padding-top: 0.75rem;
+	padding-bottom: 0.75rem;
+}
+.breadcrumb-item {
+	+ {
+		.breadcrumb-item {
+			padding-left: var(--bs-breadcrumb-item-padding-x);
+			&::before {
+                width: 20px;
+                height: 20px;
+				float: left;
+				margin-right: 8px;
+				color: var(--bs-breadcrumb-divider-color);
+				content: var(--bs-breadcrumb-divider);
+                font-weight: bolder;
+			}
+		}
+	}
+	a {
+		text-decoration: none;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 600;
+        font-style: normal;
+	    color: var(--g-kit-lime-50);
+	}
+    &.active {
+	    color: var(--bs-breadcrumb-item-active-color);
+        font-weight: 600;
+    }
+}

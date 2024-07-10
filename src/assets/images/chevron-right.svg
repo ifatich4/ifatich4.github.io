@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   fill="none"
+   version="1.1"
+   id="svg11"
+   sodipodi:docname="chevron-right.svg"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+  <metadata
+     id="metadata17">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs15" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="781"
+     inkscape:window-height="480"
+     id="namedview13"
+     showgrid="false"
+     inkscape:zoom="9.8333333"
+     inkscape:cx="12"
+     inkscape:cy="12"
+     inkscape:window-x="409"
+     inkscape:window-y="106"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg11" />
+  <mask
+     id="mask0"
+     mask-type="alpha"
+     maskUnits="userSpaceOnUse"
+     x="8"
+     y="6"
+     width="8"
+     height="12">
+    <path
+       d="M15.0025 15.8725L11.1225 11.9925L15.0025 8.11253C15.3925 7.72253 15.3925 7.09253 15.0025 6.70253C14.6125 6.31253 13.9825 6.31253 13.5925 6.70253L9.00246 11.2925C8.61246 11.6825 8.61246 12.3125 9.00246 12.7025L13.5925 17.2925C13.9825 17.6825 14.6125 17.6825 15.0025 17.2925C15.3825 16.9025 15.3925 16.2625 15.0025 15.8725Z"
+       fill="white"
+       id="path4" />
+  </mask>
+  <g
+     mask="url(#mask0)"
+     id="g9"
+     transform="matrix(-1,0,0,1,24,0)">
+    <rect
+       width="24"
+       height="24"
+       id="rect7"
+       x="0"
+       y="0"
+       style="fill:#58585b" />
+  </g>
+</svg>

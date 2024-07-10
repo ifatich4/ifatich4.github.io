@@ -1,0 +1,61 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon product/Sub-Menu/Gadai/Saham">
+<g id="Group">
+<path id="Rectangle" fill-rule="evenodd" clip-rule="evenodd" d="M8 21C8 19.8954 8.89543 19 10 19H14C15.1046 19 16 19.8954 16 21V38C16 39.1046 15.1046 40 14 40H10C8.89543 40 8 39.1046 8 38V21Z" fill="#00883E"/>
+<mask id="mask0_0_10872" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="19" width="8" height="21">
+<path id="Rectangle_2" fill-rule="evenodd" clip-rule="evenodd" d="M8 21C8 19.8954 8.89543 19 10 19H14C15.1046 19 16 19.8954 16 21V38C16 39.1046 15.1046 40 14 40H10C8.89543 40 8 39.1046 8 38V21Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_0_10872)">
+<path id="Rectangle_3" fill-rule="evenodd" clip-rule="evenodd" d="M8 18C8 16.8954 8.89543 16 10 16H14C15.1046 16 16 16.8954 16 18V35C16 36.1046 15.1046 37 14 37H10C8.89543 37 8 36.1046 8 35V18Z" fill="#00AB4E"/>
+</g>
+</g>
+<g id="Group 2">
+<path id="Rectangle_4" fill-rule="evenodd" clip-rule="evenodd" d="M32 16C32 14.8954 32.8954 14 34 14H38C39.1046 14 40 14.8954 40 16V38C40 39.1046 39.1046 40 38 40H34C32.8954 40 32 39.1046 32 38V16Z" fill="#00883E"/>
+<mask id="mask1_0_10872" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="32" y="14" width="8" height="26">
+<path id="Rectangle_5" fill-rule="evenodd" clip-rule="evenodd" d="M32 16C32 14.8954 32.8954 14 34 14H38C39.1046 14 40 14.8954 40 16V38C40 39.1046 39.1046 40 38 40H34C32.8954 40 32 39.1046 32 38V16Z" fill="white"/>
+</mask>
+<g mask="url(#mask1_0_10872)">
+<path id="Rectangle_6" fill-rule="evenodd" clip-rule="evenodd" d="M32 13C32 11.8954 32.8954 11 34 11H38C39.1046 11 40 11.8954 40 13V35C40 36.1046 39.1046 37 38 37H34C32.8954 37 32 36.1046 32 35V13Z" fill="#00AB4E"/>
+</g>
+</g>
+<g id="Group 3">
+<path id="Rectangle_7" fill-rule="evenodd" clip-rule="evenodd" d="M20 28C20 26.8954 20.8954 26 22 26H26C27.1046 26 28 26.8954 28 28V38C28 39.1046 27.1046 40 26 40H22C20.8954 40 20 39.1046 20 38V28Z" fill="#CC9D3F"/>
+<mask id="mask2_0_10872" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="20" y="26" width="8" height="14">
+<path id="Rectangle_8" fill-rule="evenodd" clip-rule="evenodd" d="M20 28C20 26.8954 20.8954 26 22 26H26C27.1046 26 28 26.8954 28 28V38C28 39.1046 27.1046 40 26 40H22C20.8954 40 20 39.1046 20 38V28Z" fill="white"/>
+</mask>
+<g mask="url(#mask2_0_10872)">
+<path id="Rectangle_9" fill-rule="evenodd" clip-rule="evenodd" d="M20 25C20 23.8954 20.8954 23 22 23H26C27.1046 23 28 23.8954 28 25V35C28 36.1046 27.1046 37 26 37H22C20.8954 37 20 36.1046 20 35V25Z" fill="#FFC54F"/>
+</g>
+</g>
+<g id="Group 4">
+<path id="Stroke 1" d="M12 13L24 20L36 8" stroke="#00662E"/>
+<g id="Oval 3">
+<circle id="Oval" cx="12" cy="13" r="3" fill="#00883E"/>
+<mask id="mask3_0_10872" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="9" y="10" width="6" height="6">
+<circle id="Oval_2" cx="12" cy="13" r="3" fill="white"/>
+</mask>
+<g mask="url(#mask3_0_10872)">
+<circle id="Oval_3" cx="12" cy="12" r="3" fill="#00AB4E"/>
+</g>
+</g>
+<g id="Oval 2">
+<circle id="Oval_4" cx="24" cy="20" r="3" fill="#CC9D3F"/>
+<mask id="mask4_0_10872" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="21" y="17" width="6" height="6">
+<circle id="Oval_5" cx="24" cy="20" r="3" fill="white"/>
+</mask>
+<g mask="url(#mask4_0_10872)">
+<circle id="Oval_6" cx="24" cy="19" r="3" fill="#FFC54F"/>
+</g>
+</g>
+<g id="Group 5">
+<circle id="Oval Copy" cx="36" cy="8" r="3" fill="#00883E"/>
+<mask id="mask5_0_10872" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="33" y="5" width="6" height="6">
+<circle id="Oval Copy_2" cx="36" cy="8" r="3" fill="white"/>
+</mask>
+<g mask="url(#mask5_0_10872)">
+<circle id="Oval Copy_3" cx="36" cy="7" r="3" fill="#00AB4E"/>
+</g>
+</g>
+</g>
+</g>
+</svg>

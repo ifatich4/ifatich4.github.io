@@ -1,0 +1,28 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon product/Sub-Menu/Gadai/Gadai Efek">
+<path id="Stroke 15" d="M9 18.25L21.75 9L33 14L38 10" stroke="#E07E26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Stroke 17" d="M35 9H39V13" stroke="#E07E26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="Group">
+<rect id="Rectangle" x="8" y="25" width="8" height="15" rx="2" fill="#CC9D3F"/>
+<mask id="mask0_0_6904" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="25" width="8" height="15">
+<rect id="Rectangle_2" x="8" y="25" width="8" height="15" rx="2" fill="white"/>
+</mask>
+<g mask="url(#mask0_0_6904)">
+<rect id="Rectangle_3" x="8" y="25" width="8" height="12" rx="2" fill="#FFC54F"/>
+</g>
+</g>
+<g id="Group_2">
+<rect id="Rectangle_4" x="32" y="25" width="8" height="15" rx="2" fill="#CC9D3F"/>
+<mask id="mask1_0_6904" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="32" y="25" width="8" height="15">
+<rect id="Rectangle_5" x="32" y="25" width="8" height="15" rx="2" fill="white"/>
+</mask>
+<g mask="url(#mask1_0_6904)">
+<rect id="Rectangle_6" x="32" y="25" width="8" height="12" rx="2" fill="#FFC54F"/>
+</g>
+</g>
+<g id="Group 3">
+<rect id="Rectangle_7" x="20" y="19" width="8" height="21" rx="2" fill="#00883E"/>
+<rect id="Rectangle_8" x="20" y="19" width="8" height="18" rx="2" fill="#00AB4E"/>
+</g>
+</g>
+</svg>

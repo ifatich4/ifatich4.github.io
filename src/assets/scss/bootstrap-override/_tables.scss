@@ -1,0 +1,198 @@
+.table {
+    border-radius: 6px;
+    margin-bottom: 0;
+    width: max-content;
+    overflow: hidden;
+
+    &.dataTable {
+        margin-bottom: 1rem;
+
+        .dataTables_wrapper {
+
+            .dataTables_paginate {
+                
+                display: flex;
+                column-gap: .75rem;
+
+                span {
+                    display: flex;
+                    column-gap: .75rem;
+                }
+
+                .paginate_button {
+                    &.current {
+                        background-color: var(--g-kit-lime-50);
+                        border: none;
+                        color: white !important;
+                    }
+
+                    &.disabled {
+                        border: 1px solid var(--g-kit-black-20);
+                        color: $lime-50 !important;
+                    }
+
+                    border-radius: .25rem !important;
+                    border: 1px solid var(--g-kit-black-20);
+                    color: $lime-50 !important;
+                }
+            }
+        }
+    }
+
+    > :not(caption)>*>* {
+        padding: .75rem;
+    }
+
+    >thead {
+        tr th {
+            padding: 18px 24px !important;
+            font-size: var(--g-kit-font-size-sigma);
+            line-height: var(--g-kit-line-height-sigma);
+            font-weight: var(--g-kit-font-weight-bold);
+            background-color: $lime-50;
+            color: $text-white;
+
+            &:first-child {
+                width: 56px;
+            }
+
+            &:not(:last-child) {
+                border-right: 1px solid $black-20;
+            }
+        }
+    }
+
+    tbody {
+        color: $black-80;
+
+        tr {
+            &:not(:nth-child(odd)) {
+                td {
+                    background-color: $black-10;
+                }
+            }
+
+            &.child {
+                td.child {
+                    width: 100%;
+
+                    &:first-child {
+                        width: 100%;
+                        display: table-cell;
+
+                        .styled-ol {}
+
+                        ul {
+                            list-style: none;
+                            margin-bottom: unset;
+
+                            & li {
+                                counter-increment: my-awesome-counter;
+                                font-size: var(--g-kit-font-size-omicron);
+                                line-height: var(--g-kit-line-height-omicron);
+                                font-weight: var(--g-kit-font-weight-normal);
+                                margin-bottom: 16px;
+                                position: relative;
+                            }
+
+                            & li:before {
+                                --size: 24px;
+                                background: var(--g-kit-lime-10);
+                                border-radius: 100%;
+                                color: var(--g-kit-lime-50);
+                                content: counter(my-awesome-counter);
+                                height: var(--size);
+                                left: calc(var(--size)*-1 - 10px);
+                                position: absolute;
+                                text-align: center;
+                                top: 0;
+                                width: var(--size);
+                            }
+                        }
+                    }
+                }
+            }
+
+            &:last-child {
+                td {
+                    border-bottom: 0px;
+                }
+            }
+
+            td {
+                padding: 1rem;
+                font-size: var(--g-kit-font-size-sigma);
+                line-height: var(--g-kit-line-height-sigma);
+                font-weight: var(--g-kit-font-weight-normal);
+
+                &.dtr-control.sorting_1 {
+                    &::after {
+                        content: url(../icon/chevron_down.svg);
+                        display: inline-block;
+                        width: 1rem;
+                        height: 1rem;
+                        margin-left: 0.5rem;
+                        position: absolute;
+                    }
+                }
+
+                &:first-child {
+                    width: 56px;
+                }
+
+                &:last-child {
+                    padding: .85rem;
+                }
+
+                &:not(:last-child) {
+                    border-right: 1px solid $black-20;
+                    border-collapse: separate;
+                }
+            }
+        }
+    }
+
+    &.rounded-corners {
+        border-spacing: 0;
+        border-collapse: separate;
+        border-radius: 10px;
+        border: 1px solid $black-20;
+    }
+
+    &.table-striped {
+        >tbody>tr {
+            &:nth-of-type(#{$table-striped-order})>* {
+                --#{$prefix}table-accent-bg: var(--g-kit-black-20);
+                color: $black-80;
+            }
+
+            &:hover {
+                background-color: $black-10;
+            }
+        }
+    }
+}
+
+.table-hover>tbody>tr:hover>* {
+    --g-bs-table-accent-bg: var(--g-kit-black-20);
+    color: var(--g-bs-table-hover-color);
+}
+
+.table-bordered> :not(caption)>* {
+    border-width: 0 0;
+}
+
+/* Apply a border to the bottom of all but the last row */
+table.rounded-corners>thead>tr:not(:last-child)>th,
+table.rounded-corners>thead>tr:not(:last-child)>td,
+table.rounded-corners>tbody>tr:not(:last-child)>th,
+table.rounded-corners>tbody>tr:not(:last-child)>td,
+table.rounded-corners>tfoot>tr:not(:last-child)>th,
+table.rounded-corners>tfoot>tr:not(:last-child)>td,
+table.rounded-corners>tr:not(:last-child)>td,
+table.rounded-corners>tr:not(:last-child)>th,
+table.rounded-corners>thead:not(:last-child),
+table.rounded-corners>tbody:not(:last-child),
+table.rounded-corners>tfoot:not(:last-child) {
+    border-bottom: 1px solid $black-20;
+}

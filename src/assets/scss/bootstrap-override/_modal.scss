@@ -1,0 +1,113 @@
+.modal {
+    --bs-modal-border-radius: 0.8rem;
+    --bs-modal-box-shadow: none;
+ 
+    .modal-footer {
+        padding: 0px;
+        border-top: none;
+        .row {
+            padding: var(--g-bs-modal-padding);
+            padding-top: .5rem;
+            gap: 16px;
+            margin: 0px;
+            justify-content: space-between;
+            .col-xl-6 {
+                max-width: 48%;
+                padding: 0px;
+            }
+        }
+        .sticky {
+            display: flex;
+            width: 100%;
+            padding: 16px;
+            gap: 8px;
+            border-radius: 12px 12px 0px 0px;
+            background: #FFF;
+            box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.14), 0px 0px 2px 0px rgba(0, 0, 0, 0.08);
+            margin-left: 0;
+            margin-right: 0;
+            margin-bottom: 0;
+            .btn {
+                justify-content: space-between;
+                width: 100%;
+            }
+        }
+        .action-button {
+            display: flex;
+            padding: 0px 16px 16px 16px;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            margin: 0px;
+            .btn {
+                justify-content: space-between;
+                width: 100%;
+            }
+        }
+    }
+
+    img {
+        object-fit: contain;
+    }
+
+    p {
+        margin-bottom: 0px;
+        font-size: var(--g-kit-font-size-omicron);
+        line-height: var(--g-kit-line-height-omicron);
+        font-weight: var(--g-kit-font-weight-normal);
+        color: $text-secondary;
+    }
+
+    .modal-header {
+        border-bottom: none;
+        padding: 16px;
+    }
+}
+
+@media screen and (min-width: 576px){
+    .modal-sm {
+        --g-bs-modal-width: 360px;
+    }
+
+    .col-xl-6 {
+        max-width: 100% !important;
+    }
+}
+
+.modal h4{
+    font-size: var(--g-kit-font-size-kappa);
+    line-height: var(--g-kit-line-height-kappa);
+    font-weight: var(--g-kit-font-weight-bold);
+    margin-bottom: 0;
+    color: $text-primary;
+}
+
+.modal h5{
+    font-size: var(--g-kit-font-size-lambda);
+    line-height: var(--g-kit-line-height-lambda);
+    font-weight: var(--g-kit-font-weight-bold);
+    margin-bottom: 0;
+    color: $text-primary;
+}
+
+.modal h6{
+    font-size: var(--g-kit-font-size-lamda);
+    line-height: var(--g-kit-line-height-lamda);
+    font-weight: var(--g-kit-font-weight-bold);
+    margin-bottom: .5rem;
+    color: $black-80;
+}
+
+.modal .modal-body {
+    font-size: var(--g-kit-font-size-omicron);
+    line-height: var(--g-kit-line-height-omicron);
+    font-weight: var(--g-kit-font-weight-normal);
+    color: $text-secondary;
+    padding-top: 0px;
+
+    max-height: 500px;
+    overflow: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

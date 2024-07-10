@@ -1,0 +1,28 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon system/L/Location_Round">
+<g id="round_color">
+<mask id="mask0_0_6402" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="20" height="20">
+<circle id="Mask" cx="12" cy="12" r="10" fill="white"/>
+</mask>
+<g mask="url(#mask0_0_6402)">
+<g id="round_color_2">
+<rect id="color" width="24" height="24" fill="#00AB4E"/>
+</g>
+</g>
+</g>
+<g id="location">
+<g id="Icon System/L/LocationPoint">
+<path id="Fill 1" fill-rule="evenodd" clip-rule="evenodd" d="M12 6L12.1493 6.00211C15.026 6.08346 17.3333 8.5086 17.3333 11.4889C17.3333 14.5617 13.7879 18.6667 12 18.6667C10.2121 18.6667 6.66663 14.5617 6.66663 11.4889C6.66663 8.5086 8.97395 6.08346 11.8507 6.00211L12 6ZM12 8.81481C13.4349 8.81481 14.5983 10.0121 14.5983 11.4889C14.5983 12.9246 13.4986 14.0962 12.1189 14.1602L12 14.163L11.881 14.1602C10.5013 14.0962 9.40168 12.9246 9.40168 11.4889C9.40168 10.0121 10.565 8.81481 12 8.81481Z" fill="#70717D"/>
+<mask id="mask1_0_6402" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="6" y="6" width="12" height="13">
+<path id="Fill 1_2" fill-rule="evenodd" clip-rule="evenodd" d="M12 6L12.1493 6.00211C15.026 6.08346 17.3333 8.5086 17.3333 11.4889C17.3333 14.5617 13.7879 18.6667 12 18.6667C10.2121 18.6667 6.66663 14.5617 6.66663 11.4889C6.66663 8.5086 8.97395 6.08346 11.8507 6.00211L12 6ZM12 8.81481C13.4349 8.81481 14.5983 10.0121 14.5983 11.4889C14.5983 12.9246 13.4986 14.0962 12.1189 14.1602L12 14.163L11.881 14.1602C10.5013 14.0962 9.40168 12.9246 9.40168 11.4889C9.40168 10.0121 10.565 8.81481 12 8.81481Z" fill="white"/>
+</mask>
+<g mask="url(#mask1_0_6402)">
+<g id="color/White">
+<rect width="16" height="16" transform="translate(4 4)" fill="white"/>
+<rect id="color_2" x="4" y="4" width="16" height="16" fill="white"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>
