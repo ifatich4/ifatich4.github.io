@@ -1,9 +1,15 @@
 <script setup>
-import { defineOptions, defineProps, defineEmits, computed } from 'vue'
-
-defineOptions({ name: 'InputText', inheritAttrs: false })
-
-const props = defineProps({
+  import { defineOptions, defineProps, defineEmits, ref, watch } from 'vue'
+  
+  defineOptions({ name: 'InputText', inheritAttrs: false })
+  
+  const formatNumber = (number) => {
+    if (!number) return ''
+    let cleanNumber = number.replace(/\D/g, '')
+    return cleanNumber.replace(/(\d{4})(?=(\d))/g, '$1 ')
+  }
+  
+  const props = defineProps({
     error: {},
     label: {},
     suffixIcon: {},
@@ -15,88 +21,96 @@ const props = defineProps({
     },
     useDelimiter: {
       default: true
+    },
+    required: {
+      type: Boolean,
+      default: false
+    },
+    variant: {
+      type: String,
+      default: 'default'
     }
   })
-const emit = defineEmits(['update:modelValue'])
-
-const inputValue = computed({
-  get() {
-    if (props.type === 'number' && props.useDelimiter && props.modelValue) {
-      const orgText = props.modelValue.replaceAll(' ', '')
-      const newText = orgText.match(/.{1,4}/g)
-      emit('update:modelValue', orgText)
-      return newText.join(' ')
-    } else {
-      return toUppercaseString(props.modelValue)
-    }
-  },
-  set(newValue) {
-    if (props.type === 'number' && props.useDelimiter && props.modelValue) {
-      emit('update:modelValue', toUppercaseString(newValue.replaceAll(' ', '')))
-    } else {
-      emit('update:modelValue', toUppercaseString(newValue))
-    }
-  }
-})
-
-const handleInput = (e) => {
-  if (props.type === 'number') {
-    const key = e.key || String.fromCharCode(e.keyCode || e.which)
-    const isNumericInput =
-      (key >= '0' && key <= '9') ||
-      (key >= 'NumPad0' && key <= 'NumPad9') ||
-      key === 'Delete' ||
-      key === 'Backspace' ||
-      key === 'Tab' ||
-      key === '.' ||
-      e.which === 32
-
-    if (!isNumericInput) {
-      e.preventDefault()
-    }
-
-    if (inputValue.value && props.useDelimiter) {
-      if (inputValue.value.replaceAll(' ', '').length % 4 === 0 && e.which !== 8) {
-        inputValue.value = inputValue.value + ' '
+  const emit = defineEmits(['update:modelValue'])
+  
+  const inputValue = ref(props.modelValue)
+  const displayValue = ref(props.type === 'number' ? formatNumber(props.modelValue) : props.modelValue)
+  const localError = ref(false)
+  
+  watch(
+    () => props.modelValue,
+    (newVal) => {
+      if (props.required) {
+        localError.value = newVal?.trim() === ''
       }
+      inputValue.value = newVal
+      displayValue.value = props.type === 'number' ? formatNumber(newVal) : newVal
+    }
+  )
+  
+  const handleInput = (event) => {
+    if (props.type === 'number') {
+      const rawValue = event.target.value.replace(/\s+/g, '')
+      localError.value = props.required && rawValue.trim() === ''
+      inputValue.value = rawValue
+      displayValue.value = formatNumber(rawValue)
+  
+      emit('update:modelValue', rawValue)
+  
+      // Restore cursor position
+      setTimeout(() => {
+        const cursorPosition = event.target.selectionStart
+        const unformattedValue = event.target.value.replace(/\s+/g, '')
+        const formattedValue = formatNumber(unformattedValue)
+        let spacesBeforeCursor = formattedValue.slice(0, cursorPosition).split(' ').length - 1
+        let newCursorPosition = cursorPosition + spacesBeforeCursor
+  
+        event.target.setSelectionRange(newCursorPosition, newCursorPosition)
+      }, 0)
+    } else {
+      inputValue.value = event.target.value
+      displayValue.value = event.target.value
+      emit('update:modelValue', event.target.value)
     }
   }
-}
-
-function toUppercaseString(val) {
-  if (val) return val.toUpperCase()
-}
-</script>
-
-<template>
-  <div :class="['group-input', props.class]">
-    <label v-if="label" :for="$attrs.id" class="form-label">
-      {{ label }}
-    </label>
-    <div class="input-group custom-input-group-icon p-0">
-      <slot name="prefix" />
-      <input
-        :value="inputValue"
-        @input="evt => inputValue = evt.target.value"
-        @keydown="handleInput"
-        class="form-control"
-        v-bind="$attrs"
-        type="text"
-        :inputmode="props.type === 'number' ? 'numeric' : 'text'"
-      />
-      <div v-if="suffixIcon" class="input-group-icon mx-2">
-        <img :src="suffixIcon" />
+  
+  </script>
+  
+  <template>
+    <div :class="['group-input', props.class]">
+      <label v-if="label" :for="$attrs.id" class="form-label">
+        {{ label }}
+      </label>
+      <div class="input-group custom-input-group-icon p-0">
+        <slot name="prefix" />
+        <input
+          :value="displayValue"
+          @input="handleInput"
+          @keydown="handleKeydown"
+          class="form-control"
+          v-bind="$attrs"
+          :required="props.required"
+          :disabled="props.disabled"
+          :type="props.type === 'number' ? 'text' : props.type"
+          :inputmode="props.type === 'number' ? 'numeric' : 'text'"
+        />
+        <div v-if="suffixIcon" class="input-group-icon mx-2">
+          <img :src="suffixIcon" />
+        </div>
+        <slot name="suffix" />
       </div>
-      <slot name="suffix" />
+      <div v-if="localError" class="error-text mt-2">
+        {{ props.required ? 'Field ini diperlukan' : '' }}
+      </div>
+      <div v-if="props.error" class="error-text mt-2">{{ error }}</div>
+      <div v-if="props.helperText && !props.error" class="helper-text mt-2">{{ helperText }}</div>
     </div>
-    <div v-if="props.error" class="error-text mt-2">{{ error }}</div>
-    <div v-if="props.helperText && !props.error" class="helper-text mt-2">{{ helperText }}</div>
-  </div>
-</template>
-
-<style scoped>
+  </template>
+  
+  <style scoped>
   .form-control:hover:not(:disabled):not([readonly]):not(.is-invalid):not(.is-valid) {
     box-shadow: 0 0 0 1px #00883e;
     outline: none;
   }
-</style>
+  </style>
+  

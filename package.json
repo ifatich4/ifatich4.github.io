@@ -1,6 +1,6 @@
 {
   "name": "kitvue-test",
-  "version": "1.1.5",
+  "version": "0.8.1",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

@@ -180,13 +180,31 @@
                 iconRight="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/WhatsApp_icon.png/640px-WhatsApp_icon.png"
                 required=""
               />
+              <!-- add -->
               <InputText
                 id="ini-id"
                 placeholder="hello world!"
-                v-model="text"
+                v-model="search"
                 error="ini error"
-                label="Ini label"
+                label="Ini Bisa Text"
               />
+
+              <InputText
+                id="iniidnumber"
+                placeholder="Test placeholder!"
+                v-model="number"
+                label="Ini Number Only"
+                type="number"
+              />
+
+              <InputText
+                id="iniidnumber"
+                placeholder="Test placeholder!"
+                v-model="number"
+                label="Ini Number Only"
+                type="search"
+              />
+              <!-- add -->
               <InputNominal
                 id="input-rupiah"
                 label="Input Rupiah"
