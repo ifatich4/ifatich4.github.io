@@ -179,8 +179,8 @@
                 iconLabel="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/WhatsApp_icon.png/640px-WhatsApp_icon.png"
                 iconRight="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/WhatsApp_icon.png/640px-WhatsApp_icon.png"
                 required=""
+                type="number"
               />
-              <!-- add -->
               <InputText
                 id="ini-id"
                 placeholder="hello world!"
@@ -204,7 +204,8 @@
                 label="Ini Number Only"
                 type="search"
               />
-              <!-- add -->
+              <p>Selected Date: {{ number }}</p>
+
               <InputNominal
                 id="input-rupiah"
                 label="Input Rupiah"
@@ -1032,6 +1033,7 @@ import { ref } from "vue";
 
 const { scrollTo } = useScrollTo();
 const text = ref("ini value");
+const number = ref("12000000");
 const rupiah = ref(12000000);
 const myFileSrc = ref();
 
@@ -1097,6 +1099,7 @@ export default {
     AddAmount,
     InputSmallText,
     InputText,
+    InputTextArea,
     InputNominal,
     InputTextArea,
     InputPersen,
