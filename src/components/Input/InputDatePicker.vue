@@ -238,10 +238,6 @@ const updateCalendar = () => {
   border-bottom: 1px solid var(--g-kit-black-20);
 }
 
-.card-body input {
-  padding-left: 0px;
-}
-
 .card b {
   font-size: var(--g-kit-font-size-lambda);
   line-height: var(--g-kit-line-height-lambda);

@@ -6,7 +6,8 @@ import {
   defineModel,
   watch,
   computed,
-  defineProps
+  defineProps,
+  defineEmits
 } from 'vue'
 import DateRangePicker from './DateRangePicker.vue'
 import { BDropdownItem, BDropdownItemButton, BOffcanvas, BFormRadioGroup, BFormRadio } from 'bootstrap-vue-next'
@@ -41,6 +42,10 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  placeholder: {
+    type: String,
+    default: 'Pilih rentang tanggal'
+  }
 })
 
 const startDate = defineModel('startDate')
@@ -100,7 +105,18 @@ const handleShown = (value) => {
     <div class="label-container">
       <label class="form-label"> {{ props.label }} </label>
     </div>
-    <Dropdown :id="$attrs.id" class="input-filter" :show-menu="!props.useBottomSheet" @shown="handleShown(true)" :placeholder="valueString">
+    <Dropdown :id="$attrs.id" class="input-filter" :show-menu="!props.useBottomSheet" @shown="handleShown(true)">
+      <template #button-content>
+        <p
+          class="overflow-hidden my-auto text-ellipsis"
+          :style="[
+            valueString ? 'color: #252528 !important' : '',
+            !valueString ? 'color: #939597 !important' : '',
+          ]"
+        >
+          {{ valueString || props.placeholder }}
+        </p>
+      </template>
       <div v-if="!props.useBottomSheet">
         <div
           v-for="(preset, idx) in props.preset"

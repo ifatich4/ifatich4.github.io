@@ -80,6 +80,7 @@
                   <td
                     v-for="day in week"
                     :key="day.date"
+                    :class="{ active: isSelectedDate(day.date) }"
                     @click="selectDate(day)"
                   >
                     {{ day.date ? day.date.getDate() : '' }}
@@ -137,7 +138,7 @@
         class="w-100 offcanvas-kit"
         placement="bottom"
         :title="'Pilih Tanggal' || title"
-        style="height: 450px;"
+        style="min-height: 485px; height: fit-content;"
         @shown="handleOffcanvasToggle(true)"
         @hidden="handleOffcanvasToggle(false)"
       >
@@ -174,6 +175,7 @@
                     <td
                       v-for="day in week"
                       :key="day.date"
+                      :class="{ active: isSelectedDate(day.date) }"
                       @click="selectDate(day)"
                     >
                       {{ day.date ? day.date.getDate() : '' }}
@@ -289,37 +291,41 @@ export default {
         this.currentYear,
         this.currentMonth - 1,
         1
-      )
-      const lastDayOfMonth = new Date(this.currentYear, this.currentMonth, 0)
-      const firstDayOfWeek = firstDayOfMonth.getDay()
-      const lastDateOfMonth = lastDayOfMonth.getDate()
+      );
+      const lastDayOfMonth = new Date(this.currentYear, this.currentMonth, 0);
+      const firstDayOfWeek = firstDayOfMonth.getDay();
+      const lastDateOfMonth = lastDayOfMonth.getDate();
 
-      let dayCount = 1
-      const calendar = []
+      let dayCount = 1;
+      const weeks = [];
 
       for (let i = 0; i < 6; i++) {
-        const week = []
+        const week = [];
+        let hasDate = false;
         for (let j = 0; j < 7; j++) {
           if ((i === 0 && j < firstDayOfWeek) || dayCount > lastDateOfMonth) {
             week.push({
-              date: null
-            })
+              date: null,
+            });
           } else {
             const date = new Date(
               this.currentYear,
               this.currentMonth - 1,
               dayCount
-            )
+            );
             week.push({
-              date
-            })
-            dayCount++
+              date,
+            });
+            dayCount++;
+            hasDate = true;
           }
         }
-        calendar.push(week)
+        if (hasDate) {
+          weeks.push(week);
+        }
       }
 
-      return calendar
+      return weeks;
     },
     years() {
       let startYear = this.selectedYear || this.currentYear
@@ -415,6 +421,15 @@ export default {
     isSelectedYear(year) {
       return year === this.currentYear
     },
+    isSelectedDate(date) {
+      if (!date || !this.selectedDate) return false;
+      const selected = new Date(this.selectedDate.split('/').reverse().join('-'));
+      return (
+        selected.getDate() === date.getDate() &&
+        selected.getMonth() === date.getMonth() &&
+        selected.getFullYear() === date.getFullYear()
+      );
+    },
     scrollToSelectedYear() {
       const yearMenu = this.years
 
@@ -431,7 +446,7 @@ export default {
     },
     handleOffcanvasToggle(value) {
       this.$emit('buttomSheetShown', value)
-    }
+    },
   },
   mounted() {
     this.$nextTick(() => {
@@ -441,217 +456,241 @@ export default {
 }
 </script>
 
+
 <style scoped>
-.form-control {
-  cursor: pointer;
-}
-
-.custom-input-group-icon:has(.form-control:disabled) {
-  background-color: var(--g-kit-black-20);
-}
-
-.content-date {
-  position: relative;
-}
-
-.form-control {
-  cursor: pointer;
-}
-
-.content-date {
-  position: relative;
-}
-
-.card {
-  position: absolute;
-  z-index: 999;
-  background-color: white;
-  width: 360px;
-  margin: 0 auto;
-}
-
-.card-header {
-  padding: 1rem;
-  background-color: white;
-  border-bottom: 1px solid var(--g-kit-black-20);
-}
-
-.card-body .d-flex {
-  border-bottom: 1px solid var(--g-kit-black-20);
-}
-
-.card-body input {
-  padding-left: 0px;
-}
-
-.card b {
-  font-size: var(--g-kit-font-size-lambda);
-  line-height: var(--g-kit-line-height-lambda);
-  font-weight: var(--g-kit-font-weight-bold);
-}
-
-.flex {
-  display: flex;
-  justify-content: space-between;
-}
-
-.datepicker table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.datepicker th,
-.datepicker td {
-  text-align: center;
-  padding: 0.5rem;
-  font-size: var(--g-kit-font-size-lambda);
-  line-height: var(--g-kit-line-height-lambda);
-  font-weight: var(--g-kit-font-weight-normal);
-  color: var(--g-kit-black-80);
-  cursor: pointer;
-}
-
-.datepicker th {
-  background-color: white;
-  border-bottom: 1px solid var(--g-kit-black-20);
-  font-size: var(--g-kit-font-size-lambda);
-  line-height: var(--g-kit-line-height-lambda);
-  font-weight: var(--g-kit-font-weight-normal);
-  color: var(--g-kit-black-60);
-}
-
-.datepicker td:hover {
-  background-color: #e6e6e6;
-}
-
-.datepicker button {
-  background-color: transparent;
-  border: none;
-  font-size: var(--g-kit-font-size-lambda);
-  line-height: var(--g-kit-line-height-lambda);
-  font-weight: var(--g-kit-font-weight-bold);
-}
-
-.bold {
-  font-weight: 800;
-}
-
-.appearance-none {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  text-indent: unset;
-  text-overflow: unset;
-  font-size: var(--g-kit-font-size-lambda);
-  line-height: var(--g-kit-line-height-lambda);
-  font-weight: var(--g-kit-font-weight-bold);
-}
-
-.datepicker span {
-  font-size: var(--g-kit-font-size-lambda);
-  line-height: var(--g-kit-line-height-lambda);
-  font-weight: var(--g-kit-font-weight-bold);
-  color: var(--g-kit-black-80);
-  cursor: pointer;
-}
-
-.datepicker span:hover {
-  color: var(--g-kit-lime-50);
-}
-
-.datepicker select {
-  border: 0px;
-  background-color: white;
-}
-
-.datepicker select:focus-visible {
-  outline: none;
-}
-
-.year {
-  position: absolute;
-  z-index: 1080;
-  background-color: white;
-  top: 120px;
-  width: 360px;
-  height: 320px;
-  overflow: scroll;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
-  border: 1px solid var(--g-kit-black-20);
-  filter: drop-shadow(0px 12px 6px rgba(0, 0, 0, 0.02))
-    drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.02));
-}
-
-.year-menu {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.year-menu button {
-  margin-top: 18px;
-  margin-bottom: 18px;
-  margin-right: 14px;
-  margin-left: 14px;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: var(--g-kit-font-size-lambda);
-  line-height: var(--g-kit-line-height-lambda);
-  font-weight: var(--g-kit-font-weight-normal);
-  color: var(--g-kit-black-80);
-}
-
-.year-menu button:hover {
-  color: var(--g-kit-lime-50);
-}
-
-.year button.active {
-  background-color: var(--g-kit-lime-50);
-  color: white;
-  margin: 10px 14px;
-  border-radius: 12px;
-}
-
-.offcanvas img {
-  margin-bottom: unset;
-}
-
-@media only screen and (max-width: 600px) {
-  .year-menu button {
-    margin-top: 17px;
-    margin-bottom: 17px;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    font-size: var(--g-kit-font-size-omicron);
-    line-height: var(--g-kit-line-height-omicron);
-    font-weight: var(--g-kit-font-weight-normal);
+  .form-control {
+    cursor: pointer;
   }
-
-  .year,
+  
+  .custom-input-group-icon:has(.form-control:disabled) {
+    background-color: var(--g-kit-black-20);
+  }
+  
+  .content-date {
+    position: relative;
+  }
+  
+  .form-control {
+    cursor: pointer;
+  }
+  
+  .content-date {
+    position: relative;
+  }
+  
   .card {
-    width: 100% !important;
-    filter: none;
+    position: absolute;
+    z-index: 999;
+    background-color: white;
+    width: 360px;
+    margin: 0 auto;
   }
-
-  .year {
-    top: 64px;
+  
+  .card-header {
+    padding: 1rem;
+    background-color: white;
+    border-bottom: 1px solid var(--g-kit-black-20);
   }
-
-  .year-menu {
-    margin-bottom: unset;
+  
+  .card-body .d-flex {
+    border-bottom: 1px solid var(--g-kit-black-20);
   }
-
-  .datepicker {
-    max-width: 100%;
+  
+  .card b {
+    font-size: var(--g-kit-font-size-lambda);
+    line-height: var(--g-kit-line-height-lambda);
+    font-weight: var(--g-kit-font-weight-bold);
   }
-
+  
+  .flex {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .datepicker table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
   .datepicker th,
   .datepicker td {
     text-align: center;
-    padding: 0.5rem;
+    padding: unset;
+    font-size: var(--g-kit-font-size-lambda);
+    line-height: var(--g-kit-line-height-lambda);
+    font-weight: var(--g-kit-font-weight-normal);
+    color: var(--g-kit-black-80);
+    cursor: pointer;
+
+    &.active {
+      background-color: var(--g-kit-lime-50);
+      color: white;
+      border-radius: 50%;
+    }
   }
-}
-</style>
+
+  .datepicker td {
+    width: calc(100% / 7);
+    height: 51.42px; /* Same as the width */
+  }
+
+  .datepicker td > * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .datepicker th {
+    background-color: white;
+    border-bottom: 1px solid var(--g-kit-black-20);
+    font-size: var(--g-kit-font-size-lambda);
+    line-height: var(--g-kit-line-height-lambda);
+    font-weight: var(--g-kit-font-weight-normal);
+    color: var(--g-kit-black-60);
+  }
+  
+  .datepicker td:hover {
+    background-color: #e6e6e6;
+  }
+  
+  .datepicker button {
+    background-color: transparent;
+    border: none;
+    font-size: var(--g-kit-font-size-lambda);
+    line-height: var(--g-kit-line-height-lambda);
+    font-weight: var(--g-kit-font-weight-bold);
+  }
+  
+  .bold {
+    font-weight: 800;
+  }
+  
+  .appearance-none {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: unset;
+    text-overflow: unset;
+    font-size: var(--g-kit-font-size-lambda);
+    line-height: var(--g-kit-line-height-lambda);
+    font-weight: var(--g-kit-font-weight-bold);
+  }
+  
+  .datepicker span {
+    font-size: var(--g-kit-font-size-lambda);
+    line-height: var(--g-kit-line-height-lambda);
+    font-weight: var(--g-kit-font-weight-bold);
+    color: var(--g-kit-black-80);
+    cursor: pointer;
+  }
+
+  .month-year-text {
+    color: var(--g-kit-lime-50) !important;
+  }
+  
+  .datepicker span:hover {
+    color: var(--g-kit-lime-50);
+  }
+  
+  .datepicker select {
+    border: 0px;
+    background-color: white;
+  }
+  
+  .datepicker select:focus-visible {
+    outline: none;
+  }
+  
+  .year {
+    position: absolute;
+    z-index: 1080;
+    background-color: white;
+    top: 120px;
+    width: 360px;
+    height: 320px;
+    overflow: scroll;
+    scrollbar-width: none;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border: 1px solid var(--g-kit-black-20);
+    filter: drop-shadow(0px 12px 6px rgba(0, 0, 0, 0.02))
+      drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.02));
+  }
+  
+  .year-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .year-menu button {
+    margin-top: 18px;
+    margin-bottom: 18px;
+    margin-right: 14px;
+    margin-left: 14px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: var(--g-kit-font-size-lambda);
+    line-height: var(--g-kit-line-height-lambda);
+    font-weight: var(--g-kit-font-weight-normal);
+    color: var(--g-kit-black-80);
+  }
+  
+  .year-menu button:hover {
+    color: var(--g-kit-lime-50);
+  }
+  
+  .year button.active {
+    background-color: var(--g-kit-lime-50);
+    color: white;
+    margin: 10px 14px;
+    border-radius: 12px;
+  }
+  
+  .offcanvas img {
+    margin-bottom: unset;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .year-menu button {
+      margin-top: 17px;
+      margin-bottom: 17px;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+      font-size: var(--g-kit-font-size-omicron);
+      line-height: var(--g-kit-line-height-omicron);
+      font-weight: var(--g-kit-font-weight-normal);
+    }
+  
+    .year,
+    .card {
+      width: 100% !important;
+      filter: none;
+    }
+  
+    .year {
+      top: 64px;
+    }
+  
+    .year-menu {
+      margin-bottom: unset;
+    }
+  
+    .datepicker {
+      max-width: 100%;
+    }
+  
+    .datepicker th,
+    .datepicker td {
+      text-align: center;
+      padding: 0.5rem;
+    }
+    .datepicker td {
+      width: calc(100% / 7);
+      height: calc(100vw / 7); /* Same as the width */
+    }
+  }
+  </style>
+  

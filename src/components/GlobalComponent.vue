@@ -70,13 +70,19 @@
                 type="primary"
                 size="md"
                 label="Button Primary"
+                loading
               />
               <Button
                 class="me-2 mb-2"
                 type="secondary"
                 size="md"
                 label="Button Seccondary"
-              />
+                icon
+              >
+                <template #icon>
+                  <img src="path/to/icon.svg" />
+                </template>
+              </Button>
               <Button
                 class="me-2 mb-2"
                 type="neutral"
@@ -143,7 +149,7 @@
         <div class="col-lg-6">
           <div class="card">
             <div class="card-header">
-              <h5>Button</h5>
+              <h5>Input Field </h5>
               <p class="mb-0">
                 <code
                   >&lt;Button type="primary" size="md" label="Button"&gt;</code
@@ -158,10 +164,12 @@
               />
               <p>Selected Date: {{ selectedDate }}</p>
               <DateRangePickerOption
+                placeholder="Pilih Tanggal Lahir"
                 label="Date Range Picker"
                 v-model:start-date="startDate"
                 v-model:end-date="endDate"
               />
+              <p>Selected Date: {{ startDate }} - {{ endDatex }}</p>
               <div class="row">
                 <div class="col-md-4">
                   <TimePicker
@@ -197,14 +205,14 @@
                 type="number"
               />
 
+              <p>Selected Date: {{ number }}</p>
+
               <InputText
-                id="iniidnumber"
-                placeholder="Test placeholder!"
-                v-model="number"
-                label="Ini Number Only"
+                id="inisearch"
+                placeholder="Cari data"
+                v-model="text"
                 type="search"
               />
-              <p>Selected Date: {{ number }}</p>
 
               <InputNominal
                 id="input-rupiah"
@@ -772,7 +780,7 @@
         <div class="col-lg-6 mt-4">
           <div class="card">
             <div class="card-header">
-              <h5>Table Basic</h5>
+              <h5>Table Basic Coyyy</h5>
               <p class="mb-0">
                 <code
                   >&lt;List type="primary" size="md" label="Button"&gt;</code
@@ -923,7 +931,7 @@
         <div class="col-lg-6 mt-4">
           <div class="card">
             <div class="card-header">
-              <h5>Table Basic</h5>
+              <h5>Date Range Picker</h5>
               <p class="mb-0">
                 <code
                   >&lt;List type="primary" size="md" label="Button"&gt;</code

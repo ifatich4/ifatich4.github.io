@@ -43,9 +43,9 @@
 		font-style: normal;
 		font-weight: 800;
 		line-height: 30px;
-		padding-right: 12px;
+		padding-right: 16px;
         &::after {
-			background-image: var(--bs-accordion-btn-active-icon);
+			background-image: var(--bs-accordion-btn-icon);
         }
 	}
 

@@ -128,25 +128,31 @@ const handleOffcanvasToggle = (value) => {
       @toggle="handleShown"
       :menuClass="{'hide-dropdown-menu': props.useBottomSheet || props.showMenu === false}"
     >
-      <template #button-content>
-        <p
-          class="overflow-hidden my-auto text-ellipsis"
-          :style="selectedText ? 'color: #252528 !important' : ''"
-        >
-          {{ selectedText || props.placeholder }}
-        </p>
-        <span>
-          <BSpinner v-if="loading" small />
-          <img
-            v-else
-            :class="[
-              shown ? 'dropdown-open' : 'dropdown-close',
-              'icon-dropdown'
+    <template #button-content>
+        <slot name="button-content">
+          <p
+            class="overflow-hidden my-auto text-ellipsis"
+            :style="[
+              selectedText ? 'color: #252528 !important' : '',
+              !selectedText ? 'color: #939597 !important' : '',
             ]"
-            src="../../assets/icon/chevron_down.svg"
-          />
-        </span>
+          >
+            {{ selectedText || props.placeholder }}
+          </p>
+        </slot>
+          <span>
+            <BSpinner v-if="loading" small />
+            <img
+              v-else
+              :class="[
+                shown ? 'dropdown-open' : 'dropdown-close',
+                'icon-dropdown'
+              ]"
+              src="../../assets/icon/chevron_down.svg"
+            />
+          </span>
       </template>
+    
       <div v-if="!props.useBottomSheet">
         <slot></slot>
         <b-form-input
@@ -181,7 +187,7 @@ const handleOffcanvasToggle = (value) => {
         class="input-dropdown"
         :class="props.items && props.items.length > 10 ? 'full-height' : 'content-height'"
       >
-        <template #title>{{ props.placeholder }}</template>
+        <template #title>{{ props.label }}</template>
         <b-form-input
           v-if="props.items && props.items.length > 10"
           @click.stop
@@ -243,7 +249,7 @@ const handleOffcanvasToggle = (value) => {
 }
 
 .icon-refresh {
-  width: 1.2rem;
+  width: 1.2rem !important;
   margin-left: 0.2rem;
   cursor: pointer;
 }

@@ -22,7 +22,7 @@
     useDelimiter: {
       default: true
     },
-    required: {
+    required: { 
       type: Boolean,
       default: false
     },
@@ -36,6 +36,7 @@
   const inputValue = ref(props.modelValue)
   const displayValue = ref(props.type === 'number' ? formatNumber(props.modelValue) : props.modelValue)
   const localError = ref(false)
+  const isSearchActive = ref(false)
   
   watch(
     () => props.modelValue,
@@ -74,19 +75,37 @@
     }
   }
   
+  const handleFocus = () => {
+    isSearchActive.value = true
+  }
+  
+  const handleBlur = () => {
+    isSearchActive.value = false
+  }
+  
+  // const handleKeydown = (event) => {
+  //   // Handle keydown events if needed
+  // }
+  
   </script>
   
   <template>
-    <div :class="['group-input', props.class]">
+    <div :class="['group-input', props.class, { 'search-active': isSearchActive && props.type === 'search' }]">
       <label v-if="label" :for="$attrs.id" class="form-label">
         {{ label }}
       </label>
-      <div class="input-group custom-input-group-icon p-0">
-        <slot name="prefix" />
+      <div class="input-group custom-input-group-icon p-0" :class="{ 'search-input': props.type === 'search' }">
+        <slot name="prefix">
+          <div v-if="props.type === 'search'" class="input-group-icon ms-3">
+            <img src="../../assets/icon/search.svg" />
+          </div>
+        </slot>
         <input
           :value="displayValue"
           @input="handleInput"
           @keydown="handleKeydown"
+          @focus="handleFocus"
+          @blur="handleBlur"
           class="form-control"
           v-bind="$attrs"
           :required="props.required"
@@ -94,7 +113,7 @@
           :type="props.type === 'number' ? 'text' : props.type"
           :inputmode="props.type === 'number' ? 'numeric' : 'text'"
         />
-        <div v-if="suffixIcon" class="input-group-icon mx-2">
+        <div v-if="suffixIcon" class="input-group-icon me-3">
           <img :src="suffixIcon" />
         </div>
         <slot name="suffix" />
@@ -106,11 +125,41 @@
       <div v-if="props.helperText && !props.error" class="helper-text mt-2">{{ helperText }}</div>
     </div>
   </template>
-  
-  <style scoped>
+
+<style lang="scss" scoped>
+  .input-group-icon {
+    display: flex;
+    align-items: center;
+  }
+  .error-text {
+    color: var(--g-kit-red-50);
+  }
+  .helper-text {
+    color: var(--g-kit-black-40);
+  }
   .form-control:hover:not(:disabled):not([readonly]):not(.is-invalid):not(.is-valid) {
     box-shadow: 0 0 0 1px #00883e;
     outline: none;
   }
-  </style>
-  
+  .search-input {
+    background-color: #F8F8F8;
+
+    input.form-control{
+      background-color: #F8F8F8;
+      border: none;
+      &:active,
+      &:focus {
+        border: none;
+      }
+      &[data-v-6bc7a4f2]:hover:not(:disabled):not([readonly]):not(.is-invalid):not(.is-valid) {
+        box-shadow: none;
+        outline: none;
+      }
+    }
+  }
+  .search-active {
+    box-shadow: 0 0 0 1px #00883e;
+    border-radius: 4px;
+  }
+</style>
+

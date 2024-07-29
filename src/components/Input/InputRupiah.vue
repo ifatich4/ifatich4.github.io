@@ -63,7 +63,7 @@ const onlyNumber = (event) => {
     v-model="rupiahValue"
     @keydown="onlyNumber"
     :placeholder="props.placeholder || 'Masukkan rupiah'"
-    type="number"
+    type="text"
     :use-delimiter="false"
   >
     <template #prefix>

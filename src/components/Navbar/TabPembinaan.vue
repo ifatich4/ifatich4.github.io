@@ -8,7 +8,7 @@
             </span>
             <nav class='vertical-align-middle scroll'>
                 <span v-for="label in filteredLabels" :key="label.id" @click="onTabClick(label.id)"
-                    :class="['nav-item', { 'completed': label.completed }]">
+                    :class="['nav-item-tab', { 'completed': label.completed }]">
                     <span class="content" />
                     {{ label.label }}
                 </span>
@@ -123,7 +123,7 @@
     }
 
     .menu-active,
-    .nav-item {
+    .nav-item-tab {
         text-align: center;
         font-weight: 800;
         padding: 16px 18px;
@@ -157,7 +157,7 @@
         }
     }
 
-    .nav-item {
+    .nav-item-tab {
         color: var(--g-kit-black-60);
         cursor: pointer;
 
