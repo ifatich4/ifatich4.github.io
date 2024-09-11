@@ -196,6 +196,14 @@
                 error="ini error"
                 label="Ini Bisa Text"
               />
+               <InputText
+                id="ini-id"
+                placeholder="hello world!"
+                v-model="search"
+                error="ini error"
+                label="Ini Bisa Text"
+                disabled
+              />
 
               <InputText
                 id="iniidnumber"
