@@ -6,7 +6,6 @@ defineOptions({
   name: 'InputRupiah'
 })
 
-// Menambahkan 'placeholder' pada props
 const props = defineProps(['modelValue', 'placeholder'])
 const emit = defineEmits(['update:modelValue'])
 
@@ -21,21 +20,13 @@ const rupiahValue = computed({
 
 const formatDecimal = (value) => {
   if (value === null || value === undefined || value === '') return ''
-  const formatter = new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 0
-  })
-  return formatter.format(value)
+  const numericValue = value.toString().replace(/\D/g, '')
+  return numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
 }
 
 const unformatDecimal = (value) => {
-  let unformatted = ''
-  if (value) {
-    const number = Number(value.replace(/[^0-9.-]/g, ''))
-    if (!isNaN(number)) {
-      unformatted = String(number)
-    }
-  }
-  return unformatted
+  if (!value) return ''
+  return value.replace(/\./g, '')
 }
 
 const onlyNumber = (event) => {

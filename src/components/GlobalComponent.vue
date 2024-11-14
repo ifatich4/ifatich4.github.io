@@ -149,7 +149,7 @@
         <div class="col-lg-6">
           <div class="card">
             <div class="card-header">
-              <h5>Input Field </h5>
+              <h5>Input Field</h5>
               <p class="mb-0">
                 <code
                   >&lt;Button type="primary" size="md" label="Button"&gt;</code
@@ -160,8 +160,14 @@
               <InputSmallDate
                 v-model="selectedDate"
                 id="birthdate"
-                placeholder="Pilih Tanggal Lahir"
+                placeholder="sadf Tanggal Lahir"
               />
+                <TestPicker
+                    v-model="selectedDate"
+                    id="birthdate"
+                    placeholder="davin Tanggal Lahir"
+                    :max-date="maxDate"
+                />
               <p>Selected Date: {{ selectedDate }}</p>
               <DateRangePickerOption
                 placeholder="Pilih Tanggal Lahir"
@@ -175,36 +181,82 @@
                   <TimePicker
                     label="Time Picker"
                     label-time="Waktu Akhir"
+                    placeholder="Waktu Akhir"
                     v-model:timepicker="timePicker"
                   />
                   Timepicker : {{ timePicker }}
                 </div>
               </div>
+              <div>
+                <BFormCheckbox
+                  id="checkbox-1"
+                  v-model="status"
+                  name="checkbox-1"
+                  value="accepted"
+                  unchecked-value="not_accepted"
+                >
+                  I accept the terms and use
+                </BFormCheckbox>
+
+                <div>
+                  State: <strong>{{ status }}</strong>
+                </div>
+              </div>
               <InputSmallText
                 id="13"
-                title="Test Judul"
+                title="Test Juduls"
                 icon="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/WhatsApp_icon.png/640px-WhatsApp_icon.png"
                 iconLabel="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/WhatsApp_icon.png/640px-WhatsApp_icon.png"
                 iconRight="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/WhatsApp_icon.png/640px-WhatsApp_icon.png"
                 required=""
                 type="number"
               />
+
               <InputText
                 id="ini-id"
                 placeholder="hello world!"
-                v-model="search"
-                error="ini error"
                 label="Ini Bisa Text"
               />
-               <InputText
+
+              <InputText
                 id="ini-id"
                 placeholder="hello world!"
-                v-model="search"
-                error="ini error"
                 label="Ini Bisa Text"
                 disabled
               />
-
+              
+              <InputText
+                id="iniidnumber"
+                color="red"
+                placeholder="Test placeholder!"
+                v-model="number"
+                label="Ini Number Only"
+                type="number"
+              />
+              <InputText
+                id="iniidnumber"
+                color="green"
+                placeholder="Test placeholder!"
+                v-model="number"
+                label="Ini Number Only"
+                type="number"
+              />
+              <InputText
+                id="iniidnumber"
+                color="blue"
+                placeholder="Test placeholder!"
+                v-model="number"
+                label="Ini Number Only"
+                type="number"
+              />
+              <InputText
+                id="iniidnumber"
+                color="orange"
+                placeholder="Test placeholder!"
+                v-model="number"
+                label="Ini Number Only"
+                type="number"
+              />
               <InputText
                 id="iniidnumber"
                 placeholder="Test placeholder!"
@@ -214,6 +266,29 @@
               />
 
               <p>Selected Date: {{ number }}</p>
+
+              <BButton @click="showPicker = true">Show Modal</BButton>
+              <InputTimePicker
+                v-model="showPicker"
+                title="Pilih Waktu"
+                :defaultHour="'14'"
+                :defaultMinute="'30'"
+                @activeTime="handleActiveTime"
+              />
+              <p>Selected Time: {{ selectedTime }}</p>
+
+              <div class="d-flex align-items-center gap-3">
+                <TimePickerResponsive
+                  v-model="selectedTimes"
+                  title="Time picker"
+                  placeholder="Choose a time"
+                  required
+                  class="w-75"
+                  error="Please select a valid time"
+                  @selectedTimeUpdated="handleSelectedTime"
+                />
+              </div>
+              <p>Selected Time: {{ selectedTimes }}</p>
 
               <InputText
                 id="inisearch"
@@ -239,6 +314,61 @@
                 :placeholder="'Pengajuan kredit'"
                 :class="'input-dropdown-kustom'"
                 :error="teksError"
+              />
+              <Dropdown
+                v-model="nilaiTerpilih"
+                :label="'Pilihan Anda'"
+                :items="daftarPilihan"
+                :itemValue="'id'"
+                :itemText="'nama'"
+                :placeholder="'Pengajuan kredit'"
+                :class="'input-dropdown-kustom'"
+                :error="teksError"
+                disabled
+              />
+              <Dropdown
+                v-model="nilaiTerpilih"
+                :label="'Pilihan Anda'"
+                :items="daftarPilihan"
+                :itemValue="'id'"
+                :itemText="'nama'"
+                :placeholder="'Pengajuan kredit'"
+                :class="'input-dropdown-kustom'"
+                :error="teksError"
+                color="red"
+              />
+              <Dropdown
+                v-model="nilaiTerpilih"
+                :label="'Pilihan Anda'"
+                :items="daftarPilihan"
+                :itemValue="'id'"
+                :itemText="'nama'"
+                :placeholder="'Pengajuan kredit'"
+                :class="'input-dropdown-kustom'"
+                :error="teksError"
+                color="green"
+              />
+              <Dropdown
+                v-model="nilaiTerpilih"
+                :label="'Pilihan Anda'"
+                :items="daftarPilihan"
+                :itemValue="'id'"
+                :itemText="'nama'"
+                :placeholder="'Pengajuan kredit'"
+                :class="'input-dropdown-kustom'"
+                :error="teksError"
+                color="blue"
+              />
+              <Dropdown
+                v-model="nilaiTerpilih"
+                :label="'Pilihan Anda'"
+                :items="daftarPilihan"
+                :itemValue="'id'"
+                :itemText="'nama'"
+                :placeholder="'Pengajuan kredit'"
+                :class="'input-dropdown-kustom'"
+                :error="teksError"
+                color="orange"
               />
               <p>Selected: {{ nilaiTerpilih }}</p>
 
@@ -359,7 +489,12 @@
               </p>
             </div>
             <div class="card-body">
-              <FilePickerLG />
+              <FilePickerLG v-model="selectedFile" :showPreview="false" errorText="ini text eror props"/>
+              <FilePickerLG v-model="selectedFile"/>
+
+              <div v-if="selectedFile && selectedFile.fileName" class="file-name-text">
+                  <p>Selected File: {{ selectedFile.fileName }}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -763,7 +898,7 @@
         <div class="col-lg-6 mt-4">
           <div class="card">
             <div class="card-header">
-              <h5>Table Basic</h5>
+              <h5>Table Data Basic</h5>
               <p class="mb-0">
                 <code
                   >&lt;List type="primary" size="md" label="Button"&gt;</code
@@ -788,7 +923,7 @@
         <div class="col-lg-6 mt-4">
           <div class="card">
             <div class="card-header">
-              <h5>Table Basic Coyyy</h5>
+              <h5>Data Table Basic</h5>
               <p class="mb-0">
                 <code
                   >&lt;List type="primary" size="md" label="Button"&gt;</code
@@ -865,10 +1000,29 @@
           </div>
         </div>
 
+          <div class="col-lg-12 mt-4">
+              <div class="card">
+                  <div class="card-header">
+                      <h5>Custom Table</h5>
+                  </div>
+                  <div class="card-body">
+                      <div class="table-responsive">
+
+                      <CustomTable
+                          :data="tableDataOsl2"
+                          :parent-head="tableParentHead2"
+                          :child-head="tableChildHead2"
+                          :dataFormatter="dataFormatter2"
+                      />
+                      </div>
+                  </div>
+              </div>
+          </div>
+
         <div class="col-lg-12 mt-4">
           <div class="card">
             <div class="card-header">
-              <h5>Table Basic</h5>
+              <h5>Stepper</h5>
               <p class="mb-0">
                 <code
                   >&lt;List type="primary" size="md" label="Button"&gt;</code
@@ -884,7 +1038,7 @@
         <div class="col-lg-12 mt-4">
           <div class="card">
             <div class="card-header">
-              <h5>Table Basic</h5>
+              <h5>Radio Button</h5>
               <p class="mb-0">
                 <code
                   >&lt;List type="primary" size="md" label="Button"&gt;</code
@@ -892,8 +1046,10 @@
               </p>
             </div>
             <div class="card-body">
-              <StepperRadio />
-              <h1>{{ activeStep }}</h1>
+              <RadioComponent
+                :items="radioItems"
+                v-model="selectedRadio"
+              />
             </div>
           </div>
         </div>
@@ -901,7 +1057,7 @@
         <div class="col-lg-12 mt-4">
           <div class="card">
             <div class="card-header">
-              <h5>Table Basic</h5>
+              <h5>Stepper Varian</h5>
               <p class="mb-0">
                 <code
                   >&lt;List type="primary" size="md" label="Button"&gt;</code
@@ -918,6 +1074,28 @@
                 </template>
                 <template v-slot:3>
                   <StepperComponents :activeStep="3" />
+                </template>
+              </SideStepper>
+
+              <SideStepper 
+                title="Langkah"
+                :labels="dropdownItemss"
+                variant="dua"
+                :accordions="accordionData"
+                :activeLabel="activeLabel"
+                @update:activeLabel="handleLabelClick"
+              >
+                <template #1>
+                    <StepperComponents :activeStep="1" />
+                </template>
+                <template #2>
+                    <StepperComponents :activeStep="2" />
+                </template>
+                <template #3>
+                    <StepperComponents :activeStep="3" />
+                </template>
+                <template #4>
+                    <StepperComponents :activeStep="4" />
                 </template>
               </SideStepper>
 
@@ -994,6 +1172,17 @@
                 :use-bottom-sheet="true"
               />
 
+              <InputCamera 
+                :compressionMaxKb="1024" 
+                title="Upload Foto Anda"
+                uniqueKey="userPhoto"
+                imagePlaceholder="idcard"
+                useBottomSheet
+                @fileDropped="handleFileDropped"
+                @fileRemoved="handleFileRemoved"
+                @errorPermission="handleErrorPermission"
+              />
+
               <p>{{ generatedFileName }}</p>
               <p>{{ receivedImgFile }}</p>
             </div>
@@ -1043,9 +1232,13 @@
 /* eslint-disable */
 import useScrollTo from "../hooks/useScrollTo";
 import DateRangePickerOption from "./Input/DateRangePickerOption.vue";
+import TestPicker from './Dropdown/DatePicker.vue';
 import TimePicker from "./Input/TimePicker.vue";
 import ModalSlider from "./Modal/ModalSlider.vue";
+import InputTimePicker from "./Input/InputTimePicker.vue";
+import TimePickerResponsive from "./Input/TimePickerResponsive.vue";
 import { ref } from "vue";
+import CustomTable from "@/components/Table/CustomTable.vue";
 
 const { scrollTo } = useScrollTo();
 const text = ref("ini value");
@@ -1054,15 +1247,335 @@ const rupiah = ref(12000000);
 const myFileSrc = ref();
 
 const showModal = ref(false);
+const showPicker = ref(false);
 
 const handleFileDropped = (file) => {
-  // myFileSrc.value = file
   console.log("file droppped", file);
 };
 
 const executeFetch = () => {
   console.log("execute fetch");
 };
+
+// const selectedFile = ref(null);
+// const fileError = ref('');
+
+const today = new Date();
+const twoWeeksAgo = new Date(today);
+twoWeeksAgo.setDate(today.getDate() - 14);
+const maxDate = twoWeeksAgo.toISOString().split('T')[0]// Mengisi maxDate dengan tanggal hari ini
+
+const tableParentHead2 = [
+    {
+        key: "id",
+        label: "No",
+        row: 2,
+        tooltip: {}
+    },
+    {
+        key: "produk",
+        label: "Produk",
+        row: 2,
+        tooltip: {}
+    },
+    {
+        key: "kolektibilitas",
+        label: "KOLEKTABILITAS",
+        col: 5,
+        tooltip: {}
+    },
+    {
+        key: "totalOsl",
+        label: "Total OSL Gross",
+        row: 2,
+        tooltip: {
+            title: 'Hasil Total OSL Gross = 1 + 2 + 3 + 4 + 5',
+            show: true,
+        }
+    },
+    {
+        key: "nominal",
+        label: "Nominal NPL (7)",
+        row: 2,
+        tooltip: {}
+    },
+    {
+        key: "nplBulanIni",
+        label: "% NPL Bulan Ini",
+        row: 2,
+        tooltip: {
+            title: 'Hasil NPL Bulan Ini = (7 : 6) x 100',
+            show: true,
+        }
+    },
+    {
+        key: "nplBulanLalu",
+        label: "% NPL Bulan Lalu (9)",
+        row: 2,
+        tooltip: {}
+    },
+    {
+        key: "npmAkhirTahun",
+        label: "% NPL Akhir Tahun Lalu (10)",
+        row: 2,
+        tooltip: {}
+    },
+]
+const tableChildHead2= [
+    {
+        key: "1",
+        label: "LANCAR (1)",
+        tooltip: {}
+    },
+    {
+        key: "2",
+        label: "DPK (2)",
+        tooltip: {}
+    },
+    {
+        key: "3",
+        label: "KURANG LANCAR (3)",
+        tooltip: {}
+    },
+    {
+        key: "4",
+        label: "DIRAGUKAN (4)",
+        tooltip: {}
+    },
+    {
+        key: "5",
+        label: "MACET (5)",
+        tooltip: {}
+    }
+]
+
+const tableDataOsl2= [
+    {
+        1 : "1",
+        2 : "KCA",
+        3: "112717270000",
+        4: "99305230000",
+        5: "131295500000",
+        6: "130978720000",
+        7: "115.88",
+        8: "112.87",
+        9: "131.12",
+        10: "126.17",
+        11: "0.24",
+        12: "32.21",
+    },
+    {
+        1 : "2",
+        2 : "Emasku Ultimate Konven Arisan",
+        3: "112717270000",
+        4: "99305230000",
+        5: "131295500000",
+        6: "130978720000",
+        7: "115.88",
+        8: "112.87",
+        9: "131.12",
+        10: "96.17",
+        11: "0.24",
+        12: "29.21",
+    },
+    {
+        1 : "3",
+        2 : "Emasku sadf Konven Arisan",
+        3: "112717270000",
+        4: "99305230000",
+        5: "131295500000",
+        6: "130978720000",
+        7: "115.88",
+        8: "112.87",
+        9: "11.12",
+        10: "26.17",
+        11: "0.24",
+        12: "92.21",
+    }
+]
+
+const tableParentHead = [
+        {
+            key: "id",
+            label: "No",
+            row: 2,
+            tooltip: {}
+        },
+        {
+            key: "produk",
+            label: "Produk",
+            row: 2,
+            tooltip: {}
+        },
+        {
+            key: "realisasi-tahun-lalu",
+            label: "REALISASI TAHUN LALU",
+            col: 2,
+            tooltip: {}
+        },
+        {
+            key: "realisasi",
+            label: "REALISASI",
+            col: 2,
+            tooltip: {}
+        },
+        {
+            key: "target",
+            label: "TARGET RKAP",
+            col: 2,
+            tooltip: {}
+        },
+        {
+            key: "pencapaian",
+            label: "Pencapaian(%)",
+            col: 2,
+            tooltip: {}
+        },
+        {
+            key: "growth",
+            label: "Growth(%)",
+            col: 3,
+            tooltip: {}
+        },
+        {
+            key: "INDIKATOR",
+            label: "Indikator",
+            row: 2,
+            tooltip: {}
+        },
+    ]
+const tableChildHead= [
+        {
+            key: "1",
+            label: "Bulan Ini (1)",
+            tooltip: {}
+        },
+        {
+            key: "2",
+            label: "Akhir Tahun (2)",
+            tooltip: {}
+        },
+        {
+            key: "3",
+            label: "Bulan Ini (3)",
+            tooltip: {}
+        },
+        {
+            key: "4",
+            label: "Akhir Tahun (4)",
+            tooltip: {}
+        },
+        {
+            key: "5",
+            label: "Bulan Ini (5)",
+            tooltip: {}
+        },
+        {
+            key: "6",
+            label: "Akhir Tahun (6)",
+            tooltip: {}
+        },
+        {
+            key: "7",
+            label: "Bulan Ini",
+            tooltip: {
+                show: true,
+                title: 'Pencapaian Bulan Ini = (4 : 5)',
+            }
+        },
+        {
+            key: "8",
+            label: "Akhir Tahun",
+            tooltip: {
+                show: true,
+                title: 'Pencapaian Tahun Ini = (4 : 6)',
+            }
+        },
+        {
+            key: "9",
+            label: "MtM",
+            tooltip: {
+                show: true,
+                title: 'Month to Month = (4 : 3)-1',
+            }
+        },
+        {
+            key: "10",
+            label: "YtD",
+            tooltip: {
+                show: true,
+                title: 'Year to Date = (4 : 2)-1',
+            }
+        },
+        {
+            key: "11",
+            label: "YoY",
+            tooltip: {
+                show: true,
+                title: 'Year to Year = (4 : 1)-1',
+            }
+        },
+    ]
+
+    const tableDataOsl= [
+        {
+            1 : "1",
+            2 : "KCA",
+            3: "112717270000",
+            4: "99305230000",
+            5: "131295500000",
+            6: "130978720000",
+            7: "115.88",
+            8: "112.87",
+            9: "131.12",
+            10: "126.17",
+            11: "0.24",
+            12: "32.21",
+            13: "160.48",
+            14: "yellow",
+        },
+        {
+            1 : "2",
+            2 : "Emasku Ultimate Konven Arisan",
+            3: "112717270000",
+            4: "99305230000",
+            5: "131295500000",
+            6: "130978720000",
+            7: "115.88",
+            8: "112.87",
+            9: "131.12",
+            10: "96.17",
+            11: "0.24",
+            12: "29.21",
+            13: "96.48",
+            14: "green",
+        },
+        {
+            1 : "3",
+            2 : "Emasku sadf Konven Arisan",
+            3: "112717270000",
+            4: "99305230000",
+            5: "131295500000",
+            6: "130978720000",
+            7: "115.88",
+            8: "112.87",
+            9: "11.12",
+            10: "26.17",
+            11: "0.24",
+            12: "92.21",
+            13: "86.48",
+            14: "red",
+        }
+    ]
+const dataFormatter = {
+    hasBg : ['9','10','11','12','13'],
+    needFormat : ['3','4','5','6','7','8'],
+}
+
+const dataFormatter2= {
+    hasBg : [],
+    needFormat : [],
+}
 </script>
 
 <script>
@@ -1105,6 +1618,8 @@ import DateRangePicker from "./Input/DateRangePicker.vue";
 import InputCamera from "./Input/InputCamera.vue";
 import TabPembinaan from "./Navbar/TabPembinaan.vue";
 
+import RadioComponent from "./Radio/Radio.vue"
+
 export default {
   name: "App",
   components: {
@@ -1143,9 +1658,50 @@ export default {
     DateRangePicker,
     InputCamera,
     TabPembinaan,
+    InputTimePicker,
+    TimePickerResponsive,
+    RadioComponent,
   },
   data() {
     return {
+      activeLabel: null,
+      dropdownItemss: [
+          { id: 1, label: 'Step 1', completed: false },
+          { id: 2, label: 'Step 2', completed: false },
+          { id: 3, label: 'Step 3', completed: false },
+          { id: 4, label: 'Step 4', completed: false }
+      ],
+      accordionData: [
+        {
+          header: 'Accordion 1',
+          labels: [
+            { id: 1, label: 'Trigger Step 1', completed: false },
+            { id: 2, label: 'Trigger Step 2', completed: false }
+          ]
+        },
+        {
+          header: 'Accordion 2',
+          labels: [
+            { id: 3, label: 'Trigger Step 3', completed: false },
+            { id: 4, label: 'Trigger Step 4', completed: false }
+          ]
+        }
+      ],
+      
+      selectedRadio: null, // Nilai yang dipilih dari radio
+      radioItems: [
+        { value: 'option1', text: 'Option 1' },
+        { value: 'option2', text: 'Option 2' },
+        { value: 'option3', text: 'Option 3' },
+        { value: 'option4', text: 'Option 4' },
+      ],
+      selectedFile: null,
+      fileError: '',  // pastikan deklarasi di sini
+      //untuk InputTimePicker
+      selectedTime: "",
+      selectedTimes: "",
+      showPicker: false,
+
       startDate: ref(null),
       endDate: ref(null),
       timePicker: ref(""),
@@ -1159,6 +1715,13 @@ export default {
         { id: 2, img: "beli_emas", nama: "Pilihan 2", link: "b.html" },
         { id: 3, img: "beli_emas", nama: "Pilihan 3", link: "c.html" },
         { id: 4, img: "beli_emas", nama: "Pilihan 4", link: "d.html" },
+        { id: 5, img: "beli_emas", nama: "Pilihan 4", link: "d.html" },
+        { id: 6, img: "beli_emas", nama: "Pilihan 4", link: "d.html" },
+        { id: 7, img: "beli_emas", nama: "Pilihan 4", link: "d.html" },
+        { id: 8, img: "beli_emas", nama: "Pilihan 4", link: "d.html" },
+        { id: 9, img: "beli_emas", nama: "Pilihan 4", link: "d.html" },
+        { id: 10, img: "beli_emas", nama: "Pilihan 4", link: "d.html" },
+        { id: 11, img: "beli_emas", nama: "Pilihan 4", link: "d.html" },
       ],
       propertiNilaiPilihan: "id",
       propertiTeksPilihan: "nama",
@@ -1185,7 +1748,7 @@ export default {
         { id: "3", label: "Step 3" },
       ],
       tabItems: [
-        { id: "1", label: "Profil Nasabah", completed: true },
+        { id: "1", label: "Kondisi Usaha / Ekonomi", completed: true },
         { id: "2", label: "Aktivitas Pembinaan", completed: false },
         { id: "3", label: "Keadaan Debitur", completed: false },
         { id: "4", label: "Kondisi Usaha / Ekonomi", completed: false },
@@ -1497,6 +2060,30 @@ export default {
     markAsCompleted(tabId) {
       this.$refs.tabPembinaan.markAsCompleted(tabId);
     },
+    handleActiveTime(event) {
+      this.selectedTime = event.activeTime;
+    },
+    handleSelectedTime(time) {
+      this.selectedTimes = time;
+    },
+    handleFileSelected(fileData) {
+      // Handle file selection and error checking
+      if (fileData && fileData.fileName) {
+          const fileSize = this.$refs.filePicker.$refs.file.files[0].size;
+          if (fileSize > 1048576) { // Check if file size exceeds 1MB
+              this.selectedFile = null;
+          } else {
+              this.fileError = '';
+              this.selectedFile = fileData;
+          }
+      } else {
+          this.selectedFile = null;
+          this.fileError = '';
+      }
+    },
+    handleLabelClick(id) {
+      this.activeLabel = id;
+    }
   },
 };
 </script>

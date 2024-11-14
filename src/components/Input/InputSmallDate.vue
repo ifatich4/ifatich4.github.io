@@ -5,7 +5,7 @@
         {{ title || 'Tanggal Lahir' }}
       </label>
 
-      <div class="input-group custom-input-group-icon">
+      <div :class="['input-group custom-input-group-icon', showCalendar ? 'active' : '']">
         <input
           type="text"
           :class="['form-control', classes]"
@@ -113,7 +113,7 @@
         {{ title || 'Tanggal Lahir' }}
       </label>
 
-      <div class="input-group custom-input-group-icon">
+      <div :class="['input-group custom-input-group-icon', showCalendar ? 'active' : '']">
         <input
           type="text"
           :class="['form-control', classes]"
@@ -457,7 +457,14 @@ export default {
 </script>
 
 
-<style scoped>
+<style lang="scss" scoped>
+  .input-group.active {
+    border: 1px solid var(--g-kit-lime-50); 
+    .form-control {
+      background-color: transparent !important
+    }
+  }
+
   .form-control {
     cursor: pointer;
   }

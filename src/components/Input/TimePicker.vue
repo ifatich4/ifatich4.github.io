@@ -2,7 +2,6 @@
 /* eslint-disable */
 import { ref, defineProps, defineModel } from "vue";
 
-import Dropdown from "../Dropdown/InputDropdown.vue";
 import Button from "../Button/Button.vue";
 
 const props = defineProps({
@@ -12,10 +11,21 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  classes: {
+    type: String,
+  },
+  required: {
+    type: Boolean,
+  },
+  disabled: {
+    type: Boolean,
+  },
+  placeholder: {
+    type: String,
+  },
 });
 
 const timepicker = defineModel("timepicker");
-
 const showTimePicker = ref(false);
 const hoursTime = ref("00");
 const minutesTime = ref("00");
@@ -56,6 +66,7 @@ const handleDownMinute = () => {
 };
 
 const saveValue = () => {
+  showTimePicker.value = false;
   timepicker.value = `${hoursTime.value}.${minutesTime.value}`;
 };
 </script>
@@ -67,15 +78,29 @@ const saveValue = () => {
         {{ props.label }}
       </label>
     </div>
-    <Dropdown
-      :id="$attrs.id"
-      @shown="handleShown(true)"
-      class="input-filter"
-      :placeholder="timepicker"
-    >
+    <div class="input-group custom-input-group-icon">
+      <input
+        type="text"
+        :class="['form-control', classes]"
+        v-bind="$attrs"
+        :aria-label="props.label"
+        :aria-describedby="props.label"
+        :disabled="disabled"
+        :required="required"
+        :placeholder="
+          placeholder || ['Pilih ' + (props.labelTime || '').toLowerCase()]
+        "
+        v-model="timepicker"
+        @click="handleShown(true)"
+      />
+      <div class="input-group-icon">
+        <img src="../../assets/icon/icon-system/icon-chevron-down.svg" />
+      </div>
+    </div>
+    <div v-if="showTimePicker" class="content-time">
       <div class="d-flex justify-content-between align-items-center">
         <b>{{ props.labelTime }}</b>
-        <button class="btn p-0" @click="showTimePicker">
+        <button class="btn p-0" @click="handleShown(false)">
           <svg
             width="24"
             height="24"
@@ -152,13 +177,28 @@ const saveValue = () => {
           </div>
         </div>
       </div>
-    </Dropdown>
+    </div>
   </div>
 </template>
 <style scoped>
 .hour {
   display: grid;
   justify-content: center;
+}
+
+.form-control {
+  cursor: pointer;
+}
+
+.custom-input-group-icon:has(.form-control:disabled) {
+  background-color: var(--g-kit-black-20);
+}
+
+.content-time {
+  position: absolute;
+  z-index: 999;
+  background-color: white;
+  margin: 0 auto;
 }
 
 .box-time {

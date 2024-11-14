@@ -3,7 +3,7 @@
         <header class='tab-pembinaan-header'>
             <span v-for="label in activeTabArray" :key="label.id"
                 :class="['menu-active', { 'active': label.id === activeTab, 'completed': label.completed }]">
-                <span class="content" />
+                <div class="me-2"><span class="content" /></div>
                 {{ label.label }}
             </span>
             <nav class='vertical-align-middle scroll'>
@@ -109,11 +109,18 @@
     .tab-pembinaan-header {
         display: flex;
         .menu-active {
-            min-width: 55%;
+            min-width: 45%;
             box-shadow: 0px 0px 10px -16px #bbb;
-            white-space: nowrap;
+            white-space: normal;
             overflow: hidden;
-            text-overflow: ellipsis;        
+            text-overflow: ellipsis;
+            display: flex;
+            padding: unset;
+            padding-left: 12px;
+            padding-right: 12px;
+            align-items: center;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
         }
 
         nav {
@@ -128,7 +135,7 @@
         font-weight: 800;
         padding: 16px 18px;
         font-size: 14px;
-        min-width: 200px;
+        min-width: 45%;
         display: inline-block;
         vertical-align: middle;
     }
@@ -140,7 +147,6 @@
         span.content {
             border: 4px solid var(--g-kit-lime-50);
             border-radius: 50%;
-            margin-right: 4px;
             width: 1rem;
             height: 1rem;
             display: inline-block;
@@ -165,7 +171,6 @@
             border: 4px solid var(--g-kit-black-50);
             background-color: var(--g-kit-black-50);
             border-radius: 50%;
-            margin-right: 4px;
             width: 1rem;
             height: 1rem;
             display: inline-block;

@@ -1,13 +1,13 @@
 <template>
     <div class="radio-container">
-      <b-form-group v-for="(item, index) in items" :key="index" class="radio-column">
-        <label class="radio-content">
-          <b-form-radio :value="item.value" v-model="radioValue" >{{ item.text }}</b-form-radio>
-        </label>
-      </b-form-group>
+        <b-form-group v-for="(item, index) in items" :key="index" class="radio-column">
+            <label class="radio-content">
+                <b-form-radio :value="item.value" v-model="radioValue">{{ item.text }}</b-form-radio>
+            </label>
+        </b-form-group>
     </div>
-  </template>
-  
+</template>
+
 
 <script>
     export default {
@@ -55,9 +55,17 @@
         gap: 1rem;
         width: 100%;
 
-        .radio-column { /* New class for styling each column */
-    width: 50%; /* Set width to 50% for two columns */
-  }
+        .radio-content:hover {
+            color: var(--g-kit-lime-50);
+            background-color: var(--g-kit-lime-10);
+            border-color: var(--g-kit-lime-50);
+        }
+
+        .radio-column {
+            /* New class for styling each column */
+            width: 50%;
+            /* Set width to 50% for two columns */
+        }
 
         label {
             cursor: pointer;
@@ -65,17 +73,15 @@
             display: flex;
             align-items: center;
 
-            padding: 1rem;
+            padding: 11px;
             border: 1px solid var(--g-kit-black-20);
             background-color: white;
             border-radius: 6px;
 
             font-size: var(--g-kit-font-size-omicron);
             line-height: var(--g-kit-line-height-omicron);
-            font-weight: var(--g-kit-font-weight-bold);
-            color: var(--g-kit-black-50);
-
-            margin-bottom: 1rem;
+            font-weight: var(--g-kit-font-weight-regular);
+            color: var(--g-kit-black-80);
 
             &:has(input:checked) {
                 color: var(--g-kit-lime-50);

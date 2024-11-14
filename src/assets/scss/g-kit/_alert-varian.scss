@@ -3,35 +3,89 @@
 	background-repeat: no-repeat;
 	background-position: right;
 	background-size: contain;
+
 	.alert {
 		border: none;
 		background-repeat: no-repeat;
 		background-position: right;
 		background-size: contain;
 	}
+
 	&.alert-success,
 	.alert-success {
-		--bs-alert-color:  var(--g-kit-black-80);
-		--bs-alert-bg: var(--g-kit-lime-10);
 		background-image: url('../images/alerts/aksen-green.svg');
+		--bs-alert-color: var(--g-kit-black-80);
+		--bs-alert-bg: var(--g-kit-lime-10);
 	}
+
 	&.alert-info,
 	.alert-info {
 		background-image: url('../images/alerts/aksen-blue.svg');
-		--bs-alert-color:  var(--g-kit-black-80);
+		--bs-alert-color: var(--g-kit-black-80);
 		--bs-alert-bg: var(--g-kit-blue-10);
 	}
+
 	&.alert-warning,
 	.alert-warning {
 		background-image: url('../images/alerts/aksen-yellow.svg');
-		--bs-alert-color:  var(--g-kit-black-80);
+		--bs-alert-color: var(--g-kit-black-80);
 		--bs-alert-bg: var(--g-kit-yellow-10);
 	}
+
 	&.alert-danger,
 	.alert-danger {
 		background-image: url('../images/alerts/aksen-red.svg');
-		--bs-alert-color:  var(--g-kit-black-80);
+		--bs-alert-color: var(--g-kit-black-80);
 		--bs-alert-bg: var(--g-kit-red-10);
 	}
 
+}
+
+@media only screen and (max-width: 425px) {
+	.variant {
+		border: none;
+		background-repeat: no-repeat;
+		background-position: right;
+		background-size: contain;
+
+		font-size: var(--g-kit-font-size-omicron);
+		line-height: var(--g-kit-line-height-omicron);
+		font-weight: var(--g-kit-font-weight-normal);
+	
+		.alert {
+			border: none;
+			background-repeat: no-repeat;
+			background-position: right;
+			background-size: contain;
+		}
+	
+		&.alert-success,
+		.alert-success {
+			background-image: url('../images/alerts/aksen-green.svg');
+			--bs-alert-color: var(--g-kit-black-80);
+			--bs-alert-bg: var(--g-kit-lime-10);
+		}
+	
+		&.alert-info,
+		.alert-info {
+			background-image: url('../images/alerts/aksen-blue.svg');
+			--bs-alert-color: var(--g-kit-black-80);
+			--bs-alert-bg: var(--g-kit-blue-10);
+		}
+	
+		&.alert-warning,
+		.alert-warning {
+			background-image: url('../images/alerts/aksen-yellow.svg');
+			--bs-alert-color: var(--g-kit-black-80);
+			--bs-alert-bg: var(--g-kit-yellow-10);
+		}
+	
+		&.alert-danger,
+		.alert-danger {
+			background-image: url('../images/alerts/aksen-red.svg');
+			--bs-alert-color: var(--g-kit-black-80);
+			--bs-alert-bg: var(--g-kit-red-10);
+		}
+	
+	}
 }

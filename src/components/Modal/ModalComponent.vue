@@ -16,6 +16,10 @@ const props = defineProps({
   centered: {
     type: Boolean,
     default: false
+  },
+  showCloseButton: {
+    type: Boolean,
+    default: true
   }
 })
 
@@ -32,7 +36,9 @@ const model = defineModel()
       <template v-slot:header="{ close }" v-if="!$slots.header">
         <slot name="header">
             <h5>{{ props.title }}</h5>
-            <button class="btn btn-close" aria-label="Close" :id="$attrs.id ? $attrs.id +'-btnCloseModal' : 'btnCloseModal'" @click="close()"></button>
+            <button class="btn btn-close" aria-label="Close" :id="$attrs.id ? $attrs.id +'-btnCloseModal' : 'btnCloseModal'" @click="close()"
+              :style="{ display: props.showCloseButton ? 'block' : 'none' }"
+            ></button>
         </slot>
       </template>
 
