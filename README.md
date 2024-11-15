@@ -137,5 +137,5 @@ Kami sangat menyambut kontribusi dari developer lain untuk menambahkan komponen 
 ---
 
 Terima kasih telah berkontribusi ke `kitvue`! Kami sangat menghargai usaha dan waktu yang kamu luangkan untuk membuat proyek ini menjadi lebih baik.
-**Love, Regard and Cheers. Happy Development**
-**<3 Pegadaian Design <3t**
+- **Love, Regard and Cheers. Happy Development**
+- **<3 Pegadaian Design <3t**
