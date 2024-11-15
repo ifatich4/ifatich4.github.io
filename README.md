@@ -45,7 +45,7 @@ module.exports = defineConfig({
 })
 ```
 
-### Spesific on line 
+### Perhatikan pada baris kode dibawah
 ```bash
 transpileDependencies: ['bootstrap-vue'],
 
@@ -58,25 +58,16 @@ pluginOptions: {
 ```
 
 ## Struktur Branch untuk Pengembangan Kitvue
+- `master`: Branch yang berisi versi stabil dari Kitvue. Branch ini digunakan untuk merilis package ke Artifactory Pegadaian.
+- `dev-update-component`: Branch pengembangan utama. Semua fitur baru atau perbaikan akan di-review di branch ini sebelum di-merge ke master.
 
-`kitvue` merupakan sebuah library komponen UI yang dapat mendukung pengembagan proyek IT di Pegadaian. Library ini menggunakan basis teknologi framework Vue versi 3.4.7, dan Bootstrap versi 5.3.2.
-
-## Branches
-
-Kami menggunakan dua branch utama dalam pengembangan proyek ini:
-
-- **`master`:** Branch yang berisikan library dengan versi yang stabil dan dapat digunakan untuk di publish menjadi sebuah package di artifactory pegadaian.
-
-- **`dev-update-component`:** Branch yang digunakan sebagai branch pengembangan utama. Semua fitur baru dan perbaikan akan di-review di sini sebelum akan di-merge ke branch `master`.
-
-## Kontribusi
-
-Kami sangat menyambut kontribusi dari developer lain untuk menambahkan komponen baru, memperbaiki styling, atau melakukan bug fixing pada komponen yang ada.
+## Cara Berkontribusi pada Kitvue
+Kami sangat mengapresiasi kontribusi dari developer lain untuk menambahkan komponen baru, memperbaiki styling, atau memperbaiki bug pada komponen yang ada.
 
 ### Langkah-Langkah Kontribusi
 
 1. **Fork dan Clone Repository**
-   - Fork repository `kitvue` ke akun GitHub kamu.
+   - Fork repository `kitvue` ke akun git kamu.
    - Clone repository fork kamu:
      ```bash
      git clone https://repo.pegadaian.co.id/client/pegadaian-ui-kit-vue.git
@@ -84,7 +75,7 @@ Kami sangat menyambut kontribusi dari developer lain untuk menambahkan komponen 
      cd pegadaian-ui-kit-vue
      ```
 
-2. **Checkout Branch `dev-update-component`**
+2. **Checkout Branch Pengembangan**
    - Pastikan kamu selalu bekerja dari branch pengembangan, `dev-update-component`:
      ```bash
      git checkout dev-update-component
@@ -123,7 +114,7 @@ Kami sangat menyambut kontribusi dari developer lain untuk menambahkan komponen 
 
 6. **Buka Merge Request (MR)**
    - Setelah selesai, buka Merge Request ke branch `dev-update-component`.
-   - Tambahkan deskripsi mengenai perubahan dan penambahan yang kamu lakukan.
+   - Tambahkan deskripsi lengkap mengenai perubahan dan penambahan yang kamu lakukan.
 
 7. **Code Review**
    - Merge Request kamu akan di-review oleh maintainer proyek dari **Pegadaian Design**.
@@ -152,6 +143,6 @@ Kami sangat menyambut kontribusi dari developer lain untuk menambahkan komponen 
 
 ---
 
-Terima kasih telah berkontribusi ke `kitvue`! Kami sangat menghargai usaha dan waktu yang kamu luangkan untuk membuat proyek ini menjadi lebih baik.
-- **Love, Regard and Cheers. Happy Development**
+Terima kasih telah berkontribusi ke `kitvue!` Kami sangat menghargai usaha dan waktu yang kamu luangkan untuk membuat proyek ini menjadi lebih baik.
 - **♡ Pegadaian Design ♡**
+- **Love, Regard and Cheers. Happy Development**
