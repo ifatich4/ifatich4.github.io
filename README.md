@@ -124,7 +124,7 @@ Kami sangat mengapresiasi kontribusi dari developer lain untuk menambahkan kompo
    - Setelah review selesai, request akan di-merge ke `dev-update-component`.
 
 # Penting Diperhatikan 
-## Penamaan Branch
+### Penamaan Branch
 
 - **Penambahan Komponen Baru:**
   - Branch name: `dev-add-(nama-komponen)`
