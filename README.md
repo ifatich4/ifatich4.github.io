@@ -1,21 +1,37 @@
-# kitvue - Pegadaian Design System
+# Kitvue - Pegadaian Design System
+
+## Tentang Kitvue
+Kitvue adalah library komponen UI berbasis Vue.js yang mendukung pengembangan proyek Digital pada Pegadaian. Library ini menggunakan teknologi:
+- **Vue.js 3.4.7**: Framework JavaScript modern.
+- **Bootstrap 5.3.2**: Library CSS responsif.
+- **Sass**: Preprocessor CSS untuk mempermudah styling.
+
+Kitvue bertujuan menyediakan solusi desain yang konsisten dan efisien, mendukung pengembangan aplikasi Pegadaian dengan standar desain modern.
+
+---
 
 ## Getting started
 
-```
-npm install git+https://repo.pegadaian.co.id/client/pegadaian-ui-kit-vue.git
+### Instalasi
+Pastikan Anda sudah menginstal *prerequisite* berikut:
+- **Node.js**: Versi 16 atau lebih baru.
+- **npm**: Versi 8 atau lebih baru.
+
+```bash
+npm install https://repo.pegadaian.co.id/client/pegadaian-ui-kit-vue.git
 ```
 
-# Configuration
-Add sass plugin
+## Langkah Konfigurasi untuk Proyek Vue
+### Tambahkan Plugin Sass
+Install plugin style-resource-loader untuk mendukung penggunaan file SCSS secara global:
 
-```
+```bash
 vue add style-resource-loader
 ```
 
-On your vue config add
+### Konfigurasi vue.config.js
 
-```
+```bash
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: ['bootstrap-vue'],
@@ -29,8 +45,8 @@ module.exports = defineConfig({
 })
 ```
 
-Spesific on line 
-```
+### Spesific on line 
+```bash
 transpileDependencies: ['bootstrap-vue'],
 
 pluginOptions: {
@@ -41,7 +57,7 @@ pluginOptions: {
 }
 ```
 
-# Berkontribusi Pada Kitvue
+## Struktur Branch untuk Pengembangan Kitvue
 
 `kitvue` merupakan sebuah library komponen UI yang dapat mendukung pengembagan proyek IT di Pegadaian. Library ini menggunakan basis teknologi framework Vue versi 3.4.7, dan Bootstrap versi 5.3.2.
 
