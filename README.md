@@ -145,4 +145,4 @@ Kami sangat mengapresiasi kontribusi dari developer lain untuk menambahkan kompo
 
 Terima kasih telah berkontribusi ke `kitvue!` Kami sangat menghargai usaha dan waktu yang kamu luangkan untuk membuat proyek ini menjadi lebih baik.
 ### ♡ Pegadaian Design ♡
-###Love, Regard and Cheers 🍻 
+### Love 🫰, Regard 🤝 and Cheers 🍻 
