@@ -41,7 +41,7 @@ pluginOptions: {
 }
 ```
 
-# kitvue - Pegadaian Design System - Kontribusi
+# Berkontribusi Pada Kitvue
 
 `kitvue` merupakan sebuah library komponen UI yang dapat mendukung pengembagan proyek IT di Pegadaian. Library ini menggunakan basis teknologi framework Vue versi 3.4.7, dan Bootstrap versi 5.3.2.
 
@@ -105,13 +105,13 @@ Kami sangat menyambut kontribusi dari developer lain untuk menambahkan komponen 
      git push origin dev-add-button
      ```
 
-6. **Buka Merge Request (PR)**
+6. **Buka Merge Request (MR)**
    - Setelah selesai, buka Merge Request ke branch `dev-update-component`.
-   - Tambahkan deskripsi mengenai perubahan yang kamu lakukan.
+   - Tambahkan deskripsi mengenai perubahan dan penambahan yang kamu lakukan.
 
 7. **Code Review**
-   - Merge Request kamu akan di-review oleh maintainer proyek.
-   - Lakukan perbaikan berdasarkan umpan balik yang diberikan.
+   - Merge Request kamu akan di-review oleh maintainer proyek dari **Pegadaian Design**.
+   - Jika ada catatan, lakukan perbaikan berdasarkan umpan balik yang diberikan.
 
 8. **Merge ke `dev-update-component`**
    - Setelah review selesai, request akan di-merge ke `dev-update-component`.
