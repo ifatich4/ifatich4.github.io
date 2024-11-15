@@ -48,7 +48,11 @@
             errorText: {
                 type: String,
                 default: 'File terlalu besar, maksimal 1 MB.',
-            }
+            },
+            uniqueKey: {
+                type: String,
+                required: true,
+            },
         },
         data() {
             return {
@@ -57,14 +61,14 @@
                 fileError: null,
             };
         },
+        emits: ['fileDropped', 'fileRemoved', 'errorPermission'],
         methods: {
             imagesPreview1(files) {
                 if (files && files[0]) {
-                    this.fileError = null; // Reset error
+                    this.fileError = null;
                     const selectedFile = files[0];
 
-                    // Check file size
-                    if (selectedFile.size > 1024 * 1024) { // 1 MB
+                    if (selectedFile.size > 1024 * 1024) {
                         this.fileError = this.errorText;
                         this.previewImage = null;
                         this.fileName = null;
@@ -78,47 +82,35 @@
                         const reader = new FileReader();
                         reader.onload = (e) => {
                             this.previewImage = e.target.result;
-                            this.$emit("fileSelected", {
-                                fileName: this.fileName,
-                                previewImage: this.previewImage,
-                            });
+                            this.$emit("fileDropped", selectedFile, this.uniqueKey);
                         };
                         reader.readAsDataURL(selectedFile);
                     } else {
                         this.previewImage = null;
-                        this.$emit("fileSelected", {
-                            fileName: this.fileName,
-                        });
+                        this.$emit("fileDropped", selectedFile, this.uniqueKey);
                     }
                 }
             },
             handleFileChange(event) {
                 this.previewImage = null;
                 this.fileName = null;
-                this.fileError = null; // Reset error
-                this.imagesPreview1(event.target.files);
+                this.fileError = null;
+                const files = event.target.files;
+                this.imagesPreview1(files);
             },
             onFileDrop(event) {
                 const files = event.dataTransfer.files;
-                this.fileError = null; // Reset error for each drop event
-                this.previewImage = null; // Reset preview
-                this.fileName = null; // Reset filename
+                this.fileError = null;
+                this.previewImage = null;
+                this.fileName = null;
                 this.imagesPreview1(files);
-            },
-            onDragOver(event) {
-                // Optional: Add styling to indicate drag-and-drop active area
-                event.currentTarget.classList.add("drag-over");
-            },
-            onDragLeave(event) {
-                // Optional: Reset styling after drag-and-drop
-                event.currentTarget.classList.remove("drag-over");
             },
             remove() {
                 this.previewImage = null;
                 this.fileName = null;
                 this.fileError = null;
-                this.$emit("input", null);
-                this.$emit("fileSelected", null);
+                this.$refs.file.value = null;
+                this.$emit("fileRemoved", this.uniqueKey);
             },
         },
         watch: {
@@ -136,13 +128,12 @@
     };
 </script>
 
-
 <style lang="scss" scoped>
     .hide {
         opacity: 0;
     }
 
-    .custom-file-upload{
+    .custom-file-upload {
         &.drag-over {
             border-color: var(--g-kit-lime-50);
         }

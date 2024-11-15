@@ -55,6 +55,12 @@
         gap: 1rem;
         width: 100%;
 
+        .radio-content{
+            .form-check {
+                margin-bottom: 0px;
+            }
+        }
+
         .radio-content:hover {
             color: var(--g-kit-lime-50);
             background-color: var(--g-kit-lime-10);
@@ -87,6 +93,15 @@
                 color: var(--g-kit-lime-50);
                 background-color: var(--g-kit-lime-10);
                 border-color: var(--g-kit-lime-50);
+            }
+        }
+    }
+    @media only screen and (max-width: 600px) {
+        .radio-container {
+            display: grid;
+
+            .radio-column {
+                width: 100%;
             }
         }
     }

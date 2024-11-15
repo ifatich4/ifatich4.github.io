@@ -489,10 +489,21 @@
               </p>
             </div>
             <div class="card-body">
-              <FilePickerLG v-model="selectedFile" :showPreview="false" errorText="ini text eror props"/>
-              <FilePickerLG v-model="selectedFile"/>
+              <FilePickerLG 
+                v-model="selectedFile" 
+                :showPreview="false" 
+                errorText="ini text eror props"
+                @fileDropped="handleFileDropped"
+                @fileRemoved="handleFileRemoved"
+                @errorPermission="handleErrorPermission"
+              />
+              <FilePickerLG v-model="selectedFile"
+                @fileDropped="handleFileDropped"
+                @fileRemoved="handleFileRemoved"
+                @errorPermission="handleErrorPermission"
+              />
 
-              <div v-if="selectedFile && selectedFile.fileName" class="file-name-text">
+              <div v-if="selectedFile && selectedFile.fileName">
                   <p>Selected File: {{ selectedFile.fileName }}</p>
               </div>
             </div>
@@ -1078,12 +1089,13 @@
               </SideStepper>
 
               <SideStepper 
-                title="Langkah"
+                title="Test Side Step Variant"
                 :labels="dropdownItemss"
                 variant="dua"
                 :accordions="accordionData"
                 :activeLabel="activeLabel"
                 @update:activeLabel="handleLabelClick"
+                class= "mb-4 mt-4"
               >
                 <template #1>
                     <StepperComponents :activeStep="1" />
@@ -1675,15 +1687,22 @@ export default {
         {
           header: 'Accordion 1',
           labels: [
-            { id: 1, label: 'Trigger Step 1', completed: false },
-            { id: 2, label: 'Trigger Step 2', completed: false }
+            { id: 1, label: 'Trigger 1', completed: false },
+            { id: 2, label: 'Trigger 2', completed: false }
           ]
         },
         {
           header: 'Accordion 2',
           labels: [
-            { id: 3, label: 'Trigger Step 3', completed: false },
-            { id: 4, label: 'Trigger Step 4', completed: false }
+            { id: 3, label: 'Trigger 3', completed: false },
+            { id: 4, label: 'Trigger 4', completed: false }
+          ]
+        },
+        {
+          header: 'Accordion 3',
+          labels: [
+            { id: 3, label: 'Trigger 3', completed: false },
+            { id: 4, label: 'Trigger 4', completed: false }
           ]
         }
       ],
