@@ -43,14 +43,15 @@ pluginOptions: {
 
 # kitvue - Pegadaian Design System - Kontribusi
 
-`kitvue` adalah library komponen UI yang dikembangkan untuk mendukung proyek-proyek internal di Pegadaian. Library ini menggunakan Vue versi 3.4.7 dan Bootstrap CSS versi 5.3.2 sebagai teknologi utama.
+`kitvue` merupakan sebuah library komponen UI yang dapat mendukung pengembagan proyek IT di Pegadaian. Library ini menggunakan basis teknologi framework Vue versi 3.4.7, dan Bootstrap versi 5.3.2.
 
 ## Branches
 
 Kami menggunakan dua branch utama dalam pengembangan proyek ini:
 
-- **`master`:** Branch ini berisi versi stabil dari library yang akan di-publish sebagai package di artifactory pegadaian.
-- **`dev-update-component`:** Branch ini digunakan sebagai branch pengembangan utama. Semua fitur baru dan perbaikan akan di-review di sini sebelum di-merge ke `master`.
+- **`master`:** Branch yang berisikan library dengan versi yang stabil dan dapat digunakan untuk di publish menjadi sebuah package di artifactory pegadaian.
+
+- **`dev-update-component`:** Branch yang digunakan sebagai branch pengembangan utama. Semua fitur baru dan perbaikan akan di-review di sini sebelum akan di-merge ke branch `master`.
 
 ## Kontribusi
 
@@ -136,6 +137,5 @@ Kami sangat menyambut kontribusi dari developer lain untuk menambahkan komponen 
 ---
 
 Terima kasih telah berkontribusi ke `kitvue`! Kami sangat menghargai usaha dan waktu yang kamu luangkan untuk membuat proyek ini menjadi lebih baik.
-
-## Love, Regard and Cheers. Happy Development 
-### <3 Pegadaian Design <3
+**Love, Regard and Cheers. Happy Development**
+**<3 Pegadaian Design <3t**
