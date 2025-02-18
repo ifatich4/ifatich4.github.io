@@ -61,6 +61,7 @@
   const search = ref('')
   const shown = ref(false)
   const shownOffcanvas = ref(false)
+  const dropdownRef = ref(null)
 
   const handleShown = () => {
     if (!props.useBottomSheet) shown.value = !shown.value
@@ -108,6 +109,10 @@
   const handleOffcanvasToggle = (value) => {
     emit('buttomSheetShown', value)
   }
+
+  defineExpose({
+    dropdownRef
+  })
 </script>
 
 <template>
@@ -119,7 +124,7 @@
       <img v-if="props.errorFetch" @click="props.executeFetch" class="icon-refresh"
         src="../../assets/icon/refresh.svg" />
     </div>
-    <BDropdown :value="selectedValue"
+    <BDropdown ref="dropdownRef" :value="selectedValue"
       :toggle-class="['w-100 gkit-dd d-flex justify-content-between align-items-center', `type-${color}`]"
       class="prevent-zero gkit-dd" v-bind="$attrs" :disabled="disabled || loading" @toggle="handleShown"
       :menuClass="{'hide-dropdown-menu': props.useBottomSheet || props.showMenu === false}">
@@ -165,7 +170,7 @@
       <BOffcanvas v-if="props.useBottomSheet && showMenu === true" v-model="shownOffcanvas" placement="bottom"
         bodyScrolling="true" @shown="handleOffcanvasToggle(true)" @hidden="handleOffcanvasToggle(false)"
         class="input-dropdown" :class="props.items && props.items.length > 10 ? 'full-height' : 'content-height'">
-        <template #title>{{ props.label }}</template>
+        <template #title>Pilih {{ props.label }}</template>
         <b-form-input v-if="props.items && props.items.length > 10" @click.stop v-model="search"
           :placeholder="'Cari ' + props.label.toLowerCase()" :id="$attrs.id + '_search'" style="margin-top: 15px;">
         </b-form-input>
@@ -256,13 +261,18 @@
     }
     .disabled {
       .dropdown-placeholder {
-        color: var(--g-kit-black-60) !important;
+        color: var(--g-kit-black-50) !important;
       }
     }
     .dropdown-placeholder {
       font-size: var(--g-kit-font-size-omicron);
       line-height: var(--g-kit-line-height-omicron);
       font-weight: var(--g-kit-font-weight-normal);
+    }
+    .btn.disabled {
+      background-color: var(--g-kit-black-20);
+      opacity: 1;
+      border: 0px;
     }
   }
 

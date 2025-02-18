@@ -46,6 +46,10 @@
 		variant: {
 			type: String,
 			default: 'default'
+		},
+		rupiah: {
+			type: Text,
+			default: ''
 		}
 	})
 	const emit = defineEmits(['update:modelValue'])
@@ -110,7 +114,7 @@
 		<label v-if="label" :for="$attrs.id" class="form-label">
 			{{ label }}
 		</label>
-		<div class="input-group custom-input-group-icon p-0" :class="{ 'search-input': props.type === 'search' }">
+		<div :class="['input-group custom-input-group-icon p-0', props.class, `${rupiah}`, { 'search-input': props.type === 'search' }]">
 			<slot name="prefix">
 				<div v-if="props.type === 'search'" class="input-group-icon ms-3">
 					<img src="../../assets/icon/search.svg" />
@@ -131,7 +135,7 @@
 			<div v-if="suffixIcon" class="input-group-icon me-3">
 				<img :src="suffixIcon" />
 			</div>
-			<slot name="suffix" />
+			<slot name="suffix" ></slot>
 		</div>
 		<div v-if="localError" class="error-text mt-2">
 			{{ props.required ? 'Field ini diperlukan' : '' }}
@@ -142,6 +146,10 @@
 </template>
 
 <style lang="scss" scoped>
+	input:disabled {
+		color: var(--g-kit-black-60);
+	}
+
 	.input-group-icon {
 		display: flex;
 		align-items: center;

@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <BAccordionItem :id="id || dynamicId" class="accordion-item" :title="header" :visible="active">
-        <slot></slot>
+        <slot ></slot>
     </BAccordionItem>
 </template>
 

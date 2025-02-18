@@ -24,7 +24,7 @@
         props: {
             image: {
                 type: String,
-                default: "/assets/images/voucher-active.png",
+                default: "./assets/images/voucher-active.png",
             },
             title: {
                 type: String,

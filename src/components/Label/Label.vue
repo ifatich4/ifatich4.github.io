@@ -16,9 +16,9 @@
             },
             variant: {
                 type: String,
-                default: "",
+                default: "default",
                 Validator: function (value) {
-                    return ["green", "blue", "red", "yellow"].indexOf(value) !== -1;
+                    return ["default" ,"green", "blue", "red", "yellow"].indexOf(value) !== -1;
                 },
             },
         },
@@ -27,7 +27,7 @@
             return {
                 classes: computed(() => ({
                     [`${
-                        props.variant ? `pgd-status-${props.variant}` : "pgd-status"
+                        props.variant ? props.variant === "default" ? "pgd-status" : `pgd-status-${props.variant}` : "pgd-status"
                     }`]: true,
                 })),
             };

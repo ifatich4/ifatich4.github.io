@@ -2,7 +2,7 @@
   <div class="home">
     <div class="container">
       <button @click="scrollTo('btm-scroll')">Scroll Test</button>
-      <BerandaHeader>
+      <BerandaHeader >
         <template #search>
           <InputDropdownHeader
             v-model="nilaiTerpilih"
@@ -35,6 +35,7 @@
             label="Button Seccondary"
           />
         </template>
+       
         <template #profil>
           <Button class="me-2 mb-2" type="link" size="md" label="Button Link" />
           <Button
@@ -114,11 +115,25 @@
               </p>
             </div>
             <div class="card-body">
+
               <Alert color="success" label="Lorem ipsum dolor sit amet" />
               <Alert color="info" label="Lorem ipsum dolor sit amet" />
               <Alert color="warning" label="Lorem ipsum dolor sit amet" />
               <Alert color="link" label="Lorem ipsum dolor sit amet" />
               <Alert color="danger" label="Lorem ipsum dolor sit amet" />
+              <Alert  color="info" label="Lorem ipsum dolor sit amet" :hideAction=false v-if="showDismissibleAlert"> 
+                <template #action>
+                  <svg  v-on:click="showDismissibleAlert = false"  width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.97814 6.27576C7.50308 5.88357 6.79868 5.90971 6.3542 6.3542C5.88193 6.82646 5.88193 7.59215 6.3542 8.06441L10.7898 12.5L6.3542 16.9356C5.88193 17.4079 5.88193 18.1735 6.3542 18.6458C6.79868 19.0903 7.50308 19.1164 7.97814 18.7242L8.06441 18.6458L12.5 14.2102L16.9356 18.6458L17.0219 18.7242C17.4969 19.1164 18.2013 19.0903 18.6458 18.6458C19.1181 18.1735 19.1181 17.4079 18.6458 16.9356L14.2102 12.5L18.6458 8.06441C19.1181 7.59215 19.1181 6.82646 18.6458 6.3542C18.2013 5.90971 17.4969 5.88357 17.0219 6.27576L16.9356 6.3542L12.5 10.7898L8.06441 6.3542L7.97814 6.27576Z" fill="#70717D"/>
+                    <mask id="mask0_0_5362" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="6" y="6" width="13" height="13">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.97814 6.27576C7.50308 5.88357 6.79868 5.90971 6.3542 6.3542C5.88193 6.82646 5.88193 7.59215 6.3542 8.06441L10.7898 12.5L6.3542 16.9356C5.88193 17.4079 5.88193 18.1735 6.3542 18.6458C6.79868 19.0903 7.50308 19.1164 7.97814 18.7242L8.06441 18.6458L12.5 14.2102L16.9356 18.6458L17.0219 18.7242C17.4969 19.1164 18.2013 19.0903 18.6458 18.6458C19.1181 18.1735 19.1181 17.4079 18.6458 16.9356L14.2102 12.5L18.6458 8.06441C19.1181 7.59215 19.1181 6.82646 18.6458 6.3542C18.2013 5.90971 17.4969 5.88357 17.0219 6.27576L16.9356 6.3542L12.5 10.7898L8.06441 6.3542L7.97814 6.27576Z" fill="white"/>
+                    </mask>
+                    <g mask="url(#mask0_0_5362)">
+                    <rect width="24" height="24" fill="#FFFFFF"/>
+                    </g>
+                  </svg>
+                </template>
+              </Alert>
 
               <Alert
                 class="variant"
@@ -140,6 +155,20 @@
                 color="danger"
                 label="Lorem ipsum dolor sit amet"
               />
+              <div class="card">
+                <CardProduct/>
+              </div>
+              
+              <CardEvent/>
+              <CardArticleHighlight/>
+              <CardFile/>
+              <CardProduct/>
+              <CardProductKonvensional/>
+              <CardProductSyariah/>
+              <CardPromo/>
+              <CardPromoCode/>
+              <CardVoucher/>
+              <CardArticle/>
 
               <AlertVarian />
             </div>
@@ -170,6 +199,7 @@
                 />
               <p>Selected Date: {{ selectedDate }}</p>
               <DateRangePickerOption
+                :disabled="false"
                 placeholder="Pilih Tanggal Lahir"
                 label="Date Range Picker"
                 v-model:start-date="startDate"
@@ -297,13 +327,13 @@
                 type="search"
               />
 
-              <InputNominal
+              <InputNominalStart
                 id="input-rupiah"
                 label="Input Rupiah"
                 v-model="rupiah"
               />
               {{ rupiah }}
-              <InputPersen id="15" title="Persentase DP" required="" />
+              <InputNominalEnd id="15" title="Persentase DP" required="" />
               <InputTextArea id="16" />
               <Dropdown
                 v-model="nilaiTerpilih"
@@ -462,14 +492,14 @@
                 <div class="card-body">
                   <Accordion class="mb-2" v-model="modelAccordion">
                     <AccordionItem header="Test header accordion" active>
-                      <InputNominal id="1" title="Nominal" required="" />
-                      <InputNominal id="2" title="Nominal" required="" />
-                      <InputNominal id="3" title="Nominal" required="" />
+                      <InputNominalStart id="1" title="Nominal" required="" />
+                      <InputNominalStart id="2" title="Nominal" required="" />
+                      <InputNominalStart id="3" title="Nominal" required="" />
                     </AccordionItem>
                     <AccordionItem header="Test header accordion 2" active>
-                      <InputPersen id="4" title="Persentase DP" required="" />
-                      <InputPersen id="5" title="Persentase DP" required="" />
-                      <InputPersen id="6" title="Persentase DP" required="" />
+                      <InputNominalEnd id="4" title="Persentase DP" required="" />
+                      <InputNominalEnd id="5" title="Persentase DP" required="" />
+                      <InputNominalEnd id="6" title="Persentase DP" required="" />
                     </AccordionItem>
                   </Accordion>
                 </div>
@@ -497,7 +527,18 @@
                 @fileRemoved="handleFileRemoved"
                 @errorPermission="handleErrorPermission"
               />
-              <FilePickerLG v-model="selectedFile"
+              <FilePickerLG
+                v-model="selectedFile"
+                :showPreview="false"
+                file="https://study.com/cimages/multimages/16/fbaddressbar8652080276605805209.png"
+                errorText="ini text eror props"
+                @fileDropped="handleFileDropped"
+                @fileRemoved="handleFileRemoved"
+                @showUrlData="handleShowFile"
+                @errorPermission="handleErrorPermission"
+              />
+              <FilePickerLG
+                v-model="selectedFile"
                 @fileDropped="handleFileDropped"
                 @fileRemoved="handleFileRemoved"
                 @errorPermission="handleErrorPermission"
@@ -525,9 +566,9 @@
                 class="mb-2"
               >
                 <template v-slot:body>
-                  <InputPersen id="7" title="Persentase DP" required="" />
-                  <InputPersen id="8" title="Persentase DP" required="" />
-                  <InputPersen id="9" title="Persentase DP" required="" />
+                  <InputNominalEnd id="7" title="Persentase DP" required="" />
+                  <InputNominalEnd id="8" title="Persentase DP" required="" />
+                  <InputNominalEnd id="9" title="Persentase DP" required="" />
                 </template>
                 <template v-slot:footer>
                   <div class="row w-100">
@@ -816,9 +857,9 @@
                 </template>
 
                 <template v-slot:body>
-                  <InputPersen id="10" title="Persentase DP" required="" />
-                  <InputPersen id="11" title="Persentase DP" required="" />
-                  <InputPersen id="12" title="Persentase DP" required="" />
+                  <InputNominalEnd id="10" title="Persentase DP" required="" />
+                  <InputNominalEnd id="11" title="Persentase DP" required="" />
+                  <InputNominalEnd id="12" title="Persentase DP" required="" />
                 </template>
               </ModalComponent>
             </div>
@@ -900,7 +941,7 @@
                 item-value="id"
                 :disabled="false"
                 size="md"
-                palceholder="Pilih salah satu"
+                placeholder="Pilih salah satu"
               />
             </div>
           </div>
@@ -1212,7 +1253,7 @@
               </p>
             </div>
             <div id="btm-scroll" class="card-body">
-              <TabPembinaan :labels="tabItems">
+              <TabPembinaan :labels="tabItems" :currently-selected="4">
                 <template v-slot:1>
                   <StepperComponents :activeStep="1" />
                 </template>
@@ -1333,6 +1374,7 @@ const tableParentHead2 = [
         tooltip: {}
     },
 ]
+
 const tableChildHead2= [
     {
         key: "1",
@@ -1599,8 +1641,8 @@ import Breadcrumb from "./Breadcrumb/Breadcrumb.vue";
 import AddAmount from "./AddAmount/AddAmountCounter.vue";
 import InputSmallText from "./Input/InputSmallText.vue";
 import InputText from "./Input/InputText.vue";
-import InputNominal from "./Input/InputRupiah.vue";
-import InputPersen from "./Input/InputPersen.vue";
+import InputNominalStart from "./Input/InputNominalStart.vue";
+import InputNominalEnd from "./Input/InputNominalEnd.vue";
 import InputTextArea from "./Input/InputTextArea.vue";
 import Dropdown from "./Dropdown/InputDropdown.vue";
 
@@ -1631,10 +1673,40 @@ import InputCamera from "./Input/InputCamera.vue";
 import TabPembinaan from "./Navbar/TabPembinaan.vue";
 
 import RadioComponent from "./Radio/Radio.vue"
+import CardArticle from "./Card/CardArticle.vue";
+import CardProduct from "./Card/CardProduct.vue";
+import NavBackNavigator from "./Navbar/NavBackNavigator.vue";
+import NavbarCorporate from "./Navbar/NavbarCorporate.vue";
+import TabProduct from "./Tab/TabProduct.vue";
+import CardEvent from "./Card/CardEvent.vue";
+import CardAccount from "./Card/CardAccount.vue";
+import CardArticleHighlight from "./Card/CardArticleHighlight.vue";
+import CardFile from "./Card/CardFile.vue";
+import CardProductKonvensional from "./Card/CardProductKonvensional.vue";
+import CardProductSyariah from "./Card/CardProductSyariah.vue";
+import CardPromo from "./Card/CardPromo.vue";
+import CardPromoCode from "./Card/CardPromoCode.vue";
+import CardVoucher from "./Card/CardVoucher.vue";
+
+
+
+
+
 
 export default {
   name: "App",
   components: {
+    CardProduct,
+    CardEvent,
+    CardArticleHighlight,
+    CardFile,
+    CardProduct,
+    CardProductKonvensional,
+    CardProductSyariah,
+    CardPromo,
+    CardPromoCode,
+    CardVoucher,
+    CardArticle,
     Button,
     Alert,
     AlertVarian,
@@ -1643,14 +1715,16 @@ export default {
     InputSmallText,
     InputText,
     InputTextArea,
-    InputNominal,
+    InputNominalStart,
     InputTextArea,
-    InputPersen,
+    InputNominalEnd,
     Accordion,
     AccordionItem,
     FilePickerLG,
     ModalSlider,
     ModalComponent,
+    NavBackNavigator,
+    NavbarCorporate,
     InputDatePicker,
     InputSmallDate,
     ListGroupOrdered,
@@ -1671,6 +1745,7 @@ export default {
     InputCamera,
     TabPembinaan,
     InputTimePicker,
+    TabProduct,
     TimePickerResponsive,
     RadioComponent,
   },
@@ -1720,6 +1795,7 @@ export default {
       selectedTime: "",
       selectedTimes: "",
       showPicker: false,
+      showDismissibleAlert : true,
 
       startDate: ref(null),
       endDate: ref(null),
@@ -2054,6 +2130,9 @@ export default {
     };
   },
   methods: {
+    handleShowFile(item) {
+      console.log("data", item);
+    },
     handleRowClick(item) {
       console.log("Row clicked:", item);
     },

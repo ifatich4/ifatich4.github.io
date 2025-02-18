@@ -32,7 +32,7 @@
             return {
                 classes: computed(() => ({
                     [`${
-                        props.variant ? `pgd-status-${props.variant}` : "pgd-status"
+                        props.variant ? props.variant === "default" ? "pgd-status" : `pgd-status-${props.variant}` : "pgd-status"
                     }`]: true,
                 })),
             };

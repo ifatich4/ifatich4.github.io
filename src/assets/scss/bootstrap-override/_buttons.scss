@@ -85,16 +85,42 @@
     }
 
     &.btn-sm, .btn-group-sm > .btn {
-        --g-bs-btn-padding-y: 2px;
-        --g-bs-btn-padding-x: 10px;
         --g-bs-btn-border-radius: var(--g-bs-border-radius-sm);
         font-size: var(--g-kit-font-size-omega);
         line-height: var(--g-kit-line-height-omega);
         font-weight: var(--g-kit-font-weight-bold);
     }
+
+    //Button Size
+    &-sm {
+        height: min-content;
+        --g-bs-btn-padding-y: 2px;
+        --g-bs-btn-padding-x: 10px;
+    }
+
+    &-md {
+        --g-bs-btn-padding-y: 0.438rem;
+        --g-bs-btn-padding-x: 1rem;
+    }
+
+    &-lg {
+        --g-bs-btn-padding-y: 0.438rem;
+        --g-bs-btn-padding-x: 1rem;
+        font-size: var(--g-kit-font-size-omicron);
+        line-height: var(--g-kit-line-height-omicron);
+        font-weight: var(--g-kit-font-weight-bold);
+    }
+
+    &-xl {
+        --g-bs-btn-padding-y: 0.688rem;
+        --g-bs-btn-padding-x: 1rem;
+        font-size: var(--g-kit-font-size-omicron);
+        line-height: var(--g-kit-line-height-omicron);
+        font-weight: var(--g-kit-font-weight-bold);
+    }
 }
 
-.btn-contextual {
+.btn-contextual { 
     width: 1.5em;
     height: 1.5em;
     padding: 0.25em 0.25em;

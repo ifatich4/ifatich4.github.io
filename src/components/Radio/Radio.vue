@@ -1,17 +1,19 @@
 <template>
     <div class="radio-container">
-        <b-form-group v-for="(item, index) in items" :key="index" class="radio-column">
+        <BFormGroup v-for="(item, index) in items" :key="index" class="radio-column">
             <label class="radio-content">
-                <b-form-radio :value="item.value" v-model="radioValue">{{ item.text }}</b-form-radio>
+                <BFormRadio :value="item.value" v-model="radioValue">{{ item.text }}</BFormRadio>
             </label>
-        </b-form-group>
+        </BFormGroup>
     </div>
 </template>
 
 
 <script>
+    import { BFormRadio, BFormGroup } from 'bootstrap-vue-next';
     export default {
         name: 'RadioComponent',
+        components : { BFormRadio, BFormGroup },
         props: {
             items: {
                 type: Array,

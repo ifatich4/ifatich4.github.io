@@ -23,7 +23,7 @@
                             action: function () {
                                 return "/";
                             },
-                            icon: "/assets/images/ico-tabungan.svg",
+                            icon: "src/assets/images/ico-tabungan.svg",
                         },
                         {
                             label: "Pinjamattn",

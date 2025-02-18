@@ -21,7 +21,7 @@ const dateRangeDisabled = computed(() =>
   SELECTED_PRESET.value === 'ANY' ? false : true
 )
 const props = defineProps({
-  label: {},
+  title: {},
   error: {},
   preset: {
     default: [
@@ -103,9 +103,9 @@ const handleShown = (value) => {
 <template>
   <div class="group-input">
     <div class="label-container">
-      <label class="form-label"> {{ props.label }} </label>
+      <label class="form-label"> {{ props.title }} </label>
     </div>
-    <Dropdown :id="$attrs.id" class="input-filter" :show-menu="!props.useBottomSheet" @shown="handleShown(true)">
+    <Dropdown :disabled="$attrs.disabled" :id="$attrs.id" class="input-filter" :show-menu="!props.useBottomSheet" @shown="handleShown(true)">
       <template #button-content>
         <p
           class="overflow-hidden my-auto text-ellipsis"

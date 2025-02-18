@@ -4,7 +4,7 @@
     font-size: var(--g-kit-font-size-omicron);
     line-height: var(--g-kit-line-height-omicron);
     font-weight: var(--g-kit-font-weight-normal);
-    color: $text-white;
+    color: $black-40;
     text-decoration: if($link-decoration == none, null, none);
     transition: all .4s;
 

@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { BOffcanvas } from 'bootstrap-vue-next'
+import { BOffcanvas, BListGroupItem, BListGroup, BButton } from 'bootstrap-vue-next'
 import Select2 from './vue3-select2-component'
 
 import { computed, ref } from 'vue'
@@ -67,7 +67,10 @@ export default {
   inheritAttrs: false,
   components: {
     Select2,
-    BOffcanvas
+    BOffcanvas,
+    BListGroupItem,
+    BListGroup,
+    BButton,
   },
   props: {
     modelValue: {

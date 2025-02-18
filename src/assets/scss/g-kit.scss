@@ -1,5 +1,3 @@
-// Configuration
-
 @import "bootstrap/dist/css/bootstrap.css";
 @import "bootstrap-vue-next/dist/bootstrap-vue-next.css";
 
@@ -10,7 +8,6 @@
 @import "g-kit/nprogress";
 
 
-// Bootstrap scss-docs-start import-stack
 
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
@@ -19,7 +16,6 @@
 @import "bootstrap/scss/mixins";
 @import "bootstrap/scss/utilities";
 
-// Layout & components
 @import "bootstrap/scss/root";
 @import "bootstrap/scss/reboot";
 @import "bootstrap/scss/type";
@@ -52,15 +48,11 @@
 @import "bootstrap/scss/offcanvas";
 @import "bootstrap/scss/placeholders";
 
-// Helpers
 @import "bootstrap/scss/helpers";
 
-// Utilities
 @import "bootstrap/scss/utilities/api";
-// Bootstrap scss-docs-end import-stack
 
 
-// Override Bootstrap styles
 @import "bootstrap-override/buttons";
 @import "bootstrap-override/forms";
 @import "bootstrap-override/font";
@@ -85,7 +77,6 @@
 @import "bootstrap-override/label";
 
 
-// Custom Styles
 @import "g-kit/filepicker";
 @import "g-kit/calendar";
 @import "g-kit/data-table";

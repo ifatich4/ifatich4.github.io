@@ -16,7 +16,6 @@
 
     defineOptions({
         name: 'InputDropdownHeader',
-        inheritAttrs: false
     })
 
     const attrs = useAttrs()

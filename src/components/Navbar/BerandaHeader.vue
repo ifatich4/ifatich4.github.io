@@ -16,15 +16,15 @@
                 <BNavForm class="d-flex">
                     <BNavItemDropdown class="dd-nav" text="Riwayat">
                         
-                        <b-card>
+                        <BCard>
                             <slot name="riwayat"></slot>
-                        </b-card>
+                        </BCard>
                     </BNavItemDropdown>
     
                     <BNavItemDropdown class="dd-nav notif" text="Notifikasi" >
-                        <b-card>
+                        <BCard>
                             <slot name="notifikasi"></slot>
-                        </b-card>
+                        </BCard>
                     </BNavItemDropdown>
     
                     <BNavItemDropdown class="dd-nav last-child">
@@ -33,9 +33,9 @@
                             {{ jabatan||'Business Process Outsourcing' }}
                         </template>
 
-                        <b-card class="content-profil">
+                        <BCard class="content-profil">
                             <slot name="profil"></slot>
-                        </b-card>
+                        </BCard>
                     </BNavItemDropdown>
                 </BNavForm>
             </BCollapse>
@@ -56,6 +56,9 @@
         BNavbarToggle,
         BNavbarNav,
         BNavForm,
+        BCollapse,
+        BNavItemDropdown,
+        BCard,
     } from 'bootstrap-vue-next';
 
     export default {
@@ -66,9 +69,12 @@
     BNavbarToggle,
     BNavbarNav,
     BNavForm,
+    BCollapse,
+    BNavItemDropdown,
+    BCard
 },
         props: {
-            username: {
+            user: {
                 type: String
             },
             jabatan: {

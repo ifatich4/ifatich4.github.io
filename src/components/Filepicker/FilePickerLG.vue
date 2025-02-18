@@ -1,8 +1,8 @@
 <template>
-    <div class="custom-file-upload" :class="{ 'fileName': fileName && !showPreview, 'hns': !showPreview }"
+    <div class="custom-file-upload" :class="{ 'fileName': fileName && !imageOnly, 'hns': !imageOnly }"
         @dragover.prevent="onDragOver" @dragleave="onDragLeave" @drop.prevent="onFileDrop">
         <div class="custom-file-upload__box-input" :class="{ 'd-none': previewImage }">
-            <span v-if="showPreview" class="custom-file-upload__box-input-icon">
+            <span v-if="imageOnly" class="custom-file-upload__box-input-icon">
                 <img src="../../assets/images/ico-image-upload.svg" alt="" />
             </span>
             <span v-else class="custom-file-upload__box-input-icon">
@@ -12,21 +12,27 @@
 
             <input type="file" id="gallery-photo-add" class="custom-file-upload__box-input-file"
                 @change="handleFileChange" ref="file"
-                :accept="showPreview ? 'image/*' : '.pdf,.doc,.docx,.xlsx,image/*'" multiple required />
+                :accept="imageOnly ? 'image/*' : '.pdf,.doc,.docx,.xlsx,image/*'" multiple required />
         </div>
 
-        <div v-if="showPreview && previewImage" class="custom-file-upload__box-preview" id="box-preview-image"
+        <div v-if="imageOnly && previewImage" class="custom-file-upload__box-preview" id="box-preview-image"
             :class="{ 'd-block': previewImage }">
             <img @click="remove" v-if="previewImage || fileName" class="close-img"
                 :class="{ 'd-block remove-button btn-close': previewImage || fileName }"
                 src="../../assets/icon/cross.svg" />
             <img class="drop-zoon__image" :src="previewImage" alt="Preview" />
         </div>
-        <div v-else-if="fileName && !showPreview" class="custom-file-upload__file-name">
-            <img @click="remove" v-if="previewImage || fileName" class="close-img"
+        <div v-else-if="fileName && !imageOnly" class="custom-file-upload__file-name">
+            <div v-if="!showFileURL">
+                <img @click="remove" v-if="previewImage || fileName" class="close-img"
                 :class="{ 'd-block remove-button btn-close': previewImage || fileName }"
                 src="../../assets/icon/cross.svg" />
-            <span>{{ fileName }}</span>
+                <span>{{ fileName }}</span>
+            </div>
+            <div v-else class="d-flex align-items-center justify-content-between">
+                <span>{{ fileName }}</span>
+                <a @click="handleFileData" class="text-green show-preview">Lihat file</a>
+            </div>
         </div>
     </div>
     <div v-if="fileError" class="error-text">
@@ -41,7 +47,7 @@
             file: {
                 type: [File, Object],
             },
-            showPreview: {
+            imageOnly: {
                 type: Boolean,
                 default: true,
             },
@@ -61,7 +67,7 @@
                 fileError: null,
             };
         },
-        emits: ['fileDropped', 'fileRemoved', 'errorPermission'],
+        emits: ['fileDropped', 'fileRemoved', 'errorPermission',"showUrlData"],
         methods: {
             imagesPreview1(files) {
                 if (files && files[0]) {
@@ -78,7 +84,7 @@
                     this.fileName = selectedFile.name;
                     const fileType = selectedFile.type;
 
-                    if (this.showPreview && fileType.startsWith("image/")) {
+                    if (this.imageOnly && fileType.startsWith("image/")) {
                         const reader = new FileReader();
                         reader.onload = (e) => {
                             this.previewImage = e.target.result;
@@ -112,14 +118,41 @@
                 this.$refs.file.value = null;
                 this.$emit("fileRemoved", this.uniqueKey);
             },
+            formatFileSize(sizeInBytes) {
+                if (sizeInBytes < 1024) {
+                    return `${sizeInBytes} Bytes`;
+                } else if (sizeInBytes < 1024 * 1024) {
+                    return `${(sizeInBytes / 1024).toFixed(2)} KB`;
+                } else {
+                    return `${(sizeInBytes / (1024 * 1024)).toFixed(2)} MB`;
+                }
+            },
+            handleFileData() {
+                this.$emit("showUrlData", this.urlFile);
+            },
         },
         watch: {
             file: {
-                handler(newFile) {
+                async handler(newFile) {
                     if (!newFile) {
-                        this.previewImage = null;
-                        this.fileName = null;
-                        this.fileError = null;
+                    this.previewImage = null;
+                    this.fileName = null;
+                    this.fileError = null;
+                    } else {
+                    const response = await fetch(newFile);
+                    if (response.ok) {
+                        this.urlFile = newFile;
+                        const urlParts = newFile.split("/");
+                        const filename = urlParts[urlParts.length - 1].split("?")[0];
+                        const blob = await response.blob();
+
+                        this.previewImage = URL.createObjectURL(blob);
+                        this.fileName = `${filename} - ${this.formatFileSize(blob.size)}`;
+                        this.showFileURL = true;
+                    } else {
+                        console.error("Failed to fetch file:", response.statusText);
+                        this.fileError = `Failed to load file: ${response.statusText}`;
+                    }
                     }
                 },
                 immediate: true,
@@ -174,6 +207,13 @@
         font-weight: bold;
         opacity: 1;
         z-index: 999;
+    }
+
+    .show-preview {
+        z-index: 999;
+        cursor: pointer;
+        font-weight: 800;
+        font-size: 12px;
     }
 
     .fileName {

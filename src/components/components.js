@@ -3,6 +3,7 @@ import AddAmount from './AddAmount/AddAmountCounter.vue';
 import Alert from './Alert/Alert.vue';
 import AlertVarian from './Alert/AlertVarian.vue';
 import Aspect from './Aspect/Aspect.vue';
+import BaseIcon from './Icons/BaseIcon.vue';
 import Breadcrumb from './Breadcrumb/Breadcrumb.vue';
 import Button from './Button/Button.vue';
 import ButtonSize from './Button/ButtonSize.vue';
@@ -22,7 +23,7 @@ import DatePicker from './Input/DatePicker.vue';
 import Dropdown from './Dropdown/Dropdown.vue';
 import FilePickerLG from './Filepicker/FilePickerLG.vue';
 import FilePickerSM from './Filepicker/FilePickerSM.vue';
-import InputPersen from './Input/InputPersen.vue';
+import InputPersen from './Input/InputNominalEnd.vue';
 import Input from './Input/InputSmallText.vue';
 import TextArea from './Input/InputTextArea.vue';
 import ModalComponent from './Modal/Modal.vue';
@@ -37,6 +38,7 @@ import DataApps from './Table/Data.vue';
 import Badge from './Badge/Badge.vue';
 import DropdownGroupItem from './Dropdown/DropdownGroupItem.vue';
 import DropdownItem from './Dropdown/DropdownItem.vue';
+import DeleteIcon from './Icons/DeleteFill.vue';
 
 export default {
     Accordion,
@@ -44,6 +46,7 @@ export default {
     Alert,
     AlertVarian,
     Aspect,
+    BaseIcon,
     Breadcrumb,
     Button,
     ButtonSize,
@@ -60,11 +63,11 @@ export default {
     CardPromoCode,
     CardVoucher,
     DatePicker,
+    DeleteIcon,
     Dropdown,
     FilePickerLG,
     FilePickerSM,
     InputPersen,
-    InputNominal,
     Input,
     InputSmallDate,
     TextArea,

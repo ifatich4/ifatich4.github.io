@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <div>
-        <BAlert class="variant" :model-value="true">Default Alert</BAlert>
+        <BAlert class="variant" :model-value="false">Default Alert</BAlert>
 
         <BAlert class="variant" variant="success" :model-value="true">Success Alert</BAlert>
 

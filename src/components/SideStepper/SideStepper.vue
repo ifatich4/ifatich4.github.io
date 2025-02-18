@@ -47,9 +47,9 @@
             </template>
 
             <!-- Offcanvas component with dynamic title -->
-            <BOffcanvas v-model="ShowMenu" placement="start" title="Kategori">
+            <BOffcanvas v-model="ShowMenu" placement="start" title="Kategori" class="tabs-custom">
                 <Accordion>
-                    <AccordionItem v-for="(accordion, index) in accordions" :key="index" :header="accordion.header">
+                    <AccordionItem v-for="(accordion, index) in accordions" :key="index" :header="accordion.header" class="tabs-custom-body">
                         <p v-for="label in accordion.labels" :key="label.id" @click="onLabelClick(label.id, true)"
                             :class="['text-label', { 'active': label.id === activeLabel, 'completed': label.completed }]">
                             <span class="content" />
@@ -316,76 +316,80 @@
 
                 width: 100%;
             }
+
+            
         }
 
-        .offcanvas {
-            border-radius: 0px !important;
-            background-color: var(--g-kit-black-10);
-
-            .offcanvas-header {
-                padding: 1rem 2rem;
+        .tabs-custom.offcanvas {
+                border-radius: 0px !important;
                 background-color: var(--g-kit-black-10);
 
-                font-size: var(--g-kit-font-size-kappa);
-                line-height: var(--g-kit-line-height-kappa);
-                font-weight: var(--g-kit-font-weight-bold);
-            }
+                .offcanvas-header {
+                    padding: 1rem 2rem;
+                    background-color: var(--g-kit-black-10);
 
-            .offcanvas-body {
-                padding: 1rem !important;
-                background-color: var(--g-kit-black-10);
-            }
-
-            .accordion-item {
-
-                .accordion-body,
-                .accordion-button {
-                    padding: 0px;
-                }
-
-                .accordion-button {
-                    background-color: transparent;
-                    color: var(--g-kit-black-60);
-                    font-size: var(--g-kit-font-size-omicron);
-                    line-height: var(--g-kit-line-height-omicron);
+                    font-size: var(--g-kit-font-size-kappa);
+                    line-height: var(--g-kit-line-height-kappa);
                     font-weight: var(--g-kit-font-weight-bold);
                 }
 
-                .accordion-body {
-                    .text-label {
-                        cursor: pointer;
-                        margin-top: 1rem;
-                        margin-left: 1rem;
+                .offcanvas-body {
+                    padding: 1rem !important;
+                    background-color: var(--g-kit-black-10);
+                }
+
+                .tabs-custom-body.accordion-item {
+
+                    .accordion-body,
+                    .accordion-button {
+                        padding: 0px;
+                    }
+
+                    .accordion-button {
+                        background-color: transparent;
                         color: var(--g-kit-black-60);
                         font-size: var(--g-kit-font-size-omicron);
                         line-height: var(--g-kit-line-height-omicron);
-                        font-weight: var(--g-kit-font-weight-regular);
+                        font-weight: var(--g-kit-font-weight-bold);
+                    }
 
-                        &.active {
-                            color: var(--g-kit-lime-50);
-                        }
+                    .accordion-body {
+                        .text-label {
+                            cursor: pointer;
+                            margin-top: 1rem;
+                            margin-left: 1rem;
+                            color: var(--g-kit-black-60);
+                            font-size: var(--g-kit-font-size-omicron);
+                            line-height: var(--g-kit-line-height-omicron);
+                            font-weight: var(--g-kit-font-weight-regular);
 
-                        &:last-child {
-                            margin-bottom: 0px;
+                            &.active {
+                                color: var(--g-kit-lime-50);
+                            }
+
+                            &:last-child {
+                                margin-bottom: 0px;
+                            }
                         }
+                    }
+
+                    .collapsing {
+                        transition: background-color 0s ease;
                     }
                 }
 
-                .collapsing {
-                    transition: background-color 0s ease;
+                .accordion-item:has(.collapse.show) {
+                    background-color: var(--g-kit-lime-10);
+                    border-color: var(--g-kit-lime-50);
                 }
             }
-
-            .accordion-item:has(.collapse.show) {
-                background-color: var(--g-kit-lime-10);
-                border-color: var(--g-kit-lime-50);
-            }
-        }
     }
 
     @media (max-width: 520px) {
-        .offcanvas.offcanvas-start.show {
-            width: -webkit-fill-available;
+        .tabs-custom {
+            &.offcanvas.offcanvas-start.show {
+                width: -webkit-fill-available;
+            }
         }
     }
 </style>
