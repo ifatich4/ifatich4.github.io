@@ -88,7 +88,7 @@
         },
         methods: {
             format: (value) =>
-                (value + "").replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, "."),
+                (value + "").replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ","),
 
             handleInput() {
                 this.currentValue = this.format(this.currentValue);

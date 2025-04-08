@@ -3,18 +3,15 @@
     <table :class="['table', props.class]" :style="[props.style]">
         <thead>
         <tr>
-            <th id="parent" v-for="head in props.parentHead" :key="head.key" :colspan="head.col" :rowspan="head.row"
-                :class="{'left-align': head.key === 'produk'}">
+            <th id="parent" v-for="head in props.parentHead" :key="head.key" :colspan="head.col" :rowspan="head.row" :class="{'left-align': head.key === 'produk'}">
                 {{ head.label }}
-                <Tooltip class="gtooltip" v-if="head.tooltip.show"
-                         color="white" v-b-tooltip.hover.bottom="{ title: head.tooltip.title, customClass: 'custom-tooltip' }" />
+                <Tooltip class="gtooltip" v-if="head.tooltip.show" color="white" v-b-tooltip.hover.bottom="{ title: head.tooltip.title, customClass: 'custom-tooltip' }" />
             </th>
         </tr>
         <tr>
             <th id="child" v-for="head in props.childHead" :key="head.key">
                 {{ head.label }}
-                <Tooltip class="gtooltip" v-if="head.tooltip.show"
-                         color="white" v-b-tooltip.hover.bottom="{ title: head.tooltip.title, customClass: 'custom-tooltip' }" />
+                <Tooltip class="gtooltip" v-if="head.tooltip.show" color="white" v-b-tooltip.hover.bottom="{ title: head.tooltip.title, customClass: 'custom-tooltip' }" />
             </th>
         </tr>
         </thead>
@@ -134,18 +131,23 @@ const getIndicatorValue = (value) => {
     margin-top: -5px;
     width: 20px;
     height: 20px;
+    opacity: 1 ;
 }
 
 ::v-deep .bs-tooltip-bottom .tooltip-arrow::before {
-    border-bottom-color: white !important;
+    border-bottom-color: white ;
 }
 
 ::v-deep .custom-tooltip .tooltip-inner {
-    background-color: white !important;
-    color: black !important;
-    border: 1px solid #ced4da !important;
-    width: 356px;
-    font-size: 12px;
+    background-color: white ;
+    color: var(--g-kit-black-60) ;
+    border: 1px solid #ced4da ;
+    max-width: 360px;
+    min-width: 200px;
+    width: fit-content;
+    font-size: var(--g-kit-font-size-sigma);
+    line-height: var(--g-kit-line-height-sigma);
+    font-weight: var(--g-kit-font-weight-normal);
     text-align: left;
 }
 

@@ -45,6 +45,18 @@ const props = defineProps({
   placeholder: {
     type: String,
     default: 'Pilih rentang tanggal'
+  },
+  firstLabel: {
+    type: String,
+    default: 'Dari'
+  },
+  secondLabel: {
+    type: String,
+    default: 'Hingga'
+  },
+  separator: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -172,6 +184,9 @@ const handleShown = (value) => {
           class="mt-2"
           @click.stop
           :disabled="dateRangeDisabled"
+          :firstLabel="props.firstLabel"
+          :secondLabel="props.secondLabel"
+          :separator="props.separator"
         />
       </div>
       <BOffcanvas
@@ -226,6 +241,9 @@ const handleShown = (value) => {
           class="mt-2"
           @click.stop
           :disabled="dateRangeDisabled"
+          :firstLabel="props.firstLabel"
+          :secondLabel="props.secondLabel"
+          :separator="props.separator"
         />
       </BOffcanvas>
     </Dropdown>

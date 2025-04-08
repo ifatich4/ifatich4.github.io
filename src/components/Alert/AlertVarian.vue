@@ -36,19 +36,3 @@
     },
   };
 </script>
-
-<style scoped lang="scss">
-  @media only screen and (max-width: 425px) {
-    .alert {
-      font-size: var(--g-kit-font-size-omicron);
-      line-height: var(--g-kit-line-height-omicron);
-      font-weight: var(--g-kit-font-weight-normal);
-
-      &.variant.alert-info {
-        font-size: var(--g-kit-font-size-omicron);
-        line-height: var(--g-kit-line-height-omicron);
-        font-weight: var(--g-kit-font-weight-normal);
-      }
-    }
-  }
-</style>

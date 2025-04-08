@@ -25,18 +25,12 @@
         </div>
       </div>
 
-      <div v-if="showContent" class="content-time card">
-        <div
-          class="card-header d-flex justify-content-between align-items-center"
-        >
+      <div v-if="showContent" class="content-time card w-360">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span><b>{{ 'Pilih '+ title || 'Pilih Tanggal' }}</b></span>
+          
           <button class="btn p-0" @click="showContent = !showContent">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"  xmlns="http://www.w3.org/2000/svg" >
               <path
                 fill-rule="evenodd"
                 clip-rule="evenodd"
@@ -51,7 +45,7 @@
           @activeTime="handleActiveTime"
         />
 
-        <div class="p-3">
+        <div class="px-3 pb-3">
           <Button
             class="w-100"
             type="primary"
@@ -167,5 +161,22 @@ export default {
   z-index: 999;
   background-color: white;
   margin: 0 auto;
+}
+
+.w-360 {
+  width: 360px;
+  border-radius: .75rem;
+}
+
+b{
+  font-size: var(--g-kit-font-size-omicron);
+  line-height: var(--g-kit-line-height-omicron);
+  font-weight: var(--g-kit-font-weight-bold);
+}
+
+.card-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--g-kit-black-20);
+  background-color: white;
 }
 </style>

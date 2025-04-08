@@ -1,6 +1,6 @@
 <template>
   <div :class="['group-input calendar-input', addClass]">
-    <div class="desktop">
+    <div class="desktop" :class="{ 'top-modal': datePosition === 'top' }">
       <label :for="$attrs.id" class="form-label">
         {{ title || 'Tanggal Lahir' }}
       </label>
@@ -69,25 +69,21 @@
                 />
               </button>
             </div>
-            <table>
-              <thead>
-                <tr>
-                  <th v-for="day in days" :key="day">{{ day }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(week, index) in calendar" :key="index">
-                  <td
-                    v-for="day in week"
-                    :key="day.date"
-                    :class="{ active: isSelectedDate(day.date) }"
-                    @click="selectDate(day)"
-                  >
-                    {{ day.date ? day.date.getDate() : '' }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="calendar-header d-flex">
+              <div v-for="day in days" :key="day" class="calendar-day">{{ day }}</div>
+            </div>
+            <div class="calendar-body">
+              <div v-for="(week, index) in calendar" :key="index" class="calendar-week d-flex">
+                <div
+                  v-for="day in week"
+                  :key="day.date"
+                  :class="{ 'calendar-date': true, active: isSelectedDate(day.date), disabled: !day.date || (disableFutureDates && isFutureDate(day.date)) || isOutOfRange(day.date) || day.isPrevMonth || day.isNextMonth, 'future-date': disableFutureDates && isFutureDate(day.date), 'isPrevMonth': day.isPrevMonth, 'isNextMonth': day.isNextMonth }"
+                  @click="selectDate(day)"
+                >
+                  {{ day.date ? day.date.getDate() : '' }}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -164,25 +160,21 @@
                   />
                 </button>
               </div>
-              <table>
-                <thead>
-                  <tr>
-                    <th v-for="day in days" :key="day">{{ day }}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(week, index) in calendar" :key="index">
-                    <td
-                      v-for="day in week"
-                      :key="day.date"
-                      :class="{ active: isSelectedDate(day.date) }"
-                      @click="selectDate(day)"
-                    >
-                      {{ day.date ? day.date.getDate() : '' }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="calendar-header d-flex">
+                <div v-for="day in days" :key="day" class="calendar-day">{{ day }}</div>
+              </div>
+              <div class="calendar-body">
+                <div v-for="(week, index) in calendar" :key="index" class="calendar-week d-flex">
+                  <div
+                    v-for="day in week"
+                    :key="day.date"
+                    :class="{ 'calendar-date': true, active: isSelectedDate(day.date), disabled: !day.date || (disableFutureDates && isFutureDate(day.date)) || isOutOfRange(day.date) || day.isPrevMonth || day.isNextMonth, 'future-date': disableFutureDates && isFutureDate(day.date), 'isPrevMonth': day.isPrevMonth, 'isNextMonth': day.isNextMonth }"
+                    @click="selectDate(day)"
+                  >
+                    {{ day.date ? day.date.getDate() : '' }}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -212,12 +204,15 @@
 
 <script>
 import { BOffcanvas } from 'bootstrap-vue-next'
+import Dropdown from '../Dropdown/InputDropdown.vue'
+
 /* eslint-disable */
 export default {
   name: 'DatePicker',
   inheritAttrs: false,
   components: {
-    BOffcanvas
+    BOffcanvas,
+    Dropdown
   },
   props: {
     title: {
@@ -247,6 +242,38 @@ export default {
     },
     addClass: {
       type: String
+    },
+    disableFutureDates: {
+      type: Boolean,
+      default: false
+    },
+    maxDaysFromToday: {
+      type: Number,
+      default: null
+    },
+    minDaysFromToday: {
+      type: Number,
+      default: null
+    },
+    maxDate: {
+      type: String,
+      default: null
+    },
+    minDate: {
+      type: String,
+      default: null
+    },
+    datePosition: {
+      type: String,
+      default: 'bottom'
+    },
+    /**
+     * @value date | short
+     * @default date
+     */
+    formatType: {
+      type: String,
+      default: 'date'
     }
   },
   emits: ['update:modelValue', 'update:selectedYear', 'buttomSheetShown'],
@@ -295,6 +322,7 @@ export default {
       const lastDayOfMonth = new Date(this.currentYear, this.currentMonth, 0);
       const firstDayOfWeek = firstDayOfMonth.getDay();
       const lastDateOfMonth = lastDayOfMonth.getDate();
+      const lastDayOfWeek = lastDayOfMonth.getDay();
 
       let dayCount = 1;
       const weeks = [];
@@ -304,9 +332,25 @@ export default {
         let hasDate = false;
         for (let j = 0; j < 7; j++) {
           if ((i === 0 && j < firstDayOfWeek) || dayCount > lastDateOfMonth) {
-            week.push({
-              date: null,
-            });
+            if (i === 0 && j < firstDayOfWeek) {
+              const prevMonthDate = new Date(this.currentYear, this.currentMonth - 1, 0);
+              prevMonthDate.setDate(prevMonthDate.getDate() - (firstDayOfWeek - j - 1));
+              week.push({
+                date: prevMonthDate,
+                isPrevMonth: true,
+              });
+            } else if (dayCount > lastDateOfMonth) {
+              const nextMonthDate = new Date(this.currentYear, this.currentMonth, dayCount - lastDateOfMonth);
+              week.push({
+                date: nextMonthDate,
+                isNextMonth: true,
+              });
+              dayCount++;
+            } else {
+              week.push({
+                date: null,
+              });
+            }
           } else {
             const date = new Date(
               this.currentYear,
@@ -348,7 +392,27 @@ export default {
   },
   methods: {
     toggleYearMenu() {
-      this.showYearMenu = !this.showYearMenu
+      this.showYearMenu = !this.showYearMenu;
+
+      this.$nextTick(() => {
+        if (this.showYearMenu) {
+          this.scrollToSelectedYear();
+        }
+      });
+    },
+    scrollToSelectedYear() {
+      const yearMenu = this.$refs.yearMenu;
+      const selectedYear = this.currentYear;
+
+      if (yearMenu) {
+        const selectedYearElement = yearMenu.querySelector(`[data-year="${selectedYear}"]`);
+        if (selectedYearElement) {
+          const selectedYearOffsetTop = selectedYearElement.offsetTop;
+          const menuHeight = yearMenu.clientHeight;
+          const selectedYearHeight = selectedYearElement.clientHeight;
+          yearMenu.scrollTop = selectedYearOffsetTop - menuHeight / 2 + selectedYearHeight / 2;
+        }
+      }
     },
     toggleOffCanvas() {
       this.showDatePickerOffcanvas = !this.showDatePickerOffcanvas
@@ -358,13 +422,15 @@ export default {
       } else {
         this.showCalendar = false
       }
+      this.resetMonthYear()
     },
     showDatePicker() {
       this.showYearMenu = false
       this.showCalendar = !this.showCalendar
+      this.resetMonthYear()
     },
     selectDate(day) {
-      if (day.date) {
+      if (day.date && (!this.disableFutureDates || !this.isFutureDate(day.date)) && !this.isOutOfRange(day.date) && !day.isPrevMonth && !day.isNextMonth) {
         const newSelectedDate = new Date(day.date)
         newSelectedDate.setDate(newSelectedDate.getDate() + 0)
 
@@ -388,8 +454,15 @@ export default {
       if (value && value !== 'null') {
         const [year, month, day] = value.split('-')
         const newDay = String(Number(day)).padStart(2, '0')
-        const newMonth = String(Number(month)).padStart(2, '0')
-        formatted = `${newDay}/${newMonth}/${year}`
+
+        if (this.formatType === 'short') {
+          const shortMonth = this.months[Number(month) - 1].substring(0, 3)
+          
+          formatted = `${newDay} ${shortMonth} ${year}`
+        } else {
+          const newMonth = String(Number(month)).padStart(2, '0')
+          formatted = `${newDay}/${newMonth}/${year}`
+        }
       }
       return formatted
     },
@@ -430,28 +503,85 @@ export default {
         selected.getFullYear() === date.getFullYear()
       );
     },
-    scrollToSelectedYear() {
-      const yearMenu = this.years
+    isFutureDate(date) {
+      if (!date) return false;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return date > today;
+    },
+    isOutOfRange(date) {
+      if (!date) return false;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
 
-      if (yearMenu) {
-        const selectedYearElement = yearMenu.children
-        if (selectedYearElement) {
-          const selectedYearOffsetTop = selectedYearElement.offsetTop
-          const menuHeight = yearMenu.clientHeight
-          const selectedYearHeight = selectedYearElement.clientHeight
-          yearMenu.scrollTop =
-            selectedYearOffsetTop - menuHeight / 2 + selectedYearHeight / 2
-        }
+      if (this.maxDaysFromToday !== null) {
+        const maxDate = new Date(today);
+        maxDate.setDate(today.getDate() + this.maxDaysFromToday);
+        if (date > maxDate) return true;
       }
+
+      if (this.minDaysFromToday !== null) {
+        const minDate = new Date(today);
+        minDate.setDate(today.getDate() + this.minDaysFromToday);
+        if (date < minDate) return true;
+      }
+
+      if (this.maxDate) {
+        const maxDate = new Date(this.maxDate);
+        maxDate.setHours(0, 0, 0, 0);
+        if (date > maxDate) return true;
+      }
+
+      if (this.minDate) {
+        const minDate = new Date(this.minDate);
+        minDate.setHours(0, 0, 0, 0);
+        if (date < minDate) return true;
+      }
+
+      return false;
     },
     handleOffcanvasToggle(value) {
       this.$emit('buttomSheetShown', value)
     },
+    adjustDatePickerPosition() {
+      this.$nextTick(() => {
+        const datePicker = this.$refs.calendar;
+        const trigger = this.$refs.trigger;
+        if (datePicker && trigger) {
+          const triggerRect = trigger.getBoundingClientRect();
+          const datePickerRect = datePicker.getBoundingClientRect();
+          const viewportHeight = window.innerHeight;
+
+          if (triggerRect.bottom + datePickerRect.height > viewportHeight) {
+            datePicker.style.top = `${triggerRect.top - datePickerRect.height}px`;
+            datePicker.style.bottom = 'auto';
+            datePicker.classList.add('above');
+            datePicker.classList.remove('below');
+          } else {
+            datePicker.style.top = `${triggerRect.bottom}px`;
+            datePicker.style.bottom = 'auto';
+            datePicker.classList.add('below');
+            datePicker.classList.remove('above');
+          }
+        }
+      });
+    },
+    resetMonthYear() {
+      if (!this.modelValue) {
+        this.currentMonth = new Date().getMonth() + 1
+        this.currentYear = new Date().getFullYear()
+      } else {
+        this.currentMonth = new Date(this.modelValue).getMonth() + 1
+        this.currentYear = new Date(this.modelValue).getFullYear()
+      }
+    },
   },
   mounted() {
     this.$nextTick(() => {
-      this.scrollToSelectedYear()
-    })
+      if (this.showYearMenu) {
+        this.scrollToSelectedYear();
+      }
+    });
   }
 }
 </script>
@@ -474,35 +604,33 @@ export default {
   }
   
   .content-date {
-    position: relative;
+    position: absolute;
   }
   
   .form-control {
     cursor: pointer;
   }
   
-  .content-date {
-    position: relative;
-  }
-  
   .card {
-    position: absolute;
+    position: relative;
     z-index: 999;
     background-color: white;
     width: 360px;
     margin: 0 auto;
+    height: fit-content;
+    border-radius: .875rem;
   }
   
-  .card-header {
+  .card-header{
     padding: 1rem;
     background-color: white;
     border-bottom: 1px solid var(--g-kit-black-20);
+    &:first-child {
+      border-top-left-radius: .875rem;
+      border-top-right-radius: .875rem;
+    }
   }
-  
-  .card-body .d-flex {
-    border-bottom: 1px solid var(--g-kit-black-20);
-  }
-  
+
   .card b {
     font-size: var(--g-kit-font-size-lambda);
     line-height: var(--g-kit-line-height-lambda);
@@ -514,57 +642,58 @@ export default {
     justify-content: space-between;
   }
   
-  .datepicker table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .datepicker th,
-  .datepicker td {
-    text-align: center;
-    padding: unset;
-    font-size: var(--g-kit-font-size-lambda);
-    line-height: var(--g-kit-line-height-lambda);
-    font-weight: var(--g-kit-font-weight-normal);
-    color: var(--g-kit-black-80);
-    cursor: pointer;
-
-    &.active {
-      background-color: var(--g-kit-lime-50);
-      color: white;
+  .datepicker {
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      padding: .5rem 1rem;
+      border-top: 1px solid var(--g-kit-black-20);
+      border-bottom: 1px solid var(--g-kit-black-20);
+      
+    }
+    .calendar-day {
+      flex: 1;
+      text-align: center;
+      font-weight: bold;
+    }
+    .calendar-body {
+      padding: 1rem;
+      display: flex;
+      gap: .5rem;
+      flex-direction: column;
+    }
+    .calendar-week {
+      display: flex;
+      gap: .5rem;
+    }
+    .calendar-date {
+      flex: 1;
+      text-align: center;
+      padding: 0.5rem;
+      cursor: pointer;
+      aspect-ratio: 1 / 1; /* Ensures a 1:1 ratio */
       border-radius: 50%;
+      place-content: center;
+      &:hover {
+        background-color: var(--g-kit-lime-50);
+        color: white;
+      }
+      &.active {
+        background-color: var(--g-kit-lime-50);
+        color: white;
+        border-radius: 50%;
+      }
+      &.disabled {
+        pointer-events: none;
+        color: var(--g-kit-black-20);
+      }
     }
   }
-
-  .datepicker td {
-    width: calc(100% / 7);
-    height: 51.42px; /* Same as the width */
-  }
-
-  .datepicker td > * {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .datepicker th {
-    background-color: white;
-    border-bottom: 1px solid var(--g-kit-black-20);
-    font-size: var(--g-kit-font-size-lambda);
-    line-height: var(--g-kit-line-height-lambda);
-    font-weight: var(--g-kit-font-weight-normal);
-    color: var(--g-kit-black-60);
-  }
-  
-  .datepicker td:hover {
-    background-color: #e6e6e6;
-  }
-  
   .datepicker button {
     background-color: transparent;
     border: none;
     font-size: var(--g-kit-font-size-lambda);
-    line-height: var(--g-kit-line-height-lambda);
+    line-height: var (--g-kit-line-height-lambda);
     font-weight: var(--g-kit-font-weight-bold);
   }
   
@@ -584,7 +713,7 @@ export default {
   
   .datepicker span {
     font-size: var(--g-kit-font-size-lambda);
-    line-height: var(--g-kit-line-height-lambda);
+    line-height: var (--g-kit-line-height-lambda);
     font-weight: var(--g-kit-font-weight-bold);
     color: var(--g-kit-black-80);
     cursor: pointer;
@@ -613,7 +742,7 @@ export default {
     background-color: white;
     top: 120px;
     width: 360px;
-    height: 320px;
+    height: -webkit-fill-available;
     overflow: scroll;
     scrollbar-width: none;
     border-bottom-left-radius: 6px;
@@ -625,17 +754,14 @@ export default {
   
   .year-menu {
     display: flex;
+    gap: 1rem;
+    padding: 1rem;
     flex-wrap: wrap;
     justify-content: center;
   }
   
   .year-menu button {
-    margin-top: 18px;
-    margin-bottom: 18px;
-    margin-right: 14px;
-    margin-left: 14px;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding: .75rem 1.5rem;
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -652,22 +778,46 @@ export default {
   .year button.active {
     background-color: var(--g-kit-lime-50);
     color: white;
-    margin: 10px 14px;
-    border-radius: 12px;
+    border-radius: 8px;
+  }
+
+  .offcanvas.offcanvas-kit {
+    .offcanvas-body {
+      padding: 0 !important;
+    }
   }
   
   .offcanvas img {
     margin-bottom: unset;
   }
+
+  .datepicker .calendar-date.future-date {
+    color: var(--g-kit-black-40);
+  }
+  .datepicker .calendar-date.isPrevMonth,
+  .datepicker .calendar-date.isNextMonth,
+  .datepicker .calendar-date.disabled {
+    color: var(--g-kit-black-40);
+    pointer-events: none;
+  }
+
+  .desktop {
+    &.top-modal {
+      position: relative;
+      
+      .content-date {
+        top: 0;
+        transform: translateY(-95%);
+        z-index: 1;
+      }
+    }
+  }
   
   @media only screen and (max-width: 600px) {
     .year-menu button {
-      margin-top: 17px;
-      margin-bottom: 17px;
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-      font-size: var(--g-kit-font-size-omicron);
-      line-height: var(--g-kit-line-height-omicron);
+      padding: .75rem 1.5rem;
+      font-size: var(--g-kit-font-size-lambda);
+      line-height: var(--g-kit-line-height-lambda);
       font-weight: var(--g-kit-font-weight-normal);
     }
   
@@ -678,26 +828,21 @@ export default {
     }
   
     .year {
-      top: 64px;
+      top: 60px;
+      height: -webkit-fill-available;
+      border-bottom: 0px;
     }
   
     .year-menu {
-      margin-bottom: unset;
+      margin-bottom: 0;
     }
   
     .datepicker {
       max-width: 100%;
     }
-  
-    .datepicker th,
-    .datepicker td {
-      text-align: center;
-      padding: 0.5rem;
-    }
-    .datepicker td {
-      width: calc(100% / 7);
-      height: calc(100vw / 7); /* Same as the width */
+
+    .content-date {
+      position: relative;
     }
   }
-  </style>
-  
+</style>

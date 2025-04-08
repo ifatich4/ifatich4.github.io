@@ -1,12 +1,11 @@
 import AlertVarian from "../components/Alert/AlertVarian.vue";
-import { ref } from 'vue'; // T
+import { ref } from 'vue';
 
 
  export default {
     title: 'Components/Alert',
     component: AlertVarian,
     tags: ['autodocs'],
-    // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
     argTypes: {
       label: {
         control: "text"
@@ -16,6 +15,9 @@ import { ref } from 'vue'; // T
         options: [
           "success", "info", "danger", "warning",
         ],
+      },
+      className: {
+        control: "text"
       },
       variant: {
         control: "text"

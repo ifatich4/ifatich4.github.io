@@ -16,3 +16,18 @@ const props = defineProps({
     <img v-if="props.color === 'black'" src="../../assets/icon/tooltip/black.svg" alt="Info Icon"/>
     <img v-else src="../../assets/icon/tooltip/white.svg" alt="Info Icon"/>
 </template>
+
+
+
+<style lang="scss">
+    .tooltip.show {
+        opacity: 1 !important;
+        font-size: var(--g-kit-font-size-sigma);
+        line-height: var(--g-kit-line-height-sigma);
+        font-weight: var(--g-kit-font-weight-regular);
+
+        .tooltip-inner {
+            padding: 1rem;
+        }
+    }
+</style>

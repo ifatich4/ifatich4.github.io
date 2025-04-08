@@ -41,9 +41,9 @@
       default: true
     },
     color: {
-			type: String,
-			default: 'default'
-		},
+      type: String,
+      default: 'default'
+    },
     error: String,
     label: String,
     items: Array,
@@ -53,18 +53,36 @@
     placeholder: String,
     class: String,
     errorFetch: String,
-    executeFetch: Function
+    executeFetch: Function,
+    required: {
+      type: Boolean,
+      default: false
+    },
+    /**
+     * @value start | center | end
+     */
+    alignment: {
+      type: String
+    }
   })
 
-  const emit = defineEmits(['update:modelValue', 'buttomSheetShown'])
+  const emit = defineEmits(['update:modelValue', 'buttomSheetShown', "close"])
 
   const search = ref('')
   const shown = ref(false)
   const shownOffcanvas = ref(false)
   const dropdownRef = ref(null)
+  const isTouched = ref(false)
 
   const handleShown = () => {
-    if (!props.useBottomSheet) shown.value = !shown.value
+    if (!props.useBottomSheet) {
+      if (shown.value) {
+        emit('close')
+      }
+
+      shown.value = !shown.value
+      isTouched.value = true
+    }
     if (props.useBottomSheet) shownOffcanvas.value = true
   }
 
@@ -95,6 +113,10 @@
     }
   })
 
+  const showError = computed(() => {
+    return isTouched.value && props.required && !selectedValue.value
+  })
+
   const handleOptionClick = (option) => {
     selectedValue.value = option[props.itemValue]
     if (props.useBottomSheet) shownOffcanvas.value = false
@@ -121,13 +143,20 @@
       <label v-if="props.label" :for="$attrs.id" class="form-label overflow-hidden">
         {{ props.label }}
       </label>
-      <img v-if="props.errorFetch" @click="props.executeFetch" class="icon-refresh"
-        src="../../assets/icon/refresh.svg" />
+      <img v-if="props.errorFetch" @click="props.executeFetch" class="icon-refresh" src="../../assets/icon/refresh.svg" />
     </div>
-    <BDropdown ref="dropdownRef" :value="selectedValue"
-      :toggle-class="['w-100 gkit-dd d-flex justify-content-between align-items-center', `type-${color}`]"
-      class="prevent-zero gkit-dd" v-bind="$attrs" :disabled="disabled || loading" @toggle="handleShown"
-      :menuClass="{'hide-dropdown-menu': props.useBottomSheet || props.showMenu === false}">
+    <BDropdown ref="dropdownRef" 
+      :value="selectedValue" 
+      :toggle-class="['w-100 gkit-dd d-flex justify-content-between align-items-center', `type-${color}`]" 
+      :class="['prevent-zero gkit-dd', { 'dd-error': showError }]" 
+      v-bind="$attrs" 
+      :disabled="disabled || loading" 
+      @toggle="handleShown" 
+      :menuClass="{'hide-dropdown-menu': props.useBottomSheet || props.showMenu === false}"
+      :start="props.alignment === 'start'"
+      :center="props.alignment === 'center'"
+      :end="props.alignment === 'end'"
+    >
       <template #button-content>
         <slot name="button-content">
           <p
@@ -140,6 +169,7 @@
             {{ selectedText || props.placeholder }}
           </p>
         </slot>
+        <slot name="icon-right">
           <span>
             <BSpinner v-if="loading" small />
             <img
@@ -151,6 +181,7 @@
               src="../../assets/icon/chevron_down.svg"
             />
           </span>
+        </slot>
       </template>
       <div v-if="!props.useBottomSheet">
         <slot></slot>
@@ -187,7 +218,7 @@
         </ul>
       </BOffcanvas>
     </BDropdown>
-    <div class="error-text mt-2" v-if="props.error">
+    <div class="error-text mt-2" v-if="showError">
       {{ props.error }}
     </div>
   </div>
@@ -228,8 +259,21 @@
     margin-left: 0.2rem;
     cursor: pointer;
   }
+  
+  .dd-error {
+    .gkit-dd {
+      border-color: var(--g-kit-black-20);
+      &:hover {
+        border-color: var(--g-kit-black-20);
+      }
+    }
+  }
 
   .gkit-dd {
+    &.w-100 {
+      padding-left: 11px;
+      padding-right: 12px;
+    }
     .dropdown-menu {
       &.show {
         max-height: 358px !important;
@@ -277,11 +321,11 @@
   }
 
   .gkit-dd:hover {
-    border-color: #00883e;
+    border-color: var(--g-kit-lime-50);
   }
 
   .error-text {
-    color: #ae1e22;
+    color: var(--g-kit-black-20);
     font-size: var(--g-kit-font-size-omega);
     line-height: var(--g-kit-line-height-omega);
     font-weight: var(--g-kit-font-weight-normal);
@@ -316,4 +360,4 @@
       background-color: var(--g-kit-orange-10) !important;
     }
   }
-</style>
+</style>s

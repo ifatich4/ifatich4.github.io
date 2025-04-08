@@ -17,6 +17,10 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  size: {
+    type: String,
+    default: 'md'
+  },
   showCloseButton: {
     type: Boolean,
     default: true
@@ -27,11 +31,9 @@ const model = defineModel()
 </script>
 
 <template>
-    <BModal v-model="model" :id="$attrs.id" :centered="props.centered" :title="props.title" :noCloseOnBackdrop="persistent" :noCloseOnEsc="persistent">
+    <BModal :size="props.size" v-model="model" :id="$attrs.id" :centered="props.centered" :title="props.title" :noCloseOnBackdrop="persistent" :noCloseOnEsc="persistent">
       <template #modal-header="{ close }">
-        <BButton id="closeBoy" class="btn btn-outline-danger" @click="close()"
-          >Close Modal</BButton>
-        >
+        <BButton id="closeBoy" class="btn btn-outline-danger" @click="close()">Close Modal</BButton>
       </template>
       <template v-slot:header="{ close }" v-if="!$slots.header">
         <slot name="header">

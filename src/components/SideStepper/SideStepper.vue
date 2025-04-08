@@ -264,7 +264,8 @@
 
                 span {
                     font-size: 14px;
-                    border: 1px solid var(--g-kit-black-20);
+                    border: 1px solid var(--g-kit-black-50);
+                    background-color: var(--g-kit-black-50);
                     border-radius: 50%;
                     margin-right: 8px;
                     width: 1.5rem;

@@ -20,7 +20,7 @@ import SideStepper from "../components/SideStepper/SideStepper.vue";
         { id: 3, label: 'Step 3', completed: false },
         { id: 4, label: 'Step 4', completed: false }
       ],
-      variant : "dua",
+      variant : "satu",
       accordions: [{
         header: 'Accordion 1',
         labels: [{

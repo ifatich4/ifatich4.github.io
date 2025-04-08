@@ -1,5 +1,4 @@
 <template>
-
     <div id="scroll-container" class="scroll-container d-flex">
       <div class="wrap-container" ref="wrapScrollHours">
         <ul id="hours" ref="hoursScroll">
@@ -238,7 +237,7 @@
 
   .wrap-container {
     position: relative;
-    max-height: 280px;
+    max-height: 260px;
     width: 125px;
     overflow-y: hidden;
     overflow: auto;
@@ -289,7 +288,7 @@
   }
 
   .wrap-container ul li.active .item {
-    transform: scale(1.9);
+    transform: scale(1.2);
   }
 
   .wrap-container ul li .item {

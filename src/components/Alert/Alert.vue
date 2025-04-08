@@ -12,12 +12,9 @@
             <BProgress variant="success" :max="dismissCountDown" :value="countdown" height="4px" />
         </BAlert>
 
-        <Button @click="dismissCountDown = true" type="primary" size="md" class="m-1"
-            label="Show alert with count-down timer" />
+        <Button @click="dismissCountDown = true" type="primary" size="md" class="m-1" label="Show alert with count-down timer" />
 
-        <Button @click="showDismissibleAlert = true" type="primary" size="md" :label="`Show dismissible alert (${
-          showDismissibleAlert ? 'visible' : 'hidden'
-        })`" />
+        <Button @click="showDismissibleAlert = true" type="primary" size="md" :label="`Show dismissible alert (${  showDismissibleAlert ? 'visible' : 'hidden' })`" />
     </div>
 </template>
 

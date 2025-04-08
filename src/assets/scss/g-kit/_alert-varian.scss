@@ -48,8 +48,8 @@
 		background-position: right;
 		background-size: contain;
 
-		font-size: var(--g-kit-font-size-omicron);
-		line-height: var(--g-kit-line-height-omicron);
+		font-size: var(--g-kit-font-size-omega);
+		line-height: var(--g-kit-line-height-omega);
 		font-weight: var(--g-kit-font-weight-normal);
 	
 		.alert {
@@ -57,6 +57,10 @@
 			background-repeat: no-repeat;
 			background-position: right;
 			background-size: contain;
+
+			font-size: var(--g-kit-font-size-omega);
+			line-height: var(--g-kit-line-height-omega);
+			font-weight: var(--g-kit-font-weight-normal);
 		}
 	
 		&.alert-success,

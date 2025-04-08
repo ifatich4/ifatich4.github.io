@@ -15,7 +15,7 @@
 
 <script>
     export default {
-        name: "Aspect",
+        name: "aspect-ratio",
         data() {
             return {
                 aspect: '16:9',

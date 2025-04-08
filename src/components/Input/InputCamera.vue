@@ -34,10 +34,14 @@ const props = defineProps({
   useBottomSheet: {
     type: Boolean,
     default: false
+  },
+  general: {
+    type: Boolean,
   }
 })
 const emit = defineEmits(['fileDropped', 'fileRemoved', 'errorPermission'])
 const fileSrc = defineModel()
+const general = false
 const isMobileView = computed(() => props.useBottomSheet)
 
 const screenSize = reactive({
@@ -277,7 +281,7 @@ const compressImg = (maxSize, dataUrl, quality = 0.7) =>
 
 <template>
   <section>
-    <div class="custom-file-upload">
+    <div class="custom-file-upload" :type="type">
       <div
         v-if="!fileSrc"
         @click="fileSourceChooserDialogClick"
@@ -397,8 +401,8 @@ const compressImg = (maxSize, dataUrl, quality = 0.7) =>
           <video class="video" ref="video" autoplay></video>
         </div>
         <div class="slot-container">
-          <div id="cameraGuidance" :class="[props.imagePlaceholder === 'idcard' ? 'card-ktp' : 'card-general', !screenSize.potrait ? 'landscape' : '']"></div>
-          <div class="helper-text" :class="!screenSize.potrait ? 'landscape' : ''">
+            <div id="cameraGuidance" v-if="!props.general" :class="[props.imagePlaceholder === 'idcard' ? 'card-ktp' : 'card-general', !screenSize.potrait ? 'landscape' : '']"></div>
+          <div class="helper-text" v-if="!props.general" :class="!screenSize.potrait ? 'landscape' : ''">
             <div class="title">{{ helperText.title }}</div>
             <div class="subtitle">{{ helperText.message }}</div>
           </div>
@@ -495,12 +499,12 @@ const compressImg = (maxSize, dataUrl, quality = 0.7) =>
       centered
       hide-footer
     >
-      <template v-if="!snappedCameraPict">
+      <template v-if="!snappedCameraPict" class="modal-camera">
         <div class="camera-container">
           <video class="video" ref="video" autoplay></video>
         </div>
         <div class="slot-container">
-          <div id="cameraGuidance" :class="props.imagePlaceholder === 'idcard' ? 'card-ktp' : 'card-general'"></div>
+          <div id="cameraGuidance" v-if="!props.general" :class="props.imagePlaceholder === 'idcard' ? 'card-ktp' : 'card-general'"></div>
           <img
             @click="handleCameraSnap"
             src="../../assets/icon/shutter-button.svg"
@@ -536,6 +540,14 @@ const compressImg = (maxSize, dataUrl, quality = 0.7) =>
 </template>
 
 <style lang="scss">
+.modal.inputCamera .modal-body {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+.modal.inputCameraMobile .modal-body {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
 .inputCamera {
   .video {
     width: 100%;
@@ -613,13 +625,13 @@ const compressImg = (maxSize, dataUrl, quality = 0.7) =>
   }
 
   .card-ktp {
-    width: 320px;
-    height: 215px;
+    width: 318px;
+    height: 200px;
     background-color: transparent;
     border-radius: 2px;
     position: absolute;
     left: 18%;
-    top: 15%;
+    top: 17%;
     opacity: 0.7;
     box-shadow: 0px 25px 0px 74px rgb(1, 1, 1);
   }

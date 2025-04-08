@@ -21,7 +21,7 @@
                 />
 
                 <div class="input-group-icon">
-                    <img :class="[showCalendar ? 'dropdown-open' : 'dropdown-close','icon-dropdown']" src="../../assets/icon/chevron_down.svg" alt=""/>
+                    <img :class="[showCalendar ? 'dropdown-open' : 'dropdown-close','icon-dropdown']" src="../../assets/icon/icon-system/icon-calendar.svg" alt=""/>
                 </div>
             </div>
 

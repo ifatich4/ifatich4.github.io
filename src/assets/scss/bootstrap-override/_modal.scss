@@ -1,20 +1,28 @@
 .modal {
     --bs-modal-border-radius: 0.8rem;
     --bs-modal-box-shadow: none;
+
+    .modal-content {
+        border-radius: var(--bs-modal-border-radius);
+    }
+
+    &.modal-sm {
+        --bs-modal-width: 360px;
+    }
+
+    &.modal-md {
+        --bs-modal-width: 564px;
+    }
+
+    &.modal-lg {
+        --bs-modal-width: 1200px;
+    }
  
     .modal-footer {
         padding: 0px;
         border-top: none;
-        .row {
-            padding: var(--g-bs-modal-padding);
-            padding-top: .5rem;
-            gap: 16px;
+        .d-flex {
             margin: 0px;
-            justify-content: space-between;
-            .col-xl-6 {
-                max-width: 48%;
-                padding: 0px;
-            }
         }
         .sticky {
             display: flex;
@@ -69,10 +77,6 @@
     .modal-sm {
         --g-bs-modal-width: 360px;
     }
-
-    .col-xl-6 {
-        max-width: 100% !important;
-    }
 }
 
 .modal h4{
@@ -104,10 +108,7 @@
     line-height: var(--g-kit-line-height-omicron);
     font-weight: var(--g-kit-font-weight-normal);
     color: $text-secondary;
-    padding-top: 0px;
-
-    max-height: 500px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     overflow: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
 }
