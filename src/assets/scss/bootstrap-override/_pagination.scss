@@ -41,6 +41,8 @@
     border: var(--#{$prefix}pagination-border-width) solid var(--#{$prefix}pagination-border-color);
     @include transition($pagination-transition);
 
+    padding: unset !important;
+
     &:hover {
         z-index: 2;
         color: var(--#{$prefix}pagination-active-color);
@@ -63,12 +65,13 @@
         color: var(--#{$prefix}pagination-active-color);
         @include gradient-bg(var(--#{$prefix}pagination-active-bg));
         border-color: var(--#{$prefix}pagination-active-border-color);
+        border: none !important;
     }
 
     &.disabled,
     .disabled>& {
         color: var(--#{$prefix}pagination-disabled-color);
-        pointer-events: none;
+        pointer-events: none !important;
         background-color: var(--#{$prefix}pagination-disabled-bg);
         border-color: var(--#{$prefix}pagination-disabled-border-color);
     }
@@ -76,7 +79,7 @@
 
 .page-item {
     &:not(:first-child) .page-link {
-      margin-left: $pagination-margin-start;
+      margin: unset !important;
   
       @include border-end-radius(var(--pagination-border-radius));
       @include border-start-radius(var(--pagination-border-radius));

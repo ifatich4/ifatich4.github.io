@@ -45,7 +45,7 @@
 
     >thead {
         tr th {
-            padding: 18px 24px !important;
+            padding: 16px !important;
             font-size: var(--g-kit-font-size-sigma);
             line-height: var(--g-kit-line-height-sigma);
             font-weight: var(--g-kit-font-weight-bold);
@@ -120,7 +120,7 @@
             }
 
             td {
-                padding: 1rem;
+                padding: 1rem !important;
                 font-size: var(--g-kit-font-size-sigma);
                 line-height: var(--g-kit-line-height-sigma);
                 font-weight: var(--g-kit-font-weight-normal);

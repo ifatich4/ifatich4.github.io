@@ -12,8 +12,15 @@ export default {
     required: { control: "boolean" },
     classes: { control: "text" },
     modelValue: { control: "text" },
-    selectedYear: { control: "object" },
+    selectedYear: { control: "number" },
     addClass: { control: "text" },
+    maxDate: { control: "text" },
+    minDate: { control: "text" },
+    maxDaysFromToday: { control: "number" },
+    minDaysFromToday: { control: "number" },
+    error: { control: "text" },
+    datePosition: { control: "text" },
+    formatType: { control: "select", options: ["date", "short"] },
   },
   args: {
     title: "Tanggal Lahir",
@@ -21,7 +28,10 @@ export default {
     disabled: false,
     required: false,
     selectedYear: new Date().getFullYear(),
-    modelValue: "selectedDate"
+    maxDate: "2025-01-20",
+    minDate : "2025-12-01",
+    modelValue: "selectedDate",
+    formatType: "date",
   },
 };
 
@@ -35,7 +45,9 @@ export const DatePicker = {
     template: `
       <InputSmallDate 
         v-bind="args" 
-        v-model="selectesdDate"
+        v-model="selectedDate"
+        :maxDate="maxDate"
+        :minDate="minDate"
       />
     `,
   }),

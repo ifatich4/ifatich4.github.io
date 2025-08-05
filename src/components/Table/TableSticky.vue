@@ -154,10 +154,12 @@ const handleRowClick = (rowClick) => {
                 &:not(:last-child) {
                     border-right: 1px solid #eeeeef;
                     border-collapse: separate;
+                    vertical-align: middle;
                 }
             }
             &:last-child td {
                 border-bottom: 0px;
+                vertical-align: middle;
             }
         }
     }

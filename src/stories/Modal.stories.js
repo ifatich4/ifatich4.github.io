@@ -262,7 +262,7 @@ import Button from "../components/Button/Button.vue";
                   />
                 </template>
                 <template v-slot:footer>
-                  <div class="row w-100">
+                  <div class="row w-100 g-2 p-3 m-0">
                     <div class="col-xl-6 col-12">
                       <Button
                         type="secondary"

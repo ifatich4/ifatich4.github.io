@@ -2,29 +2,33 @@
   <div>
     <div :class="['date-range-picker', { 'with-separator': props.separator }]">
       <CalendarDropdown
-        :disabled="props.disabled"
+        :flexWidth="props.flexWidth"
+        :disabled="props.disabled || props.disabledStartDate"
         :title="props.firstLabel"
         v-model="startDate"
         :placeholder="props.firstPlaceholder"
         :min-date="props.minStartDate"
-        :max-date="endDate || props.maxStartDate"
+        :max-date="maxStartDate"
         :format-type="props.formatType"
         :alignment="props.firstAlignment"
         @buttom-sheet-shown="handleOffcanvasToggle"
         @close="emits('close:start')"
+        :no-slash="props.noSlash"
       />
       <div v-if="props.separator" class="form-label d-block" style="top: 40px; position: relative; height: min-content;">s.d</div>
       <CalendarDropdown
-        :disabled="props.disabled"
+        :flexWidth="props.flexWidth"
+        :disabled="props.disabled || props.disabledEndDate"
         :title="props.secondLabel"
         v-model="endDate"
         :placeholder="props.secondPlaceholder"
-        :min-date="startDate || props.minEndDate"
+        :min-date="minEndDate"
         :max-date="props.maxEndDate"
         :format-type="props.formatType"
         :alignment="props.secondAlignment"
         @buttom-sheet-shown="handleOffcanvasToggle"
         @close="emits('close:end')"
+        :no-slash="props.noSlash"
       />
     </div>
     <div v-if="props.errorMessage || errorValidation" class="error-text mt-2">
@@ -87,6 +91,10 @@ const props = defineProps({
   maxEndDate: {
     type: Date,
   },
+  flexWidth: {
+      type: Boolean,
+      default: false
+  },
   /**
    * @value date | short
    * @default date
@@ -109,6 +117,41 @@ const props = defineProps({
    */
   secondAlignment: {
     type: String
+  },
+  /**
+   * remove slash from in out of range date
+   */
+  noSlash: {
+    type: Boolean,
+    default: false
+  },
+  disabledStartDate: {
+    type: Boolean,
+    default: false
+  },
+  disabledEndDate: {
+    type: Boolean,
+    default: false
+  }
+})
+
+const minEndDate = computed(() => {
+  if (props.minEndDate && props.minEndDate > new Date(startDate.value)) {
+    return props.minEndDate
+  } else if (startDate.value) {
+    return new Date(startDate.value)
+  } else {
+    return null
+  }
+})
+
+const maxStartDate = computed(() => {
+  if (props.maxStartDate && props.maxStartDate < new Date(endDate.value)) {
+    return props.maxStartDate
+  } else if (endDate.value) {
+    return new Date(endDate.value)
+  } else {
+    return null
   }
 })
 
@@ -134,6 +177,7 @@ export default {
 }
 
 .error-text {
+  color: var(--g-kit-red-50);
   margin-bottom: 16px;
 }
 </style>

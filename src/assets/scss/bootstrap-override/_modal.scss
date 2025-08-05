@@ -1,6 +1,7 @@
 .modal {
     --bs-modal-border-radius: 0.8rem;
     --bs-modal-box-shadow: none;
+    --g-bs-modal-margin: 4rem;
 
     .modal-content {
         border-radius: var(--bs-modal-border-radius);
@@ -69,7 +70,7 @@
 
     .modal-header {
         border-bottom: none;
-        padding: 16px;
+        padding : 16px;
     }
 }
 
@@ -108,7 +109,7 @@
     line-height: var(--g-kit-line-height-omicron);
     font-weight: var(--g-kit-font-weight-normal);
     color: $text-secondary;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding-top: 16px;
+    padding-bottom: 16px;
     overflow: auto;
 }

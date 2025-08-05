@@ -1,6 +1,7 @@
 <script setup>
 	// Import necessary functions from Vue
 	import {
+		defineExpose,
 		defineOptions,
 		defineProps,
 		defineEmits,
@@ -20,6 +21,11 @@
 		let cleanNumber = number.replace(/\D/g, '')
 		return cleanNumber.replace(/(\d{4})(?=(\d))/g, '$1 ')
 	}
+
+    const toUpperCase = (text) => {
+        if (typeof text !== 'string') return ''
+        return text.toUpperCase()
+    }
 
 	// Define props for the component
 	const props = defineProps({
@@ -43,6 +49,10 @@
 			type: Boolean,
 			default: false
 		},
+		useAutoCaps: {
+			type: Boolean,
+			default: false
+		},
 		required: {
 			type: Boolean,
 			default: false
@@ -54,7 +64,11 @@
 		rupiah: {
 			type: String,
 			default: ''
-		}
+		},
+		general: {
+			type: Boolean,
+			default: false
+		},
 	})
 
 	// Define emits for the component
@@ -62,7 +76,12 @@
 
 	// Define reactive variables
 	const inputValue = ref(props.modelValue)
-	const displayValue = ref(props.type === 'number' ? formatNumber(props.modelValue) : props.modelValue)
+	// const displayValue = ref(props.type === 'number' ? formatNumber(props.modelValue) : props.modelValue)
+	const displayValue = ref(
+		props.type === 'number' && props.general
+		? (props.modelValue ? String(props.modelValue).replace(/[^0-9]/g, '') : '')
+		: props.type === 'number' ? formatNumber(props.modelValue) : props.modelValue
+	)
 	const localError = ref(false)
 	const isSearchActive = ref(false)
 
@@ -73,37 +92,70 @@
 			if (props.required) {
 				localError.value = newVal ?.trim() === ''
 			}
-			inputValue.value = newVal
-			displayValue.value = props.type === 'number' ? formatNumber(newVal) : newVal
+            const upperCasedValue = props.useAutoCaps ? toUpperCase(newVal) : newVal;
+
+			inputValue.value = upperCasedValue
+			
+			if (props.type === 'number' && props.general) {
+				displayValue.value = upperCasedValue?.replace(/[^0-9]/g, '') || ''
+			} else if (props.type === 'number') {
+				displayValue.value = formatNumber(newVal)
+			} else {
+				displayValue.value = upperCasedValue
+			}
 		}
 	)
 
 	// Handle input events
-	const handleInput = (event) => {
-		if (props.type === 'number') {
-			const rawValue = event.target.value.replace(/\s+/g, '')
-			localError.value = props.required && rawValue.trim() === ''
-			inputValue.value = rawValue
-			displayValue.value = formatNumber(rawValue)
+    const handleInput = (event) => {
+        const rawValue = event.target.value;
+		if (props.type === 'number' && props.general) {
+			const cleanedValue = rawValue.replace(/[^0-9]/g, '');
+			localError.value = props.required && cleanedValue.trim() === '';
+			inputValue.value = cleanedValue;
+			displayValue.value = cleanedValue;
 
-			emit('update:modelValue', rawValue)
+			emit('update:modelValue', cleanedValue);
 
-			// Restore cursor position
+			// Set value input agar tidak ada karakter non-angka yang lolos
+			event.target.value = cleanedValue;
+
 			setTimeout(() => {
-				const cursorPosition = event.target.selectionStart
-				const unformattedValue = event.target.value.replace(/\s+/g, '')
-				const formattedValue = formatNumber(unformattedValue)
-				let spacesBeforeCursor = formattedValue.slice(0, cursorPosition).split(' ').length - 1
-				let newCursorPosition = cursorPosition + spacesBeforeCursor
+				const cursorPosition = event.target.selectionStart;
+				event.target.setSelectionRange(cursorPosition, cursorPosition);
+			}, 0);
+		} else if (props.type === 'number') {
+            const cleanedValue = rawValue.replace(/\s+/g, '');
+            localError.value = props.required && cleanedValue.trim() === '';
+            inputValue.value = cleanedValue;
+            displayValue.value = formatNumber(cleanedValue);
 
-				event.target.setSelectionRange(newCursorPosition, newCursorPosition)
-			}, 0)
-		} else {
-			inputValue.value = event.target.value
-			displayValue.value = event.target.value
-			emit('update:modelValue', event.target.value)
-		}
-	}
+            emit('update:modelValue', cleanedValue);
+
+            // Restore cursor position
+            setTimeout(() => {
+                const cursorPosition = event.target.selectionStart;
+                const unformattedValue = event.target.value.replace(/\s+/g, '');
+                const formattedValue = formatNumber(unformattedValue);
+                let spacesBeforeCursor = formattedValue.slice(0, cursorPosition).split(' ').length - 1;
+                let newCursorPosition = cursorPosition + spacesBeforeCursor;
+
+                event.target.setSelectionRange(newCursorPosition, newCursorPosition);
+            }, 0);
+        } else {
+            const upperCasedValue = props.useAutoCaps ? toUpperCase(rawValue) : rawValue;
+            inputValue.value = upperCasedValue;
+            displayValue.value = upperCasedValue;
+
+            emit('update:modelValue', upperCasedValue);
+
+            // Restore cursor position for text input
+            setTimeout(() => {
+                const cursorPosition = event.target.selectionStart;
+                event.target.setSelectionRange(cursorPosition, cursorPosition);
+            }, 0);
+        }
+    };
 
 	// Handle focus events
 	const handleFocus = () => {
@@ -121,6 +173,11 @@
 		displayValue.value = ''
 		emit('update:modelValue', '')
 	}
+	defineExpose({
+		focus: () => inputRef.value?.focus(),
+	});
+
+	const inputRef = ref(null);
 </script>
 
 <template>
@@ -135,10 +192,21 @@
 					<img src="../../assets/icon/search.svg" />
 				</div>
 			</slot>
-			<input :value="displayValue" @input="handleInput" @focus="handleFocus" @blur="handleBlur"
-				:class="['form-control', `type-${props.color}`]" v-bind="$attrs" :required="props.required"
-				:disabled="props.disabled" :type="props.type === 'number' ? 'text' : props.type"
-				:inputmode="props.type === 'number' ? 'numeric' : 'text'" />
+
+			<input
+				ref="inputRef"
+				:value="displayValue"
+				@input="handleInput"
+				@focus="handleFocus"
+				@blur="handleBlur"
+				:class="['form-control', `type-${props.color}`]"
+				v-bind="$attrs"
+				:required="props.required"
+				:disabled="props.disabled"
+				:type="props.type === 'number' ? 'text' : props.type"
+				:inputmode="props.type === 'number' ? 'numeric' : 'text'"
+			/>
+
 			<div v-if="props.type === 'search' && displayValue" class="input-group-icon me-3">
 				<button @click="clearSearch" class="btn btn-link p-0">
 					<img src="../../assets/icon/close_round.svg" />
@@ -206,7 +274,10 @@
 	}
 
 	.search-active {
-		box-shadow: 0 0 0 1px #00883e;
-		border-radius: 4px;
+		.input-group {
+			box-shadow: 0 0 0 1px #00883e;
+			border-radius: 4px;
+			outline: none;
+		}
 	}
 </style>

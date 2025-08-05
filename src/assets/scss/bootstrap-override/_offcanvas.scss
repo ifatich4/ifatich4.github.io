@@ -20,6 +20,10 @@
    .offcanvas-body{
         min-height: 72px !important;
     }
+    
+    &.offcanvas-bottom {
+        max-height: 95%;
+    }
 
 }
 

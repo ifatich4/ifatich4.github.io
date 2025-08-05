@@ -3,7 +3,7 @@
     <div>
         <slot name="table-header"></slot>
     </div>
-    <table :class="['table rounded-corners', props.class]" :style="[props.style]">
+    <table :class="['table', props.class]" :style="[props.style]">
         <thead>
             <tr>
                 <th v-for="column in props.columns" :key="column.key" @click="sortTable(column.key)">
@@ -31,7 +31,7 @@
         </tbody>
     </table>
   </template>
-  
+
   <script setup>
     /* eslint-disable */
     import { defineProps, computed, ref } from 'vue'
@@ -52,23 +52,23 @@
             default: 'Tidak ada data yang ditampilkan'
         },
     })
-  
+
     let sortKey = ref("id")
     let sortOrder = ref()
-  
+
     const sortedData = computed(() => {
         if (!sortOrder) return props.data
         return props.data.slice().sort((a, b) => {
             const modifier = sortOrder.value;
             const x = a[sortKey.value];
             const y = b[sortKey.value];
-  
+
             if (x === y) return 0;
-  
+
             return x > y ? modifier : -modifier;
         });
     })
-  
+
     function sortTable(key) {
         if (sortKey.value === key) {
             sortOrder.value = -sortOrder.value
@@ -78,4 +78,29 @@
         }
     }
   </script>
-  
+<style lang="scss" scoped>
+    table {
+        border-collapse: separate;
+        border-spacing: 0;
+        border: 1px solid #eeeeef;
+        border-radius: 8px;
+    }
+
+    /* Header Rounded Corner */
+    thead tr:first-child th:first-child {
+        border-top-left-radius: 7px;
+    }
+
+    thead tr:first-child th:last-child {
+        border-top-right-radius: 7px;
+    }
+
+    /* Footer Rounded Corner */
+    tbody tr:last-child td:first-child {
+        border-bottom-left-radius: 7px;
+    }
+
+    tbody tr:last-child td:last-child {
+        border-bottom-right-radius: 7px;
+    }
+</style>

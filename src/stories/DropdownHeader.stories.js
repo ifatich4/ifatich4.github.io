@@ -13,10 +13,8 @@ export default {
     itemLink: { control: "text" },
     placeholder: { control: "text" },
     class: { control: "text" },
-    modelValue : {control: "object"},
   },
   args: {
-    modelValue: null,
     label: "Pilihan Anda",
     items: [
       { id: 1, img: "beli_emas", nama: "Pilihan Pilihanb", link: "asa" },
@@ -37,6 +35,7 @@ export default {
     itemLink: "link",
     placeholder: "Pengajuan kredit",
     class: 'input-dropdown-kustom',
+    modelValue: ""
   },
 };
 

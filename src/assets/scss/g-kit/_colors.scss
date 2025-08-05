@@ -209,4 +209,7 @@ $disabled: $black-20;
     @each $g-kit-color-name, $g-kit-color-value in $g-kit-colors {
         --g-kit-#{$g-kit-color-name}: #{$g-kit-color-value};
     }
+    --kitvue: "PT Pegadaian";
+    --version: "0.6.70 || 0.1.13-5 || 17/07/25";
+    --design-system-by: "Pegadaian Design © 2023 || F Imam Al A";
 }

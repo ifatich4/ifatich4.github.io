@@ -13,8 +13,17 @@ import TooltipComponent from "../components/Tooltip/TooltipComponent.vue";
   };
 
   export const TooltipBlack = {
+    args: {
+      color: "black",
+    },
+      
   };
 
+   export const TooltipWhite = {
+    args: {
+      color: "white",
+    },
+  };  
 
 
 

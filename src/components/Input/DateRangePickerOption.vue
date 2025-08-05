@@ -7,109 +7,127 @@ import {
   watch,
   computed,
   defineProps,
-  defineEmits
-} from 'vue'
-import DateRangePicker from './DateRangePicker.vue'
-import { BDropdownItem, BDropdownItemButton, BOffcanvas, BFormRadioGroup, BFormRadio } from 'bootstrap-vue-next'
-import Dropdown from '../Dropdown/InputDropdown.vue'
+  defineEmits,
+} from "vue";
+import DateRangePicker from "./DateRangePicker.vue";
+import {
+  BDropdownItem,
+  BDropdownItemButton,
+  BOffcanvas,
+  BFormRadioGroup,
+  BFormRadio,
+} from "bootstrap-vue-next";
+import Dropdown from "../Dropdown/InputDropdown.vue";
 
-defineOptions({ name: 'DateRangePickerOption', inheritAttrs: false })
-const emit = defineEmits(['buttomSheetShown'])
+defineOptions({ name: "DateRangePickerOption", inheritAttrs: false });
+const emit = defineEmits(["buttomSheetShown"]);
 
-const SELECTED_PRESET = ref('ANY')
+const SELECTED_PRESET = ref("ANY");
 const dateRangeDisabled = computed(() =>
-  SELECTED_PRESET.value === 'ANY' ? false : true
-)
+  SELECTED_PRESET.value === "ANY" ? false : true
+);
 const props = defineProps({
   title: {},
   error: {},
   preset: {
     default: [
       {
-        label: '7 Hari Terakhir',
-        value: '7'
+        label: "7 Hari Terakhir",
+        value: "7",
       },
       {
-        label: '30 Hari Terakhir',
-        value: '30'
-      }
-    ]
+        label: "30 Hari Terakhir",
+        value: "30",
+      },
+    ],
   },
   showAny: {
-    default: true
+    default: true,
   },
   useBottomSheet: {
     type: Boolean,
-    default: false
+    default: false,
   },
   placeholder: {
     type: String,
-    default: 'Pilih rentang tanggal'
+    default: "Pilih rentang tanggal",
   },
   firstLabel: {
     type: String,
-    default: 'Dari'
+    default: "Dari",
   },
   secondLabel: {
     type: String,
-    default: 'Hingga'
+    default: "Hingga",
   },
   separator: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+  flexWidth: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * remove slash from in out of range date
+   */
+  noSlash: {
+    type: Boolean,
+    default: false,
+  },
+});
 
-const startDate = defineModel('startDate')
-const endDate = defineModel('endDate')
-const showOffcanvas = ref(false)
+const startDate = defineModel("startDate");
+const endDate = defineModel("endDate");
+const showOffcanvas = ref(false);
 
 const getDateString = (date) => {
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
 
-  return `${year}-${month}-${day}`
-}
+  return `${year}-${month}-${day}`;
+};
 
 const getFormattedDateString = (dateString) => {
-  const [year, month, day] = dateString.split('-')
+  const [year, month, day] = dateString.split("-");
 
-  return `${day}/${month}/${year}`
-}
+  return `${day}/${month}/${year}`;
+};
 
 const valueString = computed(() =>
   startDate.value && endDate.value
     ? `${getFormattedDateString(startDate.value)} - ${getFormattedDateString(
         endDate.value
       )}`
-    : ''
-)
+    : ""
+);
 
 watch(SELECTED_PRESET, () => {
-  if (SELECTED_PRESET.value === 'ANY') {
-    startDate.value = ''
-    endDate.value = ''
-    return
+  if (SELECTED_PRESET.value === "ANY") {
+    startDate.value = "";
+    endDate.value = "";
+    return;
   }
-  const todaysDate = new Date()
-  const previousDate = new Date()
-  previousDate.setDate(todaysDate.getDate() - parseInt(SELECTED_PRESET.value))
-  startDate.value = getDateString(previousDate)
-  endDate.value = getDateString(todaysDate)
-  if (SELECTED_PRESET.value !== 'ANY') handleShown(false)
-})
+  const todaysDate = new Date();
+  const previousDate = new Date();
+  previousDate.setDate(todaysDate.getDate() - parseInt(SELECTED_PRESET.value));
+  startDate.value = getDateString(previousDate);
+  endDate.value = getDateString(todaysDate);
+  if (SELECTED_PRESET.value !== "ANY") handleShown(false);
+});
 
 watch([startDate, endDate], () => {
-  if (SELECTED_PRESET.value === 'ANY' && startDate.value && endDate.value) handleShown(false)
-})
+  if (SELECTED_PRESET.value === "ANY" && startDate.value && endDate.value)
+    handleShown(false);
+});
 
 const handleShown = (value) => {
   if (props.useBottomSheet) {
-    showOffcanvas.value = value
-    emit('buttomSheetShown', value)
+    showOffcanvas.value = value;
+    emit("buttomSheetShown", value);
   }
-}
+};
 </script>
 
 <template>
@@ -117,7 +135,13 @@ const handleShown = (value) => {
     <div class="label-container">
       <label class="form-label"> {{ props.title }} </label>
     </div>
-    <Dropdown :disabled="$attrs.disabled" :id="$attrs.id" class="input-filter" :show-menu="!props.useBottomSheet" @shown="handleShown(true)">
+    <Dropdown
+      :disabled="$attrs.disabled"
+      :id="$attrs.id"
+      class="input-filter"
+      :show-menu="!props.useBottomSheet"
+      @shown="handleShown(true)"
+    >
       <template #button-content>
         <p
           class="overflow-hidden my-auto text-ellipsis"
@@ -136,7 +160,7 @@ const handleShown = (value) => {
           class="preset-btn"
           :class="{
             'preset-btn--selected': SELECTED_PRESET === preset.value,
-            'mt-2': idx > 0
+            'mt-2': idx > 0,
           }"
         >
           <BDropdownItem>
@@ -148,7 +172,7 @@ const handleShown = (value) => {
               <div
                 class="btn-identifier"
                 :class="{
-                  'btn-identifier--selected': SELECTED_PRESET === preset.value
+                  'btn-identifier--selected': SELECTED_PRESET === preset.value,
                 }"
               >
                 &nbsp;
@@ -157,6 +181,7 @@ const handleShown = (value) => {
             </BDropdownItemButton>
           </BDropdownItem>
         </div>
+
         <div
           v-if="props.showAny"
           class="preset-btn mt-2"
@@ -165,12 +190,14 @@ const handleShown = (value) => {
           <BDropdownItem>
             <BDropdownItemButton
               class="overflow-hidden"
-              buttonClass="d-flex align-items-center test"
+              buttonClass="d-flex align-items-center"
               @click.stop="SELECTED_PRESET = 'ANY'"
             >
               <div
                 class="btn-identifier"
-                :class="{ 'btn-identifier--selected': SELECTED_PRESET === 'ANY' }"
+                :class="{
+                  'btn-identifier--selected': SELECTED_PRESET === 'ANY',
+                }"
               >
                 &nbsp;
               </div>
@@ -178,7 +205,9 @@ const handleShown = (value) => {
             </BDropdownItemButton>
           </BDropdownItem>
         </div>
+
         <DateRangePicker
+          :flexWidth="props.flexWidth"
           v-model:start-date="startDate"
           v-model:end-date="endDate"
           class="mt-2"
@@ -187,8 +216,10 @@ const handleShown = (value) => {
           :firstLabel="props.firstLabel"
           :secondLabel="props.secondLabel"
           :separator="props.separator"
+          :no-slash="props.noSlash"
         />
       </div>
+
       <BOffcanvas
         v-if="props.useBottomSheet"
         v-model="showOffcanvas"
@@ -204,19 +235,20 @@ const handleShown = (value) => {
           class="preset-btn"
           :class="{
             'preset-btn--selected': SELECTED_PRESET === preset.value,
-            'mt-2': idx > 0
+            'mt-2': idx > 0,
           }"
         >
           <BFormRadio
-            style="margin-top: auto;"
+            style="margin-top: auto"
             class="btn-identifier d-flex align-items-center"
             :class="{
-              'btn-identifier--selected': SELECTED_PRESET === preset.value
+              'btn-identifier--selected': SELECTED_PRESET === preset.value,
             }"
             v-model="SELECTED_PRESET"
             :value="preset.value"
             :id="$attrs.id + '-preset-' + preset.value"
-          >{{ preset.label }}</BFormRadio>
+            >{{ preset.label }}</BFormRadio
+          >
         </div>
         <div
           v-if="props.showAny"
@@ -226,14 +258,15 @@ const handleShown = (value) => {
           <BFormRadio
             class="btn-identifier d-flex align-items-center"
             :class="{
-              'btn-identifier--selected': SELECTED_PRESET === 'ANY'
+              'btn-identifier--selected': SELECTED_PRESET === 'ANY',
             }"
-            style="margin-top: auto;"
+            style="margin-top: auto"
             v-model="SELECTED_PRESET"
             :value="'ANY'"
             :id="$attrs.id + '-preset-any'"
             @click.stop
-          >Rentang Waktu</BFormRadio>
+            >Rentang Waktu</BFormRadio
+          >
         </div>
         <DateRangePicker
           v-model:start-date="startDate"
@@ -244,6 +277,7 @@ const handleShown = (value) => {
           :firstLabel="props.firstLabel"
           :secondLabel="props.secondLabel"
           :separator="props.separator"
+          :no-slash="props.noSlash"
         />
       </BOffcanvas>
     </Dropdown>
@@ -255,7 +289,8 @@ const handleShown = (value) => {
 .input-filter {
   .dropdown-menu {
     &.show {
-      display: table;
+      overflow: visible !important;
+      max-height: fit-content !important;
     }
   }
 }

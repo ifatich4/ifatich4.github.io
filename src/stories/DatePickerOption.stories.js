@@ -11,7 +11,13 @@ export default {
     disabled: { control: "boolean" },
     showAny: { control: "boolean" },
     useBottomSheet: { control: "boolean" },
-    preset : { control: "object" }
+    preset : { control: "object" },
+    firstLabel: { control: "text" },
+    secondLabel: { control: "text" },
+    error: { control: "text" },
+    separator: { control: "boolean" },
+    flexWdith: { control: "boolean" },
+    noSlash: { control: "boolean" , description: "Remove slash from in out of range date"},
   },
   args: {
     title: "Tanggal Lahir",
@@ -29,6 +35,12 @@ export default {
       }
     ],
     showAny: true,
+    firstLabel: "Dari",
+    secondLabel: "Hingga",
+    separator: true,
+    flexWdith: true,
+    noSlash: false,
+
   },
 };
 
@@ -43,8 +55,8 @@ export const DatePickerOption = {
       template: `
         <DateRangePickerOption 
           v-bind="args" 
-          v-model:start-date="${args.startDatee}"
-          v-model:end-date="${args.endDatee}"
+          v-model:start-date="startDate"
+          v-model:end-date="endDate"
         />
       `,
     }),

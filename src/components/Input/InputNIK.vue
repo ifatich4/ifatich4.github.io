@@ -238,7 +238,10 @@ input:disabled {
 }
 
 .search-active {
-  box-shadow: 0 0 0 1px #00883e;
-  border-radius: 4px;
+  .input-group {
+    box-shadow: 0 0 0 1px #00883e;
+    border-radius: 4px;
+    outline: none;
+  }
 }
 </style>

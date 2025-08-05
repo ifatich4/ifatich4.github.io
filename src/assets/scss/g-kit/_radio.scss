@@ -51,3 +51,8 @@ input[type=checkbox]:checked {
     background-color: $lime-50;
     border: $lime-50;
 }
+
+// Storybook Stylies Override
+.docblock-argstable-body tr td label input {
+    background-color: transparent !important;
+}

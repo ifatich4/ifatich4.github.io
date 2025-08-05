@@ -188,5 +188,9 @@ th[colspan], th[rowspan] {
     font-size: 12px;
     text-align: center;
 }
+
+.table tbody td{
+    vertical-align: middle;
+}
 </style>
   

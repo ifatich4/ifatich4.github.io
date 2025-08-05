@@ -278,7 +278,7 @@ export default {
         'Mei',
         'Juni',
         'Juli',
-        'Augustus',
+        'Agustus',
         'September',
         'Oktober',
         'November',

@@ -2,7 +2,7 @@ import Button from "../components/Button/Button.vue";
 import DataTable from "../components/Table/DataTable.vue";
 
   export default {
-    title: 'Components/DataTable',
+    title: 'Components/Table/DataTable',
     component: DataTable,
     tags: ['autodocs'],
     args: {

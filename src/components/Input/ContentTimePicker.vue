@@ -2,7 +2,7 @@
     <div id="scroll-container" class="scroll-container d-flex">
       <div class="wrap-container" ref="wrapScrollHours">
         <ul id="hours" ref="hoursScroll">
-          <li v-for="(item, index) in hours" :key="index" :class="{ active: activeHourIndex === index }"
+          <li v-for="(item, index) in hours" :key="index" :class="{ active: activeHoursIndex === index }"
             @click="activateInput('hours', index)">
             <span v-if="!isEditing('hours', index)" class="item">{{ item }}</span>
             <InputText v-else v-model="editableValue" @input="handleInput('hours')" @blur="saveEdit('hours', index)"
@@ -13,7 +13,7 @@
       <p class="mb-0"><b>:</b></p>
       <div class="wrap-container" ref="wrapScrollMinutes">
         <ul id="minutes" ref="minutesScroll">
-          <li v-for="(item, index) in minutes" :key="index" :class="{ active: activeMinuteIndex === index }"
+          <li v-for="(item, index) in minutes" :key="index" :class="{ active: activeMinutesIndex === index }"
             @click="activateInput('minutes', index)">
             <span v-if="!isEditing('minutes', index)" class="item">{{ item }}</span>
             <InputText v-else v-model="editableValue" @input="handleInput('minutes')" @blur="saveEdit('minutes', index)"
@@ -40,7 +40,7 @@
       defaultMinute: {
         type: String,
         default: '58'
-      }
+      },
     },
     data() {
       return {
@@ -48,12 +48,15 @@
         hours: ['23', '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15',
           '16', '17', '18', '19', '20', '21', '22', '23', '00', '01'
         ],
-        minutes: ['58','59', '00','01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', 
-                  '15','16', '17', '18', '19', '20', '21', '22', '23', ' 24', '25', '26', '27', '28', '29', '30', '31', 
-                  '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '46', '46', '47', '48', 
-                  '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '59', '00', '01', '02'],
-        activeHourIndex: 0,
-        activeMinuteIndex: 0,
+        minutes: [
+          '58','59','00','01','02','03','04','05','06','07','08','09',
+          '10','11','12','13','14','15','16','17','18','19','20','21','22','23',
+          '24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40',
+          '41','42','43','44','45','46','47','48','49','50','51','52','53','54','55','56','57',
+          '58','59','00','01','02'
+        ],
+        activeHoursIndex: 0,
+        activeMinutesIndex: 0,
         hoursOpts: {
           itemCount: null,
           itemHeight: null,
@@ -66,21 +69,29 @@
         },
         editingIndex: null,
         editingList: null,
-        editableValue: ''
+        editableValue: '',
       };
     },
     mounted() {
       this.$nextTick(() => {
         this.initItems('hours');
         this.initItems('minutes');
-        this.setDefaultValues();
-        this.$refs.wrapScrollHours.onscroll = this.debounce(() => this.scrollWrap('hours'), 50);
-        this.$refs.wrapScrollMinutes.onscroll = this.debounce(() => this.scrollWrap('minutes'), 50);
-        this.scrollToActiveItem('hours');
-        this.scrollToActiveItem('minutes');
+        this.$nextTick(() => {
+          this.setDefaultValues();
+          this.$refs.wrapScrollHours.onscroll = this.debounce(() => this.scrollWrap('hours'), 50);
+          this.$refs.wrapScrollMinutes.onscroll = this.debounce(() => this.scrollWrap('minutes'), 50);
+         });
       });
     },
     methods: {
+      initializeAndScroll() {
+        this.initItems('hours');
+        this.initItems('minutes');
+
+        this.setDefaultValues();
+
+        this.itemsInitialized = true;
+      },
       isEditing(listName, index) {
         return this.editingList === listName && this.editingIndex === index;
       },
@@ -135,13 +146,14 @@
         const activeIndex = itemsScrolled % listOpts.itemCount;
 
         if (listName === 'hours') {
-          this.activeHourIndex = activeIndex;
+          this.activeHoursIndex = activeIndex;
         } else if (listName === 'minutes') {
-          this.activeMinuteIndex = activeIndex;
+          this.activeMinutesIndex = activeIndex;
         }
 
         this.scrollToActiveItem(listName);
         this.emitActiveTime();
+
       },
       scrollToActiveItem(listName) {
         const listOpts = this[`${listName}Opts`];
@@ -189,8 +201,8 @@
         });
       },
       emitActiveTime() {
-        const activeHour = this.hours[this.activeHourIndex] || '00';
-        const activeMinute = this.minutes[this.activeMinuteIndex] || '00';
+        const activeHour = this.hours[this.activeHoursIndex] || '00';
+        const activeMinute = this.minutes[this.activeMinutesIndex] || '00';
         const formattedTime = `${activeHour}:${activeMinute.padStart(2, '0')}`;
 
         this.$emit('activeTime', {
@@ -198,19 +210,18 @@
         });
       },
       setDefaultValues() {
-        this.activeHourIndex = this.hours.indexOf(this.defaultHour);
-        this.activeMinuteIndex = this.minutes.indexOf(this.defaultMinute);
+        // Set active index
+        this.activeHoursIndex = this.hours.indexOf(this.defaultHour);
+        this.activeMinutesIndex = this.minutes.indexOf(this.defaultMinute);
 
-        if (this.activeHourIndex === -1) this.activeHourIndex = 0;
-        if (this.activeMinuteIndex === -1) this.activeMinuteIndex = 0;
+        if (this.activeHoursIndex === -1) this.activeHoursIndex = 0;
+        if (this.activeMinutesIndex === -1) this.activeMinutesIndex = 0;
 
-        this.editableValue = this.hours[this.activeHourIndex]; // Set the default editable value for hours
-        this.editableValue = this.minutes[this.activeMinuteIndex]; // Set the default editable value for minutes
+        // Jangan set dua kali editableValue (bisa buat field jam/menit salah)
+        this.editableValue = this.hours[this.activeHoursIndex];
 
-        this.$nextTick(() => {
-          this.$refs.wrapScrollHours.scrollTop = this.activeHourIndex * this.hoursOpts.itemHeight;
-          this.$refs.wrapScrollMinutes.scrollTop = this.activeMinuteIndex * this.minutesOpts.itemHeight;
-        });
+        this.scrollToActiveItem('hours');
+        this.scrollToActiveItem('minutes');
 
         this.emitActiveTime();
       },

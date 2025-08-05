@@ -30,10 +30,50 @@
             </thead>
             <tbody>
                 <tr v-for="(item, index) in data" :key="index">
-                    <td v-for="column in columns" :key="column.data">
-                        {{ item[column.data] }}
+                    <td v-for="column in columns" :key="column.data" class="align-middle">
+                         <template v-if="isDataArray(item[column.data])">
+                            <div class="flex flex-column gap-1">
+                                <span v-html="getLimitedArrayDisplay(item[column.data])"></span>
+                                <div class="flex gap-1 align-items-center text-link-data-table">
+                                    Lihat Selengkapnya
+                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M8.1225 9.70253L12.0025 13.5825L15.8825 9.70253C16.2725 9.31253 16.9025 9.31253 17.2925 9.70253C17.6825 10.0925 17.6825 10.7225 17.2925 11.1125L12.7025 15.7025C12.3125 16.0925 11.6825 16.0925 11.2925 15.7025L6.7025 11.1125C6.3125 10.7225 6.3125 10.0925 6.7025 9.70253C7.0925 9.32253 7.7325 9.31253 8.1225 9.70253Z" fill="black"/>
+                                        <mask id="mask0_0_5346" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="6" y="9" width="12" height="7">
+                                            <path d="M8.1225 9.70253L12.0025 13.5825L15.8825 9.70253C16.2725 9.31253 16.9025 9.31253 17.2925 9.70253C17.6825 10.0925 17.6825 10.7225 17.2925 11.1125L12.7025 15.7025C12.3125 16.0925 11.6825 16.0925 11.2925 15.7025L6.7025 11.1125C6.3125 10.7225 6.3125 10.0925 6.7025 9.70253C7.0925 9.32253 7.7325 9.31253 8.1225 9.70253Z" fill="white"/>
+                                        </mask>
+                                        <g mask="url(#mask0_0_5346)">
+                                            <rect width="24" height="24" fill="currentColor"/>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+                         </template>
+                         <template v-else-if="isDataImg(item[column.data])">
+                            <div class="image-data-table-wrapper">
+                                <img
+                                    v-if="item[column.data] && item[column.data][0]"
+                                    :src="item[column.data][0].src"
+                                    alt="Foto 1"
+                                    class="image-data-table image-data-no-overlay"
+                                    @click="$emit('update:modalSliderOpen', true)"
+                                />
+
+                                <div class="image-data-second-wrapper"  @click="$emit('update:modalSliderOpen', true)">
+                                    <img
+                                    v-if="item[column.data] && item[column.data][1]"
+                                    :src="item[column.data][1].src"
+                                    alt="Foto 2"
+                                    :class="[`image-data-table`, item[column.data].length > 2 ?  `image-data-with-overlay` : `image-data-no-overlay`]"
+                                    />
+                                    <div v-if="item[column.data].length > 2" class="image-overlay-data-table">{{ (item[column.data].length - 2) + "+" }}</div>
+                                </div>
+                            </div>
+                        </template>
+                         <template v-else>
+                             {{ item[column.data] }}
+                         </template>
                     </td>
-                    <td>
+                    <td class="align-middle">
                         <slot name="tableActionButtons" :item="item"></slot>
                     </td>
                 </tr>
@@ -47,7 +87,6 @@
             :total-rows="data.length"
             :per-page="entriesPerPage"
             v-model="currentPage"
-            :limit="7"
         />
 
         <div class="responsive-table">
@@ -63,7 +102,17 @@
                                 {{ column.title }}:
                             </span>
                             <span class="card-value" v-if="column.data !== leftContent && column.data !== rightContent">
-                                {{ item[column.data] }}
+                                <template v-if="isDataArray(item[column.data])">
+                                    <span class="text-end d-block" v-html="item[column.data].map(obj => `${obj.title} : ${obj.value}`).join('<br>')"></span>
+                                </template>
+                                <template v-else-if="isDataImg(item[column.data])">
+                                    <div class="text-link-data-table photo" @click="emitSlider">
+                                        Lihat Foto
+                                    </div>
+                                </template>
+                                <template v-else>
+                                    {{ item[column.data] }}
+                                </template>
                             </span>
                         </div>
                     </div>
@@ -116,6 +165,10 @@
             },
             rightContent: {
                 type: String
+            },
+            modalSliderOpen: {
+                type: Boolean,
+                default: false
             }
         },
         mounted() {
@@ -135,7 +188,14 @@
                 }
             }
         },
+        emits: ['update:modalSliderOpen'],
         methods: {
+            getLimitedArrayDisplay(array) {
+                if (array.length > 5) {
+                    return array.slice(0, 2).map(obj => `${obj.title} : ${obj.value}`).join('<br>');
+                }
+                return array.map(obj => `${obj.title} : ${obj.value}`).join('<br>');
+            },
             handleSort(key) {
                 if (this.sortKey === key) {
                     this.sortOrder = -this.sortOrder;
@@ -143,6 +203,19 @@
                     this.sortKey = key;
                     this.sortOrder = 1;
                 }
+            },
+             isDataArray(data) {
+                return Array.isArray(data) &&
+                    data.every(item =>
+                    item &&
+                    typeof item === 'object' &&
+                    'title' in item &&
+                    'value' in item
+                    );
+            },
+            isDataImg(data) {
+            return Array.isArray(data) &&
+                data.every(img => img && typeof img === 'object' && 'src' in img);
             },
             initializeDataTable() {
                 this.$nextTick(() => {
@@ -217,6 +290,58 @@
             display: block;
             position: absolute;
         }
+
+        .image-data-table-wrapper {
+            display: flex;
+            gap: 0.5rem;
+            position: relative;
+
+            .image-data-table {
+                width: 5rem;
+                height: 5rem;
+                object-fit: cover;
+                border-radius: 0.5rem;
+
+                &:hover{
+                    cursor: pointer;
+                }
+            }
+
+            .image-data-no-overlay {
+                border: 1px solid var(--g-kit-black-40);
+            }
+
+            .image-data-second-wrapper {
+                position: relative;
+                width: 5rem;
+                height: 5rem;
+
+                img.image-data-second {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 0.5rem;
+                }
+
+                .image-overlay-data-table {
+                    position: absolute;
+                    inset: 0;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    border-radius: 0.5rem;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: white;
+                    font-weight: bold;
+                    font-size: 1rem;
+
+                    &:hover{
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+
     }
     .dataTables_length,
     .dataTables_filter {
@@ -248,6 +373,19 @@
 
     .responsive-table {
         display: none;
+
+            .text-link-data-table {
+                color: var(--g-kit-lime-50);
+                font-weight: var(--g-kit-font-weight-bold);
+
+                &.photo{
+                    font-size: var(--g-kit-font-size-omega);
+                }
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
     }
 
     .w-10 {

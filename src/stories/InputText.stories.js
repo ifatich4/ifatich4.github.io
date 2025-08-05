@@ -10,7 +10,7 @@ import InputText from "../components/Input/InputText.vue";
       error : { control: "text" },
       class: { control: "text" },
       helperText: {control: "text"},
-      type: {control: "select", options: ["text", "number"] },
+      type: {control: "select", options: ["text", "number", "search"] },
       color: {control: "select", options: ["default", "blue", "green", "orange", "red"] },
       suffix : { control: "text" },
       prefix : { control: "text" },

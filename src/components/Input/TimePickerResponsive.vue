@@ -41,7 +41,8 @@
           </button>
         </div>
         <ContentTimePicker
-          :initialTime="selectedTime"
+          :default-hour="modelValue ? modelValue.split(':')[0] : '23'"
+          :default-minute="modelValue ? modelValue.split(':')[1] : '58'"
           @activeTime="handleActiveTime"
         />
 
@@ -93,11 +94,13 @@
       @hidden="handleOffcanvasToggle(false)"
     >
       <ContentTimePicker
-        :initialTime="selectedTime"
+        ref="mobileTimePicker"
+        :default-hour="modelValue ? modelValue.split(':')[0] : '23'"
+        :default-minute="modelValue ? modelValue.split(':')[1] : '58'"
         @activeTime="handleActiveTime"
       />
 
-      <div class="px-3 pb-0 pt-3">
+      <div class="px-3 py-3">
         <Button
           class="w-100"
           type="primary"
@@ -126,16 +129,41 @@ export default {
     required: Boolean,
     placeholder: String,
     error: String, // Error message
+    modelValue: String,
   },
   data() {
     return {
-      selectedTime: null,
+      selectedTime: this.modelValue,
       tempSelectedTime: "",
       showDatePickerOffcanvas: false,
       showContent: false,
     };
   },
+  watch: {
+  modelValue: {
+    immediate: true,
+    handler(value) {
+      if (!this.isValidTimeFormat(value)) {
+        console.error(`[TimePickerResponsive] Invalid time format: "${value}". Expected format: "HH:MM"`);
+        // Optional: fallback value
+        this.selectedTime = '';
+      } else {
+        this.selectedTime = value;
+      }
+    }
+  }
+},
   methods: {
+     isValidTimeFormat(value) {
+    const regex = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+    return regex.test(value);
+  },
+    reInitMobilePicker() {
+      // Akses metode di ContentTimePicker setelah tampil
+      this.$nextTick(() => {
+       this.$refs.mobileTimePicker?.initializeAndScroll?.(); // method dari ContentTimePicker
+      });
+    },
     handleActiveTime(event) {
       this.tempSelectedTime = event.activeTime;
     },
@@ -150,7 +178,10 @@ export default {
     },
     handleOffcanvasToggle(value) {
       this.$emit("bottomSheetShown", value);
-    },
+      if (value) {
+        this.reInitMobilePicker();
+      }
+    }
   },
 };
 </script>
