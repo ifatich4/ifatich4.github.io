@@ -1,0 +1,30 @@
+image: artifactory.pegadaian.co.id:8084/docker:latest
+
+variables:
+  DOCKER_AUTH_CONFIG: '{"auths": {"artifactory.pegadaian.co.id:5443": {"auth": "$DOCKER_AU_CONFIG"},"artifactory.pegadaian.co.id:8084": {"auth": "$DOCKER_AU_CONFIG"}}}'
+  REGISTRY: artifactory.pegadaian.co.id:8084
+  NPM_URL: https://artifactory.pegadaian.co.id/repository/npm-hosted-01/
+
+stages:
+  - deploy
+  - snapshot
+
+deploy:
+  image: $REGISTRY/node:20.10.0-alpine
+  stage: deploy
+  script:
+    - echo "registry=$NPM_REGISTRY_URL" > .npmrc
+    - echo "//artifactory.pegadaian.co.id/repository/npm-hosted-01/:_auth=$NPM_AUTH_TOKEN" >> .npmrc
+    - npm publish --userconfig .npmrc
+  only:
+    - master
+
+snapshot:
+  image: $REGISTRY/node:20.10.0-alpine
+  stage: snapshot
+  script:
+    - echo "registry=$NPM_REGISTRY_URL" > .npmrc
+    - echo "//artifactory.pegadaian.co.id/repository/npm-hosted-01/:_auth=$NPM_AUTH_TOKEN" >> .npmrc
+    - npm publish --userconfig .npmrc
+  only:
+    - /^dev-update-component$/

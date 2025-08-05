@@ -1,37 +1,21 @@
-# Kitvue - Pegadaian Design System
-
-## Tentang Kitvue
-Kitvue adalah library komponen UI berbasis Vue.js yang mendukung pengembangan proyek Digital pada Pegadaian. Library ini menggunakan teknologi:
-- **Vue.js 3.4.7**: Framework JavaScript modern.
-- **Bootstrap 5.3.2**: Library CSS responsif.
-- **Sass**: Preprocessor CSS untuk mempermudah styling.
-
-Kitvue bertujuan menyediakan solusi desain yang konsisten dan efisien, mendukung pengembangan aplikasi Pegadaian dengan standar desain modern.
-
----
+# kitvue - Pegadaian Design System
 
 ## Getting started
 
-### Instalasi
-Pastikan Anda sudah menginstal *prerequisite* berikut:
-- **Node.js**: Versi 16 atau lebih baru.
-- **npm**: Versi 8 atau lebih baru.
-
-```bash
-npm install https://repo.pegadaian.co.id/client/pegadaian-ui-kit-vue.git
+```
+npm install git+https://repo.pegadaian.co.id/client/pegadaian-ui-kit-vue.git
 ```
 
-## Langkah Konfigurasi untuk Proyek Vue
-### Tambahkan Plugin Sass
-Install plugin style-resource-loader untuk mendukung penggunaan file SCSS secara global:
+# Configuration
+Add sass plugin
 
-```bash
+```
 vue add style-resource-loader
 ```
 
-### Konfigurasi vue.config.js
+On your vue config add
 
-```bash
+```
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: ['bootstrap-vue'],
@@ -45,8 +29,8 @@ module.exports = defineConfig({
 })
 ```
 
-### Perhatikan pada baris kode dibawah
-```bash
+Spesific on line 
+```
 transpileDependencies: ['bootstrap-vue'],
 
 pluginOptions: {
@@ -57,17 +41,25 @@ pluginOptions: {
 }
 ```
 
-## Struktur Branch untuk Pengembangan Kitvue
-- `master`: Branch yang berisi versi stabil dari Kitvue. Branch ini digunakan untuk merilis package ke Artifactory Pegadaian.
-- `dev-update-component`: Branch pengembangan utama. Semua fitur baru atau perbaikan akan di-review di branch ini sebelum di-merge ke master.
+# kitvue - Pegadaian Design System - Kontribusi
 
-## Cara Berkontribusi pada Kitvue
-Kami sangat mengapresiasi kontribusi dari developer lain untuk menambahkan komponen baru, memperbaiki styling, atau memperbaiki bug pada komponen yang ada.
+`kitvue` adalah library komponen UI yang dikembangkan untuk mendukung proyek-proyek internal di Pegadaian. Library ini menggunakan Vue versi 3.4.7 dan Bootstrap CSS versi 5.3.2 sebagai teknologi utama.
+
+## Branches
+
+Kami menggunakan dua branch utama dalam pengembangan proyek ini:
+
+- **`master`:** Branch ini berisi versi stabil dari library yang akan di-publish sebagai package di artifactory pegadaian.
+- **`dev-update-component`:** Branch ini digunakan sebagai branch pengembangan utama. Semua fitur baru dan perbaikan akan di-review di sini sebelum di-merge ke `master`.
+
+## Kontribusi
+
+Kami sangat menyambut kontribusi dari developer lain untuk menambahkan komponen baru, memperbaiki styling, atau melakukan bug fixing pada komponen yang ada.
 
 ### Langkah-Langkah Kontribusi
 
 1. **Fork dan Clone Repository**
-   - Fork repository `kitvue` ke akun git kamu.
+   - Fork repository `kitvue` ke akun GitHub kamu.
    - Clone repository fork kamu:
      ```bash
      git clone https://repo.pegadaian.co.id/client/pegadaian-ui-kit-vue.git
@@ -75,7 +67,7 @@ Kami sangat mengapresiasi kontribusi dari developer lain untuk menambahkan kompo
      cd pegadaian-ui-kit-vue
      ```
 
-2. **Checkout Branch Pengembangan**
+2. **Checkout Branch `dev-update-component`**
    - Pastikan kamu selalu bekerja dari branch pengembangan, `dev-update-component`:
      ```bash
      git checkout dev-update-component
@@ -112,19 +104,19 @@ Kami sangat mengapresiasi kontribusi dari developer lain untuk menambahkan kompo
      git push origin dev-add-button
      ```
 
-6. **Buka Merge Request (MR)**
+6. **Buka Merge Request (PR)**
    - Setelah selesai, buka Merge Request ke branch `dev-update-component`.
-   - Tambahkan deskripsi lengkap mengenai perubahan dan penambahan yang kamu lakukan.
+   - Tambahkan deskripsi mengenai perubahan yang kamu lakukan.
 
 7. **Code Review**
-   - Merge Request kamu akan di-review oleh maintainer proyek dari **Pegadaian Design**.
-   - Jika ada catatan, lakukan perbaikan berdasarkan umpan balik yang diberikan.
+   - Merge Request kamu akan di-review oleh maintainer proyek.
+   - Lakukan perbaikan berdasarkan umpan balik yang diberikan.
 
 8. **Merge ke `dev-update-component`**
    - Setelah review selesai, request akan di-merge ke `dev-update-component`.
 
 # Penting Diperhatikan 
-### Penamaan Branch
+## Penamaan Branch
 
 - **Penambahan Komponen Baru:**
   - Branch name: `dev-add-(nama-komponen)`
@@ -143,6 +135,7 @@ Kami sangat mengapresiasi kontribusi dari developer lain untuk menambahkan kompo
 
 ---
 
-Terima kasih telah berkontribusi ke `kitvue!` Kami sangat menghargai usaha dan waktu yang kamu luangkan untuk membuat proyek ini menjadi lebih baik.
-### ♡ Pegadaian Design ♡
-### Love 🫰, Regard 🤝 and Cheers 🍻 
+Terima kasih telah berkontribusi ke `kitvue`! Kami sangat menghargai usaha dan waktu yang kamu luangkan untuk membuat proyek ini menjadi lebih baik.
+
+## Love, Regard and Cheers. Happy Development 
+### <3 Pegadaian Design <3
