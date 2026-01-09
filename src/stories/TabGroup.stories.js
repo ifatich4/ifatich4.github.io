@@ -1,11 +1,19 @@
 import TabGroup from "../components/Tab/TabGroup.vue";
 
-
-  export default {
-    title: 'Components/Tab/Default',
-    component: TabGroup,
-    tags: ['autodocs'],
-    args: {
+export default {
+  title: 'Components/Tab/Default',
+  component: TabGroup,
+  tags: ['autodocs'],
+  decorators: [
+    () => ({
+      template: `
+        <div style="width: 100%; max-width: 500px; padding: 16px;">
+          <story />
+        </div>
+      `,
+    }),
+  ],
+  args: {
       items: [
         {
           label: "Title",

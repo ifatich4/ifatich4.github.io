@@ -1,154 +1,350 @@
-/* Custom Storybook Styles - Pegadaian UI Kit */
+/**
+ * Custom Storybook Styles - Pegadaian UI Kit
+ * Using colors from g-kit/_colors.scss
+ * 
+ * Color Reference:
+ * - Lime (Primary): #00ab4e (lime-50), #00883e (lime-60), #e6f6ea (lime-10)
+ * - Black (Neutral): #252528 (black-80), #58585b (black-60), #939597 (black-50), #bbbdc0 (black-40), #eeeeef (black-20), #f8f8f8 (black-10)
+ * - Gold: #d8b56d (gold-50), #fbf7f0 (gold-10)
+ * - Broccoli (Dark Green): #004d43 (broccoli-50)
+ */
 
-/* Manager (Sidebar) Styles */
-.sidebar-header {
-  padding: 20px 16px !important;
-  border-bottom: 1px solid #E5E9EB;
+:root {
+  /* Design System Colors */
+  --pgd-lime-90: #00441f;
+  --pgd-lime-80: #00662e;
+  --pgd-lime-60: #00883e;
+  --pgd-lime-50: #00ab4e;
+  --pgd-lime-40: #40bd63;
+  --pgd-lime-20: #99dcab;
+  --pgd-lime-10: #e6f6ea;
+  
+  --pgd-gold-50: #d8b56d;
+  --pgd-gold-10: #fbf7f0;
+  
+  --pgd-broccoli-50: #004d43;
+  
+  --pgd-black-80: #252528;
+  --pgd-black-60: #58585b;
+  --pgd-black-50: #939597;
+  --pgd-black-40: #bbbdc0;
+  --pgd-black-20: #eeeeef;
+  --pgd-black-10: #f8f8f8;
+  
+  --pgd-white: #ffffff;
+  
+  --pgd-blue-50: #1868ab;
+  --pgd-blue-10: #e8f1f9;
+  
+  --pgd-red-50: #ae1e22;
+  --pgd-red-10: #f9e7e8;
 }
 
-/* Custom scrollbar */
+/* ================================
+   Custom Scrollbar
+   ================================ */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F1F5F9;
+  background: var(--pgd-black-10);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E0;
+  background: var(--pgd-black-40);
   border-radius: 3px;
+  transition: background 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #A0AEC0;
+  background: var(--pgd-black-50);
+}
+
+/* ================================
+   Sidebar Styles
+   ================================ */
+
+/* Sidebar header with brand */
+.sidebar-header {
+  padding: 20px 16px !important;
+  border-bottom: 1px solid var(--pgd-black-20);
+  background: linear-gradient(180deg, var(--pgd-white) 0%, var(--pgd-black-10) 100%);
+}
+
+/* Sidebar background */
+nav[role="navigation"] {
+  background: var(--pgd-black-10) !important;
 }
 
 /* Sidebar item hover effects */
 [data-nodetype="component"] button:hover,
-[data-nodetype="story"] button:hover {
-  background-color: rgba(0, 112, 60, 0.08) !important;
+[data-nodetype="story"] button:hover,
+[data-nodetype="document"] button:hover {
+  background-color: var(--pgd-lime-10) !important;
 }
 
 /* Active story highlight */
 [data-selected="true"] button {
-  background-color: rgba(0, 112, 60, 0.12) !important;
-  border-left: 3px solid #00703C !important;
+  background-color: var(--pgd-lime-10) !important;
+  border-left: 3px solid var(--pgd-lime-50) !important;
+  font-weight: 600 !important;
 }
 
-/* Story icon colors */
+/* Story icon colors - Lime green */
 [data-nodetype="story"] svg {
-  color: #00703C !important;
+  color: var(--pgd-lime-50) !important;
 }
 
-/* Component folder icon */
+/* Document icon colors */
+[data-nodetype="document"] svg {
+  color: var(--pgd-blue-50) !important;
+}
+
+/* Component folder icon - Gray by default */
 [data-nodetype="component"] svg {
-  color: #52606D !important;
+  color: var(--pgd-black-60) !important;
 }
 
-/* Expanded component folder */
+/* Root folder icon */
+[data-nodetype="root"] svg {
+  color: var(--pgd-broccoli-50) !important;
+}
+
+/* Expanded folder - Green icon */
 [data-expanded="true"] > button svg {
-  color: #00703C !important;
+  color: var(--pgd-lime-60) !important;
 }
 
-/* Search input styling */
+/* ================================
+   Search Input
+   ================================ */
 #storybook-explorer-searchfield {
   border-radius: 8px !important;
-  border: 1px solid #E5E9EB !important;
+  border: 2px solid var(--pgd-black-20) !important;
   padding: 10px 12px !important;
   transition: all 0.2s ease !important;
+  background: var(--pgd-white) !important;
 }
 
 #storybook-explorer-searchfield:focus {
-  border-color: #00703C !important;
-  box-shadow: 0 0 0 3px rgba(0, 112, 60, 0.1) !important;
+  border-color: var(--pgd-lime-50) !important;
+  box-shadow: 0 0 0 3px rgba(0, 171, 78, 0.15) !important;
+  outline: none !important;
 }
 
-/* Toolbar buttons */
+#storybook-explorer-searchfield::placeholder {
+  color: var(--pgd-black-50) !important;
+}
+
+/* ================================
+   Toolbar
+   ================================ */
+/* Toolbar background */
+.sb-bar {
+  background: var(--pgd-white) !important;
+  border-bottom: 1px solid var(--pgd-black-20) !important;
+}
+
+/* Toolbar buttons hover */
 button[title]:hover {
-  background-color: rgba(0, 112, 60, 0.08) !important;
+  background-color: var(--pgd-lime-10) !important;
+  color: var(--pgd-lime-60) !important;
 }
 
-/* Panel tabs */
+/* Toolbar separator */
+.sb-bar hr {
+  background-color: var(--pgd-black-20) !important;
+}
+
+/* ================================
+   Panel Tabs
+   ================================ */
 [role="tablist"] button[role="tab"] {
   transition: all 0.2s ease !important;
+  color: var(--pgd-black-60) !important;
+}
+
+[role="tablist"] button[role="tab"]:hover {
+  color: var(--pgd-lime-60) !important;
 }
 
 [role="tablist"] button[role="tab"][aria-selected="true"] {
-  border-bottom-color: #00703C !important;
-  color: #00703C !important;
+  border-bottom-color: var(--pgd-lime-50) !important;
+  color: var(--pgd-lime-50) !important;
+  font-weight: 600 !important;
 }
 
-/* Docs page styling */
+/* ================================
+   Docs Page Styling
+   ================================ */
 .sbdocs-wrapper {
   padding: 32px !important;
+  background: var(--pgd-black-10) !important;
 }
 
 .sbdocs-content {
   max-width: 1000px !important;
+  background: var(--pgd-white) !important;
+  padding: 40px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
 }
 
 /* Story title in docs */
 .sbdocs-title {
   font-weight: 700 !important;
-  color: #1F2933 !important;
+  color: var(--pgd-black-80) !important;
+  font-size: 2rem !important;
 }
 
 /* Subtitle */
 .sbdocs-subtitle {
-  color: #52606D !important;
+  color: var(--pgd-black-60) !important;
 }
 
-/* Code blocks */
+/* ================================
+   Code Blocks
+   ================================ */
 .docblock-source {
   border-radius: 8px !important;
-  border: 1px solid #E5E9EB !important;
-}
-
-/* ArgTypes table */
-.docblock-argstable {
-  border-radius: 8px !important;
+  border: 1px solid var(--pgd-black-20) !important;
   overflow: hidden !important;
 }
 
+.docblock-source pre {
+  background: var(--pgd-black-80) !important;
+}
+
+/* Inline code */
+.sbdocs code:not(.docblock-source code) {
+  background-color: var(--pgd-lime-10) !important;
+  color: var(--pgd-lime-80) !important;
+  padding: 2px 8px !important;
+  border-radius: 4px !important;
+  font-size: 0.875em !important;
+  font-weight: 500 !important;
+}
+
+/* ================================
+   Args Table
+   ================================ */
+.docblock-argstable {
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  border: 1px solid var(--pgd-black-20) !important;
+}
+
+.docblock-argstable thead {
+  background-color: var(--pgd-lime-10) !important;
+}
+
 .docblock-argstable th {
-  background-color: #F8FAFB !important;
-  color: #1F2933 !important;
+  color: var(--pgd-lime-80) !important;
   font-weight: 600 !important;
+  text-transform: uppercase !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.5px !important;
 }
 
 .docblock-argstable td {
-  border-color: #E5E9EB !important;
+  border-color: var(--pgd-black-20) !important;
+  color: var(--pgd-black-80) !important;
 }
 
-/* Canvas preview */
+.docblock-argstable tbody tr:hover {
+  background-color: var(--pgd-black-10) !important;
+}
+
+/* ================================
+   Canvas Preview
+   ================================ */
 .sb-show-main {
-  background: #FFFFFF !important;
+  background: var(--pgd-white) !important;
 }
 
-/* Addon panel */
+#storybook-preview-wrapper {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  border-radius: 8px !important;
+  margin: 16px !important;
+  overflow: hidden !important;
+  border: 1px solid var(--pgd-black-20) !important;
+}
+
+/* ================================
+   Addon Panel
+   ================================ */
 .sb-addon-panel {
-  border-top: 1px solid #E5E9EB !important;
+  border-top: 1px solid var(--pgd-black-20) !important;
+  background: var(--pgd-white) !important;
 }
 
-/* Controls addon */
 .sb-controls-wrapper {
   padding: 16px !important;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
+/* ================================
+   Links
+   ================================ */
+.sbdocs a {
+  color: var(--pgd-lime-60) !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
+  font-weight: 500 !important;
 }
 
-.sidebar-item {
-  animation: fadeIn 0.2s ease;
+.sbdocs a:hover {
+  color: var(--pgd-lime-80) !important;
+  text-decoration: underline !important;
 }
 
-/* Badge styles for status */
+/* ================================
+   Blockquotes
+   ================================ */
+.sbdocs blockquote {
+  border-left: 4px solid var(--pgd-lime-50) !important;
+  background-color: var(--pgd-lime-10) !important;
+  padding: 16px 20px !important;
+  border-radius: 0 8px 8px 0 !important;
+  margin: 16px 0 !important;
+}
+
+.sbdocs blockquote p {
+  color: var(--pgd-black-80) !important;
+  margin: 0 !important;
+}
+
+/* ================================
+   Headings
+   ================================ */
+.sbdocs h1, .sbdocs h2, .sbdocs h3 {
+  color: var(--pgd-black-80) !important;
+  font-weight: 700 !important;
+}
+
+.sbdocs h1 {
+  font-size: 2rem !important;
+  margin-top: 0 !important;
+}
+
+.sbdocs h2 {
+  font-size: 1.5rem !important;
+  border-bottom: 2px solid var(--pgd-lime-50) !important;
+  padding-bottom: 8px !important;
+  margin-top: 32px !important;
+}
+
+.sbdocs h3 {
+  font-size: 1.25rem !important;
+  color: var(--pgd-lime-80) !important;
+  margin-top: 24px !important;
+}
+
+/* ================================
+   Status Badges
+   ================================ */
 .sb-badge {
   border-radius: 4px !important;
   font-size: 10px !important;
@@ -157,62 +353,154 @@ button[title]:hover {
   letter-spacing: 0.5px !important;
 }
 
-/* Preview container shadow */
-#storybook-preview-wrapper {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
-  border-radius: 8px !important;
-  margin: 16px !important;
-  overflow: hidden !important;
+/* ================================
+   Animations
+   ================================ */
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(-4px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
 }
 
-/* Links in docs */
-.sbdocs a {
-  color: #00703C !important;
-  text-decoration: none !important;
-  transition: color 0.2s ease !important;
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 1; 
+  }
+  50% { 
+    opacity: 0.7; 
+  }
 }
 
-.sbdocs a:hover {
-  color: #005A30 !important;
-  text-decoration: underline !important;
+.sidebar-item {
+  animation: fadeIn 0.2s ease;
 }
 
-/* Blockquotes */
-.sbdocs blockquote {
-  border-left: 4px solid #00703C !important;
-  background-color: rgba(0, 112, 60, 0.04) !important;
-  padding: 12px 16px !important;
-  border-radius: 0 8px 8px 0 !important;
-}
-
-/* Inline code */
-.sbdocs code:not(.docblock-source code) {
-  background-color: rgba(0, 112, 60, 0.08) !important;
-  color: #00703C !important;
-  padding: 2px 6px !important;
-  border-radius: 4px !important;
-  font-size: 0.9em !important;
-}
-
-/* Headings */
-.sbdocs h1, .sbdocs h2, .sbdocs h3 {
-  color: #1F2933 !important;
-  font-weight: 700 !important;
-  margin-top: 24px !important;
-}
-
-.sbdocs h2 {
-  border-bottom: 1px solid #E5E9EB !important;
-  padding-bottom: 8px !important;
+/* ================================
+   Loading States
+   ================================ */
+.sb-loader {
+  border-color: var(--pgd-black-20) !important;
+  border-top-color: var(--pgd-lime-50) !important;
 }
 
 /* Empty state */
 .sb-empty-container {
-  color: #6B7D8A !important;
+  color: var(--pgd-black-50) !important;
 }
 
-/* Loading spinner */
-.sb-loader {
-  border-color: #E5E9EB !important;
-  border-top-color: #00703C !important;
+/* ================================
+   Story Preview Controls
+   ================================ */
+.sb-story-controls {
+  background: var(--pgd-black-10) !important;
+  border-radius: 8px !important;
+  padding: 16px !important;
+}
+
+/* Controls input styling */
+.sb-story-controls input[type="text"],
+.sb-story-controls input[type="number"],
+.sb-story-controls select {
+  border: 1px solid var(--pgd-black-40) !important;
+  border-radius: 6px !important;
+  padding: 8px 12px !important;
+  transition: border-color 0.2s ease !important;
+}
+
+.sb-story-controls input[type="text"]:focus,
+.sb-story-controls input[type="number"]:focus,
+.sb-story-controls select:focus {
+  border-color: var(--pgd-lime-50) !important;
+  box-shadow: 0 0 0 3px rgba(0, 171, 78, 0.15) !important;
+  outline: none !important;
+}
+
+/* Toggle/Boolean controls */
+.sb-story-controls button[role="switch"][aria-checked="true"] {
+  background-color: var(--pgd-lime-50) !important;
+}
+
+/* ================================
+   Action Buttons
+   ================================ */
+button.sb-button {
+  background: var(--pgd-lime-50) !important;
+  color: var(--pgd-white) !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 8px 16px !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+}
+
+button.sb-button:hover {
+  background: var(--pgd-lime-60) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 8px rgba(0, 171, 78, 0.25) !important;
+}
+
+button.sb-button:active {
+  transform: translateY(0) !important;
+}
+
+/* Secondary buttons */
+button.sb-button--secondary {
+  background: var(--pgd-white) !important;
+  color: var(--pgd-lime-60) !important;
+  border: 2px solid var(--pgd-lime-50) !important;
+}
+
+button.sb-button--secondary:hover {
+  background: var(--pgd-lime-10) !important;
+}
+
+/* ================================
+   Tooltip Styling
+   ================================ */
+[role="tooltip"] {
+  background: var(--pgd-black-80) !important;
+  color: var(--pgd-white) !important;
+  border-radius: 6px !important;
+  padding: 8px 12px !important;
+  font-size: 0.875rem !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* ================================
+   Notification/Toast
+   ================================ */
+.sb-notification {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
+}
+
+.sb-notification--success {
+  border-left: 4px solid var(--pgd-lime-50) !important;
+}
+
+.sb-notification--error {
+  border-left: 4px solid var(--pgd-red-50) !important;
+}
+
+.sb-notification--info {
+  border-left: 4px solid var(--pgd-blue-50) !important;
+}
+
+/* ================================
+   Mobile Responsive
+   ================================ */
+@media (max-width: 768px) {
+  .sbdocs-content {
+    padding: 20px !important;
+    margin: 8px !important;
+  }
+  
+  .sbdocs-title {
+    font-size: 1.5rem !important;
+  }
 }

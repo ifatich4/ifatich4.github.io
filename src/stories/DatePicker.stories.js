@@ -5,6 +5,15 @@ export default {
   title: "Components/DatePicker/Default",
   component: InputSmallDate,
   tags: ["autodocs"],
+  decorators: [
+    () => ({
+      template: `
+        <div style="width: 100%; max-width: 350px; padding: 16px; min-height: 400px;">
+          <story />
+        </div>
+      `,
+    }),
+  ],
   argTypes: {
     title: { control: "text" },
     placeholder: { control: "text" },

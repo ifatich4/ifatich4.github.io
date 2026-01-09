@@ -22,12 +22,12 @@
                             <div class="overlay-header-sm-mobile">
                                 <div class="modal-menu-lainnya">
                                     <div class="modal-menu-lainnya__box">
-                                        <template v-for="(item, index) in items" :key="index">
-                                            <div v-if="!item.action" class="modal-menu-lainnya__box-content">
+                                        <template v-for="(item, index) in (items || [])" :key="index">
+                                            <div v-if="item && !item.action" class="modal-menu-lainnya__box-content">
                                                 <img :src="item.icon" alt="" />
                                                 <p>{{ item.label }}</p>
                                             </div>
-                                            <a v-else class="modal-menu-lainnya__box-content" :href="item.action"><img
+                                            <a v-else-if="item" class="modal-menu-lainnya__box-content" :href="item.action"><img
                                                     :src="item.icon" alt="" />
                                                 <p>{{ item.label }}</p>
                                             </a>
@@ -538,9 +538,7 @@
 </template>
 <script>
     export default {
-        name: {
-            type: "NavCorporate",
-        },
+        name: "NavbarCorporate",
         props: {
             image: {
                 type: String,

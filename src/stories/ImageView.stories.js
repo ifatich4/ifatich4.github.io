@@ -11,6 +11,15 @@ export default {
       },
     },
   },
+  decorators: [
+    () => ({
+      template: `
+        <div style="width: 100%; max-width: 500px; padding: 16px;">
+          <story />
+        </div>
+      `,
+    }),
+  ],
   argTypes: {
     title: {
       control: 'text',

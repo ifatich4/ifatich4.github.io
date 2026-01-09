@@ -1,11 +1,20 @@
 import { ref } from "vue";
 import InputText from "../components/Input/InputText.vue";
 
-  export default {
-    title: 'Components/InputField/Default',
-    component: InputText,
-    tags: ['autodocs'],
-    argTypes : {
+export default {
+  title: 'Components/InputField/Default',
+  component: InputText,
+  tags: ['autodocs'],
+  decorators: [
+    () => ({
+      template: `
+        <div style="width: 100%; max-width: 400px; padding: 16px;">
+          <story />
+        </div>
+      `,
+    }),
+  ],
+  argTypes: {
       label : { control:"text" },
       error : { control: "text" },
       class: { control: "text" },

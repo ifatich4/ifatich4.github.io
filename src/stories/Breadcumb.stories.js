@@ -1,12 +1,19 @@
 import Breadcrumb from '../components/Breadcrumb/Breadcrumb.vue';
 
-
- export default {
-    title: 'Components/Breadcumb',
-    component: Breadcrumb,
-    tags: ['autodocs'],
-    // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-    argTypes: {
+export default {
+  title: 'Components/Breadcrumb',
+  component: Breadcrumb,
+  tags: ['autodocs'],
+  decorators: [
+    () => ({
+      template: `
+        <div style="width: 100%; max-width: 600px; padding: 16px;">
+          <story />
+        </div>
+      `,
+    }),
+  ],
+  argTypes: {
       items: {
         control: "object"
       },

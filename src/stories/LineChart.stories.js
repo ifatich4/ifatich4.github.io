@@ -10,7 +10,17 @@ export default {
         component: 'Line Chart component untuk visualisasi data trend dalam bentuk garis dengan support gradient fill dan custom tooltip.',
       },
     },
+    layout: 'fullscreen',
   },
+  decorators: [
+    () => ({
+      template: `
+        <div style="width: 100%; max-width: 800px; height: 400px; padding: 24px; margin: 0 auto;">
+          <story />
+        </div>
+      `,
+    }),
+  ],
   argTypes: {
     labels: {
       control: 'object',

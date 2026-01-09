@@ -17,6 +17,10 @@ export default {
       control: 'object',
       description: 'Array kategori tabs',
     },
+    tabSelected: {
+      control: 'number',
+      description: 'Index tab yang aktif (required)',
+    },
   },
 };
 
@@ -36,7 +40,7 @@ export const Default = {
     },
     template: `
       <div>
-        <TabKategori :items="items" v-model="activeTab" />
+        <TabKategori :items="items" v-model:tabSelected="activeTab" />
         <p class="mt-3">Active Tab: {{ activeTab }}</p>
       </div>
     `,
@@ -56,7 +60,7 @@ export const FewTabs = {
     },
     template: `
       <div>
-        <TabKategori :items="items" v-model="activeTab" />
+        <TabKategori :items="items" v-model:tabSelected="activeTab" />
       </div>
     `,
   }),
@@ -80,7 +84,7 @@ export const ManyTabs = {
     },
     template: `
       <div style="max-width: 600px;">
-        <TabKategori :items="items" v-model="activeTab" />
+        <TabKategori :items="items" v-model:tabSelected="activeTab" />
       </div>
     `,
   }),

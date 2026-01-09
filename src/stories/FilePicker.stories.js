@@ -4,6 +4,15 @@ export default {
   title: "Components/FilePicker/Default",
   component: FilePickerLG,
   tags: ["autodocs"],
+  decorators: [
+    () => ({
+      template: `
+        <div style="width: 100%; max-width: 450px; padding: 16px;">
+          <story />
+        </div>
+      `,
+    }),
+  ],
   argTypes: {
     errorText: {contorl: "text"},
     file: {control: "object"},

@@ -1,7 +1,7 @@
 import NavbarCorporate from "../components/Navbar/NavbarCorporate.vue";
 
 export default {
-  title: 'Components/Navbar/NavbarCorporate',
+  title: 'Components/Navigation/NavbarCorporate',
   component: NavbarCorporate,
   tags: ['autodocs'],
   parameters: {
@@ -15,37 +15,61 @@ export default {
   argTypes: {
     image: {
       control: 'text',
-      description: 'URL logo',
+      description: 'URL logo Pegadaian',
     },
     items: {
       control: 'object',
-      description: 'Array menu items dengan icon, label, dan action',
+      description: 'Array menu items dengan icon, label, action dan child items',
+    },
+    searchHandler: {
+      action: 'searched',
+      description: 'Handler function untuk search',
     },
   },
   args: {
-    image: '/assets/images/logo-pegadaian.svg',
+    image: '/assets/images/logo-pegadaian-small.svg',
     items: [
-      { icon: '/assets/images/ico-gadai.svg', label: 'Gadai', action: '/gadai' },
-      { icon: '/assets/images/ico-tabungan.svg', label: 'Tabungan Emas', action: '/tabungan-emas' },
-      { icon: '/assets/images/ico-pembiayaan.svg', label: 'Pembiayaan', action: '/pembiayaan' },
-    ],
-  },
-};
-
-export const Default = {
-  args: {
-    image: '/assets/images/logo-pegadaian.svg',
-    items: [
-      { icon: '/assets/images/ico-gadai.svg', label: 'Gadai', action: '/gadai' },
-      { icon: '/assets/images/ico-tabungan.svg', label: 'Tabungan Emas', action: '/tabungan-emas' },
-      { icon: '/assets/images/ico-pembiayaan.svg', label: 'Pembiayaan', action: '/pembiayaan' },
-      { icon: '/assets/images/ico-invest-emas.svg', label: 'Investasi', action: '/investasi' },
+      {
+        label: 'Kerjasama',
+        action: '/kerjasama',
+        icon: '/assets/images/world.svg',
+        child: null,
+      },
+      {
+        label: 'Promo',
+        action: '/promo',
+        icon: '/assets/images/bag-dark.svg',
+        child: null,
+      },
+      {
+        label: 'Artikel',
+        action: '/artikel',
+        icon: '',
+        child: [
+          { label: 'Emas', action: '/artikel/emas' },
+          { label: 'Inspirasi', action: '/artikel/inspirasi' },
+          { label: 'Wirausaha', action: '/artikel/wirausaha' },
+        ],
+      },
+      {
+        label: 'Acara',
+        action: '/acara',
+        child: null,
+      },
+      {
+        label: 'Simulasi',
+        action: '/simulasi',
+        child: [
+          { label: 'Harga Emas Batangan', action: '/simulasi/harga-emas' },
+          { label: 'Simulasi Tabungan Emas', action: '/simulasi/tabungan-emas' },
+        ],
+      },
     ],
   },
   decorators: [
     () => ({
       template: `
-        <div style="min-height: 300px;">
+        <div style="min-height: 400px; background: #f8f8f8;">
           <story />
         </div>
       `,
@@ -53,25 +77,56 @@ export const Default = {
   ],
 };
 
-export const WithFullMenu = {
+export const Default = {};
+
+export const WithMinimalMenu = {
   args: {
-    image: '/assets/images/logo-pegadaian.svg',
+    image: '/assets/images/logo-pegadaian-small.svg',
     items: [
-      { icon: '/assets/images/ico-gadai.svg', label: 'Gadai', action: '/gadai' },
-      { icon: '/assets/images/ico-tabungan.svg', label: 'Tabungan Emas', action: '/tabungan-emas' },
-      { icon: '/assets/images/ico-pembiayaan.svg', label: 'Pembiayaan', action: '/pembiayaan' },
-      { icon: '/assets/images/ico-invest-emas.svg', label: 'Investasi', action: '/investasi' },
-      { icon: '/assets/images/ico-cicil-emas.svg', label: 'Cicil Emas', action: '/cicil-emas' },
-      { icon: '/assets/images/ico-pembayaran-no-bg.svg', label: 'Pembayaran', action: '/pembayaran' },
+      {
+        label: 'Kerjasama',
+        action: '/kerjasama',
+        icon: '/assets/images/world.svg',
+        child: null,
+      },
+      {
+        label: 'Promo',
+        action: '/promo',
+        icon: '/assets/images/bag-dark.svg',
+        child: null,
+      },
     ],
   },
-  decorators: [
-    () => ({
-      template: `
-        <div style="min-height: 300px;">
-          <story />
-        </div>
-      `,
-    }),
-  ],
+};
+
+export const WithSubmenu = {
+  args: {
+    image: '/assets/images/logo-pegadaian-small.svg',
+    items: [
+      {
+        label: 'Produk',
+        action: '/produk',
+        icon: '',
+        child: [
+          { label: 'Gadai Emas', action: '/produk/gadai-emas' },
+          { label: 'Tabungan Emas', action: '/produk/tabungan-emas' },
+          { label: 'Cicil Emas', action: '/produk/cicil-emas' },
+        ],
+      },
+      {
+        label: 'Layanan',
+        action: '/layanan',
+        icon: '',
+        child: [
+          { label: 'Jasa Taksiran', action: '/layanan/taksiran' },
+          { label: 'Jasa Titipan', action: '/layanan/titipan' },
+        ],
+      },
+      {
+        label: 'Tentang Kami',
+        action: '/tentang',
+        child: null,
+      },
+    ],
+  },
 };

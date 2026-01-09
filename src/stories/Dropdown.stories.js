@@ -3,8 +3,17 @@ import { ref } from "vue";
 
 export default {
   title: "Components/Dropdown/Default",
-  component: InputDropdown ,
+  component: InputDropdown,
   tags: ["autodocs"],
+  decorators: [
+    () => ({
+      template: `
+        <div style="width: 100%; max-width: 400px; padding: 16px; min-height: 350px;">
+          <story />
+        </div>
+      `,
+    }),
+  ],
   argTypes: {
     items: { control: "object" },
     modelValue : { control: "object"},

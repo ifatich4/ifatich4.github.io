@@ -1,11 +1,28 @@
 import Button from "../components/Button/Button.vue";
 import DataTable from "../components/Table/DataTable.vue";
 
-  export default {
-    title: 'Components/Table/DataTable',
-    component: DataTable,
-    tags: ['autodocs'],
-    args: {
+export default {
+  title: 'Components/Table/DataTable',
+  component: DataTable,
+  tags: ['autodocs'],
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        component: 'DataTable component untuk menampilkan data dalam format tabel dengan fitur sorting, pagination, dan custom columns.',
+      },
+    },
+  },
+  decorators: [
+    () => ({
+      template: `
+        <div style="width: 100%; padding: 24px;">
+          <story />
+        </div>
+      `,
+    }),
+  ],
+  args: {
       data: [
         {
           id: 1,

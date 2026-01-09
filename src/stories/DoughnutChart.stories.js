@@ -10,7 +10,17 @@ export default {
         component: 'Doughnut Chart component untuk visualisasi data dalam bentuk donat dengan support custom tooltip dan warna.',
       },
     },
+    layout: 'fullscreen',
   },
+  decorators: [
+    () => ({
+      template: `
+        <div style="width: 100%; max-width: 500px; height: 400px; padding: 24px; margin: 0 auto;">
+          <story />
+        </div>
+      `,
+    }),
+  ],
   argTypes: {
     labels: {
       control: 'object',

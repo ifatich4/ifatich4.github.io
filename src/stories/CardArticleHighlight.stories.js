@@ -10,7 +10,17 @@ export default {
         component: 'Card Article Highlight untuk menampilkan artikel unggulan dengan overlay gambar, label kategori, judul dan tanggal.',
       },
     },
+    layout: 'fullscreen',
   },
+  decorators: [
+    () => ({
+      template: `
+        <div style="width: 100%; padding: 24px;">
+          <story />
+        </div>
+      `,
+    }),
+  ],
   argTypes: {
     items: {
       control: 'object',

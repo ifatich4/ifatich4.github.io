@@ -32,20 +32,25 @@ const preview = {
       toc: true,
       theme: pegadaianTheme,
     },
-    // Custom backgrounds for preview
+    // Custom backgrounds for preview - Using Design System Colors
     backgrounds: {
-      default: 'light',
+      default: 'White',
       values: [
-        { name: 'light', value: '#FFFFFF' },
-        { name: 'soft', value: '#F8FAFB' },
-        { name: 'gray', value: '#E5E9EB' },
-        { name: 'dark', value: '#1F2933' },
-        { name: 'pegadaian-green', value: '#00703C' },
-        { name: 'pegadaian-gold', value: '#FFD700' },
+        { name: 'White', value: '#ffffff' },
+        { name: 'Black 10', value: '#f8f8f8' },
+        { name: 'Black 20', value: '#eeeeef' },
+        { name: 'Black 80', value: '#252528' },
+        { name: 'Lime 10', value: '#e6f6ea' },
+        { name: 'Lime 50', value: '#00ab4e' },
+        { name: 'Lime 80', value: '#00662e' },
+        { name: 'Gold 10', value: '#fbf7f0' },
+        { name: 'Gold 50', value: '#d8b56d' },
+        { name: 'Blue 10', value: '#e8f1f9' },
+        { name: 'Broccoli 50', value: '#004d43' },
       ],
     },
-    // Layout configuration
-    layout: 'centered',
+    // Layout configuration - changed from 'centered' to 'padded' for better component sizing
+    layout: 'padded',
     // Viewport presets
     viewport: {
       viewports: {
