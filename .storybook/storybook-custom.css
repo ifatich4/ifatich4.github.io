@@ -1,0 +1,218 @@
+/* Custom Storybook Styles - Pegadaian UI Kit */
+
+/* Manager (Sidebar) Styles */
+.sidebar-header {
+  padding: 20px 16px !important;
+  border-bottom: 1px solid #E5E9EB;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E0;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A0AEC0;
+}
+
+/* Sidebar item hover effects */
+[data-nodetype="component"] button:hover,
+[data-nodetype="story"] button:hover {
+  background-color: rgba(0, 112, 60, 0.08) !important;
+}
+
+/* Active story highlight */
+[data-selected="true"] button {
+  background-color: rgba(0, 112, 60, 0.12) !important;
+  border-left: 3px solid #00703C !important;
+}
+
+/* Story icon colors */
+[data-nodetype="story"] svg {
+  color: #00703C !important;
+}
+
+/* Component folder icon */
+[data-nodetype="component"] svg {
+  color: #52606D !important;
+}
+
+/* Expanded component folder */
+[data-expanded="true"] > button svg {
+  color: #00703C !important;
+}
+
+/* Search input styling */
+#storybook-explorer-searchfield {
+  border-radius: 8px !important;
+  border: 1px solid #E5E9EB !important;
+  padding: 10px 12px !important;
+  transition: all 0.2s ease !important;
+}
+
+#storybook-explorer-searchfield:focus {
+  border-color: #00703C !important;
+  box-shadow: 0 0 0 3px rgba(0, 112, 60, 0.1) !important;
+}
+
+/* Toolbar buttons */
+button[title]:hover {
+  background-color: rgba(0, 112, 60, 0.08) !important;
+}
+
+/* Panel tabs */
+[role="tablist"] button[role="tab"] {
+  transition: all 0.2s ease !important;
+}
+
+[role="tablist"] button[role="tab"][aria-selected="true"] {
+  border-bottom-color: #00703C !important;
+  color: #00703C !important;
+}
+
+/* Docs page styling */
+.sbdocs-wrapper {
+  padding: 32px !important;
+}
+
+.sbdocs-content {
+  max-width: 1000px !important;
+}
+
+/* Story title in docs */
+.sbdocs-title {
+  font-weight: 700 !important;
+  color: #1F2933 !important;
+}
+
+/* Subtitle */
+.sbdocs-subtitle {
+  color: #52606D !important;
+}
+
+/* Code blocks */
+.docblock-source {
+  border-radius: 8px !important;
+  border: 1px solid #E5E9EB !important;
+}
+
+/* ArgTypes table */
+.docblock-argstable {
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
+.docblock-argstable th {
+  background-color: #F8FAFB !important;
+  color: #1F2933 !important;
+  font-weight: 600 !important;
+}
+
+.docblock-argstable td {
+  border-color: #E5E9EB !important;
+}
+
+/* Canvas preview */
+.sb-show-main {
+  background: #FFFFFF !important;
+}
+
+/* Addon panel */
+.sb-addon-panel {
+  border-top: 1px solid #E5E9EB !important;
+}
+
+/* Controls addon */
+.sb-controls-wrapper {
+  padding: 16px !important;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.sidebar-item {
+  animation: fadeIn 0.2s ease;
+}
+
+/* Badge styles for status */
+.sb-badge {
+  border-radius: 4px !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Preview container shadow */
+#storybook-preview-wrapper {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+  border-radius: 8px !important;
+  margin: 16px !important;
+  overflow: hidden !important;
+}
+
+/* Links in docs */
+.sbdocs a {
+  color: #00703C !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
+}
+
+.sbdocs a:hover {
+  color: #005A30 !important;
+  text-decoration: underline !important;
+}
+
+/* Blockquotes */
+.sbdocs blockquote {
+  border-left: 4px solid #00703C !important;
+  background-color: rgba(0, 112, 60, 0.04) !important;
+  padding: 12px 16px !important;
+  border-radius: 0 8px 8px 0 !important;
+}
+
+/* Inline code */
+.sbdocs code:not(.docblock-source code) {
+  background-color: rgba(0, 112, 60, 0.08) !important;
+  color: #00703C !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  font-size: 0.9em !important;
+}
+
+/* Headings */
+.sbdocs h1, .sbdocs h2, .sbdocs h3 {
+  color: #1F2933 !important;
+  font-weight: 700 !important;
+  margin-top: 24px !important;
+}
+
+.sbdocs h2 {
+  border-bottom: 1px solid #E5E9EB !important;
+  padding-bottom: 8px !important;
+}
+
+/* Empty state */
+.sb-empty-container {
+  color: #6B7D8A !important;
+}
+
+/* Loading spinner */
+.sb-loader {
+  border-color: #E5E9EB !important;
+  border-top-color: #00703C !important;
+}

@@ -65,7 +65,7 @@ const onlyNumber = (event) => {
 </template>
 
 <style lang="scss">
-  .rupiah.custom-input-group-icon{
+  .rupiah.custom-input-group-icon {
     position: relative;
     border: 1px solid var(--g-kit-black-20);
 
@@ -73,26 +73,34 @@ const onlyNumber = (event) => {
       border: 1px solid var(--g-kit-lime-50);
     }
 
+    &:has(:disabled) .input-group-text {
+      background-color: var(--g-kit-black-20);
+    }
+
     .input-group-text{
+      color: var(--g-kit-black-60);
       height: 46px;
+      min-width: 92px;
     }
 
     input {
       box-shadow: none !important;
       border: none !important;
       border-radius: 6px;
+       border-left: 1px solid var(--g-kit-black-20) !important;
 
       &:disabled {
         border-color: var(--g-kit-black-20);
+         border-left: 1px solid var(--g-kit-black-40) !important;
+      }
+
+      &:focus, &:hover:not(:disabled) {
+        border-color: var(--g-kit-lime-50) !important;
       }
     }
   }
 
   .rupiah.custom-input-group-icon:has(input:disabled) {
-    border-color: var(--g-kit-black-20);
-
-    &:hover {
-      border-color: var(--g-kit-black-20);
-    }
+    border-color: var(--g-kit-black-40);
   }
 </style>

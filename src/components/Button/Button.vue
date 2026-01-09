@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <button class="btn" :class="[`btn-${type}`, `btn-${size}`]" :disabled="loading || disabled">
-      <div class="d-flex justify-content-center align-items-center">
+      <div class="h-100 d-flex justify-content-center align-items-center">
         <BSpinner v-if="loading" class="me-1" :small="size === 'sm' || size==='md'" />
         <div class="icon" v-if="icon" :small="size === 'sm' || size==='md'">
           <slot name="icon"></slot>
@@ -36,14 +36,28 @@
                 validator(value) {
                     return ["sm", "md", "lg", "xl"].includes(value);
                 },
+                default:'lg'
             },
         }
     };
 </script>
 
 <style scoped lang="scss">
+
+  .btn-sm {
+    height: 24px;
+  }
+
   .btn-md {
     height: 40px;
+  }
+
+  .btn-lg {
+    height: 48px;
+  }
+
+  .btn-xl {
+    height: 52px;
   }
 
   .icon {

@@ -1,0 +1,24 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle opacity="0.1" cx="24" cy="24" r="24" fill="#FFC54F"/>
+<rect x="20.25" y="14.25" width="16.5" height="24" rx="3" fill="#CC9D3F"/>
+<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="20" y="14" width="17" height="25">
+<rect x="20.25" y="14.25" width="16.5" height="24" rx="3" fill="white"/>
+</mask>
+<g mask="url(#mask0)">
+<rect x="18" y="14.25" width="16.5" height="24" rx="3" fill="#FFC54F"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M26.8613 18.1729L24.3603 20.0585C24.0543 20.289 23.9257 20.6992 24.0429 21.073L24.9978 24.1239C25.115 24.4977 25.4508 24.75 25.8294 24.75H28.9206C29.2992 24.75 29.635 24.4977 29.7522 24.1239L30.7071 21.073C30.8243 20.6992 30.6957 20.289 30.3897 20.0585L27.8887 18.1729C27.5827 17.9424 27.1673 17.9424 26.8613 18.1729Z" fill="#CC9D3F"/>
+<rect x="23.625" y="32.25" width="7.5" height="1.5" rx="0.75" fill="#CC9D3F"/>
+<rect x="23.625" y="28.5" width="7.5" height="1.5" rx="0.75" fill="#CC9D3F"/>
+</g>
+<path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M26.25 14.25L29.25 14.2469V31.5C29.25 33.1568 27.9069 34.5 26.25 34.5H20.25V32.25L26.25 14.25Z" fill="#CC9D3F"/>
+<rect x="11.25" y="9.75" width="16.5" height="24" rx="3" fill="#CC9D3F"/>
+<mask id="mask1" mask-type="alpha" maskUnits="userSpaceOnUse" x="11" y="9" width="17" height="25">
+<rect x="11.25" y="9.75" width="16.5" height="24" rx="3" fill="white"/>
+</mask>
+<g mask="url(#mask1)">
+<rect x="9" y="9.75" width="16.5" height="24" rx="3" fill="#FFC54F"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M17.8613 13.6729L15.3603 15.5585C15.0543 15.789 14.9257 16.1992 15.0429 16.573L15.9978 19.6239C16.115 19.9977 16.4508 20.25 16.8294 20.25H19.9206C20.2992 20.25 20.635 19.9977 20.7522 19.6239L21.7071 16.573C21.8243 16.1992 21.6957 15.789 21.3897 15.5585L18.8887 13.6729C18.5827 13.4424 18.1673 13.4424 17.8613 13.6729Z" fill="#CC9D3F"/>
+<rect x="14.625" y="27.75" width="7.5" height="1.5" rx="0.75" fill="#CC9D3F"/>
+<rect x="14.625" y="24" width="7.5" height="1.5" rx="0.75" fill="#CC9D3F"/>
+</g>
+</svg>

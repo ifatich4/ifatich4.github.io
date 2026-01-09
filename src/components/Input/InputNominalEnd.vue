@@ -6,7 +6,7 @@
             <img :src="require('../../assets/images/icon-info.svg')" />
         </label>
 
-        <div class="input-group rupiah custom-input-group-icon p-0">
+        <div class="input-group rupiah custom-input-group-icon p-0 input-nominal-end">
             <input 
                 type="tel" :class="['form-control prevent-zero', { 'is-inval': localError }]" 
                 :placeholder="placeholder || ['Masukkan ' + title.toLowerCase()]"
@@ -42,7 +42,7 @@
                 type: String,
                 default: "placeholder . . .",
             },
-            value: {
+            modelValue: {
                 type: [String, Number],
                 default: "",
             },
@@ -69,6 +69,16 @@
             unit: {
                 type: String,
                 default: "%"
+            },
+            tooltip: {
+                type: Boolean,
+                default: true,
+            },
+            delimeter: {
+                type: String,
+                default: "comma",
+                validator: (value) => ["comma", "dot", "none"].includes(value),
+                required: false,
             }
         },
         data: () => ({
@@ -79,7 +89,7 @@
             currentValue(newVal) {
                 this.localError = this.required && !newVal;
             },
-            value: {
+            modelValue: {
                 handler(after) {
                     this.currentValue = this.format(after);
                 },
@@ -87,13 +97,54 @@
             },
         },
         methods: {
-            format: (value) =>
-                (value + "").replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+            format(value) {
+                if (value == null || value === "") return "";
+
+                const clean = (value + "").replace(/\D/g, "");
+
+                if (this.delimeter === "comma") {
+                return clean.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                } else if (this.delimeter === "dot") {
+                return clean.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                } else {
+                return clean;
+                }
+            },
 
             handleInput() {
                 this.currentValue = this.format(this.currentValue);
-                this.$emit("input", (this.currentValue + "").replace(/[^0-9]/g, ""));
+                this.$emit("update:modelValue", (this.currentValue + "").replace(/[^0-9]/g, ""));
             },
         },
+
     };
 </script>
+
+<style lang="scss">
+
+.rupiah.custom-input-group-icon {
+
+    &.input-nominal-end {
+
+        &:has(:focus) {
+            border: 1px solid var(--g-kit-lime-50);
+        } 
+        
+        input {
+            border-left: none !important;
+            border-right: 1px solid var(--g-kit-black-20) !important;
+
+            &:disabled {
+                border-left: none !important;
+                border-right: 1px solid var(--g-kit-black-40) !important;
+                color: var(--g-kit-black-60);
+            }
+
+            &:hover:not(:disabled),&:focus {
+                border-right-color: var(--g-kit-lime-50) !important;
+            }
+        }
+    }
+}
+
+</style>

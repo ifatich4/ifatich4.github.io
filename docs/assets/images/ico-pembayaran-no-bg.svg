@@ -1,0 +1,20 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M4 7C4 5.34315 5.34315 4 7 4H17C18.6569 4 20 5.34315 20 7V25C20 26.6569 18.6569 28 17 28H7C5.34315 28 4 26.6569 4 25V7Z" fill="#1868AB"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M4 7C4 5.34315 5.34315 4 7 4H15C16.6569 4 18 5.34315 18 7V25C18 26.6569 16.6569 28 15 28H7C5.34315 28 4 26.6569 4 25V7Z" fill="#5297D1"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M5.33333 7.58331C5.33333 6.34067 6.34069 5.33331 7.58333 5.33331L7.66666 5.33331C8.03485 5.33331 8.33333 5.63179 8.33333 5.99998C8.33333 6.36817 8.6318 6.66665 8.99999 6.66665H13C13.3682 6.66665 13.6667 6.36817 13.6667 5.99998C13.6667 5.63179 13.9651 5.33331 14.3333 5.33331H14.4167C15.6593 5.33331 16.6667 6.34067 16.6667 7.58331V23.5686C16.6667 25.2255 15.3235 26.5686 13.6667 26.5686H8.33333C6.67647 26.5686 5.33333 25.2255 5.33333 23.5686V7.58331Z" fill="white"/>
+<rect x="10.6667" y="16" width="16.6667" height="12" rx="3" fill="#1868AB"/>
+<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="10" y="16" width="18" height="12">
+<rect x="10.6667" y="16" width="16.6667" height="12" rx="3" fill="white"/>
+</mask>
+<g mask="url(#mask0)">
+<rect x="8.66667" y="15.3333" width="16.6667" height="12" rx="3" fill="#5297D1"/>
+</g>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M19.3333 22C19.3333 20.8954 20.2288 20 21.3333 20H26.5C27.3284 20 28 20.6716 28 21.5V22.5C28 23.3284 27.3284 24 26.5 24H21.3333C20.2288 24 19.3333 23.1046 19.3333 22Z" fill="#CC9D3F"/>
+<mask id="mask1" mask-type="alpha" maskUnits="userSpaceOnUse" x="19" y="20" width="9" height="4">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M19.3333 22C19.3333 20.8954 20.2288 20 21.3333 20H26.5C27.3284 20 28 20.6716 28 21.5V22.5C28 23.3284 27.3284 24 26.5 24H21.3333C20.2288 24 19.3333 23.1046 19.3333 22Z" fill="white"/>
+</mask>
+<g mask="url(#mask1)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M17.3333 22C17.3333 20.8954 18.2288 20 19.3333 20H24.5C25.3284 20 26 20.6716 26 21.5V22.5C26 23.3284 25.3284 24 24.5 24H19.3333C18.2288 24 17.3333 23.1046 17.3333 22Z" fill="#FFC54F"/>
+<ellipse cx="21.3333" cy="22" rx="1.33333" ry="1.33333" fill="white"/>
+</g>
+</svg>

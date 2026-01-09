@@ -1,0 +1,23 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="12.6667" y="7.33333" width="14.6667" height="21.3333" rx="3" fill="#CC9D3F"/>
+<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="12" y="7" width="16" height="22">
+<rect x="12.6667" y="7.33333" width="14.6667" height="21.3333" rx="3" fill="white"/>
+</mask>
+<g mask="url(#mask0)">
+<rect x="10.6667" y="7.33333" width="14.6667" height="21.3333" rx="3" fill="#FFC54F"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M18.5433 10.8203L16.3203 12.4965C16.0482 12.7013 15.934 13.0659 16.0381 13.3983L16.8869 16.1101C16.9911 16.4424 17.2896 16.6667 17.6261 16.6667H20.3739C20.7104 16.6667 21.0089 16.4424 21.1131 16.1101L21.9619 13.3983C22.066 13.0659 21.9518 12.7013 21.6797 12.4965L19.4567 10.8203C19.1846 10.6154 18.8154 10.6154 18.5433 10.8203Z" fill="#CC9D3F"/>
+<rect x="15.6667" y="23.3333" width="6.66667" height="1.33333" rx="0.666666" fill="#CC9D3F"/>
+<rect x="15.6667" y="20" width="6.66667" height="1.33333" rx="0.666667" fill="#CC9D3F"/>
+</g>
+<path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M18 7.33333L20.6667 7.33066V22.3333C20.6667 23.9902 19.3235 25.3333 17.6667 25.3333H12.6667V23.3333L18 7.33333Z" fill="#CC9D3F"/>
+<rect x="4.66667" y="3.33333" width="14.6667" height="21.3333" rx="3" fill="#CC9D3F"/>
+<mask id="mask1" mask-type="alpha" maskUnits="userSpaceOnUse" x="4" y="3" width="16" height="22">
+<rect x="4.66667" y="3.33333" width="14.6667" height="21.3333" rx="3" fill="white"/>
+</mask>
+<g mask="url(#mask1)">
+<rect x="2.66667" y="3.33333" width="14.6667" height="21.3333" rx="3" fill="#FFC54F"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.5433 6.82032L8.32028 8.49647C8.04822 8.70135 7.93396 9.06594 8.03812 9.39826L8.88692 12.1101C8.99108 12.4424 9.28956 12.6667 9.62613 12.6667H12.3739C12.7104 12.6667 13.0089 12.4424 13.1131 12.1101L13.9619 9.39826C14.066 9.06594 13.9518 8.70135 13.6797 8.49647L11.4567 6.82032C11.1846 6.61544 10.8154 6.61544 10.5433 6.82032Z" fill="#CC9D3F"/>
+<rect x="7.66667" y="19.3333" width="6.66667" height="1.33333" rx="0.666666" fill="#CC9D3F"/>
+<rect x="7.66667" y="16" width="6.66667" height="1.33333" rx="0.666667" fill="#CC9D3F"/>
+</g>
+</svg>

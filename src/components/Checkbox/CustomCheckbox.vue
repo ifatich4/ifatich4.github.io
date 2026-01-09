@@ -1,12 +1,13 @@
 <template>
-    <label class="checkbox-wrapper">
+    <label class="checkbox-wrapper" >
         <input
             type="checkbox"
             v-model="isChecked"
             @change="handleChange"
-            class="g-checkbox hidden-checkbox"
+            :class="[`g-checkbox hidden-checkbox`]"
+            :disabled="props.disabled"
         />
-        <span class="checkbox-container" @mousedown="createRipple">
+        <span class="checkbox-container" @mousedown="createRipple"  tabindex="0" @keydown.enter.prevent="toggleValue">
             <img
                 :src="checkboxIcon"
                 alt="checkbox"
@@ -15,7 +16,7 @@
             <span v-for="ripple in ripples" :key="ripple.id" class="ripple"
                   :style="ripple.style" />
         </span>
-        <span :class="checkboxTextClass">
+        <span :class="[checkboxTextClass, props.color && `label-disabled`]">
             {{ label }}
         </span>
     </label>
@@ -38,6 +39,10 @@ const props = defineProps({
         type: String,
         default: 'checkbox-text',
     },
+    disabled: {
+        type: Boolean,
+        default: false,
+    }
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -50,6 +55,10 @@ watch(() => props.modelValue, (val) => {
 
 function handleChange() {
     emit('update:modelValue', isChecked.value)
+}
+
+const toggleValue = () => {
+    emit("update:modelValue", !isChecked.value);
 }
 
 const checkboxIcon = computed(() => {
@@ -88,11 +97,15 @@ function createRipple(event) {
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .checkbox-wrapper {
     display: inline-flex;
     align-items: center;
     cursor: pointer;
+
+     .label-disabled {
+        color: var(--g-kit-black-60);
+    }
 }
 .checkbox-container:hover {
     background-color: rgba(0, 0, 0, 0.05);
@@ -111,6 +124,10 @@ function createRipple(event) {
     display: flex;
     overflow: hidden;
     border-radius: 25%;
+
+    &:focus {
+        outline: var(--g-kit-lime-50) auto 1px;
+    }
 }
 .ripple {
     position: absolute;

@@ -29,7 +29,6 @@ const props = defineProps({
   uniqueKey: {},
   imagePlaceholder: {
     type: String,
-    default: 'idcard'
   },
   useBottomSheet: {
     type: Boolean,
@@ -37,7 +36,11 @@ const props = defineProps({
   },
   general: {
     type: Boolean,
-  }
+  },
+  userName: {
+    type: String,
+    default: 'unknown'
+  },
 })
 const emit = defineEmits(['fileDropped', 'fileRemoved', 'errorPermission'])
 const fileSrc = defineModel()
@@ -61,24 +64,14 @@ window.onresize = onResizeScreen
 onResizeScreen()
 
 const constraints = computed(() => {
-  if (isMobileView) {
-    return {
-      video: {
-          facingMode: facingMode.value,
-          deviceId: {},
-      },
-      audio: false,
-    }
-  } else {
-    return {
-      video: {
-          width: 532,
-          height: 416,
-          facingMode: facingMode.value,
-          deviceId: {},
-      },
-      audio: false,
-    }
+  return {
+    video: {
+      width: { ideal: 1920 },
+      height: { ideal: 1080 },
+      facingMode: facingMode.value,
+      deviceId: {},
+    },
+    audio: false,
   }
 })
 
@@ -146,20 +139,47 @@ const handleSwitchCamera = async() => {
   startCamera()
 }
 
+const idCardCropping = (videoH, videoW) => {
+  let guideW = videoW * 0.25
+  let guideH = videoH * 0.35
+  const scale = props.useBottomSheet ? 1 : 2
+  guideW *= scale
+  guideH *= scale
+  return { guideW, guideH }
+}
+
+const generalCropping = (videoH, videoW) => {
+  let guideW = videoW
+  let guideH = videoH
+  return { guideW, guideH }
+}
+
 const handleCameraSnap = () => {
+  const videoEl = video.value
+  if (!videoEl) return
+
+  const videoW = videoEl.videoWidth
+  const videoH = videoEl.videoHeight
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
-  if (isMobileView) {
-    canvas.width = video.value.videoWidth
-    canvas.height = video.value.videoHeight
-    ctx.drawImage(video.value, 0, 0, canvas.width, canvas.height)
-  } else {
-    const element = document.getElementById('cameraGuidance')
-    const rect = element.getBoundingClientRect()
-    ctx.drawImage(video.value, 0, 0, video.value.videoWidth, video.value.videoHeight, 0, 0, rect.width, rect.height)
-  }
+
+  // Hitung area crop dari fungsi
+  const { guideW, guideH } = props.imagePlaceholder === "idcard" ? idCardCropping(videoH, videoW) : generalCropping(videoH, videoW)
+
+  const startX = (videoW - guideW) / 2
+  const startY = (videoH - guideH) / 2
+
+  const outputScale = window.devicePixelRatio || 10
+  canvas.width = guideW * outputScale
+  canvas.height = guideH * outputScale
+
+  ctx.imageSmoothingEnabled = false
+  ctx.imageSmoothingQuality = "high"
+
+  ctx.drawImage(videoEl, startX, startY, guideW, guideH, 0, 0, canvas.width, canvas.height)
+
+  snappedCameraPict.value = canvas.toDataURL("image/png")
   stopCamera()
-  snappedCameraPict.value = canvas.toDataURL('image/jpeg')
 }
 
 const blobToDataUrl = (blob) =>
@@ -318,7 +338,7 @@ const compressImg = (maxSize, dataUrl, quality = 0.7) =>
           ref="imgElement"
           :src="fileSrc"
           alt="Captured Image"
-          class="imgCaptured"
+          :class="[`imgCaptured`, props.imagePlaceholder === 'idcard' && 'idcard']"
           :id="`${$attrs.id}_img`"
         />
         <img 
@@ -382,19 +402,22 @@ const compressImg = (maxSize, dataUrl, quality = 0.7) =>
       v-model="cameraDialog"
       class="inputCameraMobile"
       centered
-      hide-footer
       fullscreen
+      :hide-footer="!snappedCameraPict"
       id="modal-camera"
     >
       <template #header="{ close }">
-        <img
-          @click="close"
-          src="../../assets/icon/arrow_left.svg"
-          alt="Close Camera"
-          :id="`${$attrs.id}_closeCamera`"
-          v-if="cameraIsReady"
-        />
-        <div class="mx-2">Ambil Foto</div>
+        <svg :id="`${$attrs.id}_closeCamera`" @click="close" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 12C20 11.4477 19.5523 11 19 11H7.83L12.71 6.12C13.1017 5.72829 13.1006 5.09284 12.7075 4.70251C12.3164 4.31412 11.6848 4.31524 11.295 4.705L4.07921 11.9208C4.03546 11.9645 4.03546 12.0355 4.07921 12.0792L11.2947 19.2947C11.6842 19.6842 12.3158 19.6842 12.7053 19.2947C13.0946 18.9054 13.0949 18.2743 12.7059 17.8847L7.83 13H19C19.5523 13 20 12.5523 20 12Z" fill="currentColor"/>
+          <mask id="mask0_0_5132" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="4" y="4" width="16" height="16">
+            <path d="M20 12C20 11.4477 19.5523 11 19 11H7.83L12.71 6.12C13.1017 5.72829 13.1006 5.09284 12.7075 4.70251C12.3164 4.31412 11.6848 4.31524 11.295 4.705L4.07921 11.9208C4.03546 11.9645 4.03546 12.0355 4.07921 12.0792L11.2947 19.2947C11.6842 19.6842 12.3158 19.6842 12.7053 19.2947C13.0946 18.9054 13.0949 18.2743 12.7059 17.8847L7.83 13H19C19.5523 13 20 12.5523 20 12Z" fill="currentColor"/>
+          </mask>
+          <g mask="url(#mask0_0_5132)">
+            <rect width="24" height="24" fill="currentColor"/>
+          </g>
+        </svg>
+
+        <div class="mx-2 fw-bolder">Ambil Foto</div>
       </template>
       <template v-if="!snappedCameraPict">
         <div class="camera-container" id="camera-container">
@@ -426,25 +449,31 @@ const compressImg = (maxSize, dataUrl, quality = 0.7) =>
           />
         </div>
       </template>
-      <div v-else>
-        <div class="preview-container">
+      <template v-else>
+        <div :class="[`preview-container`, props.imagePlaceholder === 'idcard' && 'idcard']">
+          <div class="timestamp">
+            <div>{{ userName }}</div>
+            <div>{{ 'Waktu: '+ new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }) + ', ' + new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute: '2-digit'})}}</div>
+          </div>
           <img :src="snappedCameraPict" alt="Captured Image" />
         </div>
-        <div class="footer-button">
+      </template>
+      <template #footer>
           <Button
             @click="handleRetakePhotoClick"
             type="neutral"
             label="Ambil Ulang Foto"
             :id="`${$attrs.id}_cameraRetake`"
+            class="w-100"
           />
           <Button
             @click="handleCameraChosen"
             type="primary"
             label="Gunakan Foto"
             :id="`${$attrs.id}_cameraChoose`"
+            class="w-100"
           />
-        </div>
-      </div>
+      </template>
     </BModal>
   </section>
 
@@ -459,7 +488,7 @@ const compressImg = (maxSize, dataUrl, quality = 0.7) =>
       centered
     >
       <div class="d-flex justify-content-center flex-column cameraInput">
-        <ul class="list-group list-group-flush" style="margin-top: 16px;">
+        <ul class="list-group list-group-flush">
           <li
             style="height: 56px"
             @click="handleSourceGalleryClick"
@@ -500,10 +529,15 @@ const compressImg = (maxSize, dataUrl, quality = 0.7) =>
       hide-footer
     >
       <template v-if="!snappedCameraPict" class="modal-camera">
-        <div class="camera-container">
+        <div :class="[`camera-container`, props.imagePlaceholder === 'idcard' && 'idcard']">
           <video class="video" ref="video" autoplay></video>
         </div>
         <div class="slot-container">
+          <div class="helper-text" v-if="!props.general" :class="'landscape'">
+            <div class="rect"></div>
+            <div class="title">{{ helperText.title }}</div>
+            <div class="subtitle">{{ helperText.message }}</div>
+          </div>
           <div id="cameraGuidance" v-if="!props.general" :class="props.imagePlaceholder === 'idcard' ? 'card-ktp' : 'card-general'"></div>
           <img
             @click="handleCameraSnap"
@@ -516,7 +550,11 @@ const compressImg = (maxSize, dataUrl, quality = 0.7) =>
         </div>
       </template>
       <div v-else>
-        <div class="preview-container">
+         <div :class="[`preview-container`, props.imagePlaceholder === 'idcard' && 'idcard']">
+          <div class="timestamp">
+            <div>{{ userName }}</div>
+            <div>{{ 'Waktu: '+ new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }) + ', ' + new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute: '2-digit'})}}</div>
+          </div>
           <img :src="snappedCameraPict" alt="Captured Image" />
         </div>
         <div class="footer-button">
@@ -540,27 +578,101 @@ const compressImg = (maxSize, dataUrl, quality = 0.7) =>
 </template>
 
 <style lang="scss">
+.modal.inputCamera .modal-dialog {
+  max-width: 564px;
+}
 .modal.inputCamera .modal-body {
   padding-top: 0px !important;
   padding-bottom: 0px !important;
 }
-.modal.inputCameraMobile .modal-body {
-  padding-top: 0px !important;
-  padding-bottom: 0px !important;
-}
-.inputCamera {
-  .video {
-    width: 100%;
-    height: 100%;
-    border-radius: .5rem;
+
+.modal.inputCameraMobile  {
+
+  .modal-body {
+    background-color: var(--g-kit-black-80);
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    display: flex !important;
+    align-items: center !important;
   }
 
-  .preview-container {
+  .modal-content {
+    border-radius: 0px;
+    background-color: var(--g-kit-black-80);
+  }
+
+  .modal-footer {
     padding: 16px;
+    background-color: var(--g-kit-black-80);
+  }
+
+  .modal-header {
+    background-image: url('../../assets/images/background-broccolli-header.svg');
+    color: var(--g-kit-white);
+    object-fit: contain;
+  }
+}
+
+.preview-container {
+   .timestamp {
+      position: absolute;
+      justify-content: space-between;
+      display: flex;
+      padding: 8px;
+      background: color-mix(in srgb, var(--g-kit-black-80) 80%, transparent);
+      border-bottom-right-radius: .75rem;
+      border-bottom-left-radius: .75rem;
+      color: var(--g-kit-white);
+      text-align: center; 
+   }
+}
+
+.inputCamera {
+  .camera-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &.idcard {
+        video {
+           height: 416px;
+        }
+      }
+
+      video {
+        height: 100% ; 
+        width: 100% !important;   
+        border-radius: .5rem;
+        background-color: #000; 
+        object-fit: cover;
+        aspect-ratio: 1/1;
+      }
+    }
+
+  .preview-container {
+    position: relative;
+    padding: 16px;
+
+    &.idcard {
+      img {
+         aspect-ratio: 16/10 !important;
+      }
+    }
+
     img{
       width: 100%;
       height: 100%;
-      border-radius: .5rem;
+      border-radius: .75rem;
+      object-fit: cover;
+      aspect-ratio: 1/1;
+    }
+
+    .timestamp {
+      font-size: var(--g-kit-font-size-omnicron);
+      padding: 16px 8px;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
     }
   }
 
@@ -625,163 +737,115 @@ const compressImg = (maxSize, dataUrl, quality = 0.7) =>
   }
 
   .card-ktp {
-    width: 318px;
-    height: 200px;
+    position: absolute;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 318px;
+    aspect-ratio: 16 / 10;
     background-color: transparent;
     border-radius: 2px;
-    position: absolute;
-    left: 18%;
-    top: 17%;
     opacity: 0.7;
-    box-shadow: 0px 25px 0px 74px rgb(1, 1, 1);
+    box-shadow: 0 0 0 106px rgba(1, 1, 1, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 205px;
   }
+
+  .helper-text {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        margin-top: 16px;
+        margin-inline: 40px;
+        padding-inline: 16px;
+        padding-block: 12px;
+        text-align: center;
+        color: var(--g-kit-white);
+       
+
+        .rect{
+          background-color: var(--g-kit-black-80);
+          opacity: 0.75;
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 0;
+          border-radius: 8px;
+        }
+
+        .title {
+            font-size: var(--g-kit-font-size-omicron);
+            font-weight: var(--g-kit-font-weight-bold);
+            z-index: 1;
+        }
+
+        .subtitle {
+          z-index: 1;
+            font-size: var(--g-kit-font-size-omega);
+            font-style: normal;
+            font-weight: 600;
+            line-height: 20px;
+        }
+    }
 }
 
 .inputCameraMobile {
   .preview-container {
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: .75rem;
+
+    width: 100vw;            
+    aspect-ratio: 1/1; 
+    background: #000;
+    overflow: hidden;
+
+    &.idcard {
+       aspect-ratio: 16 / 10; 
+    }
+
     img {
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
     }
-  }
 
-  .video {
-    height: 100%;
-		width: 100%;
-    object-fit: cover;
-  }
-
-  .modal-body {
-    margin: 0px !important;
-    padding: 0px;
-    height: 100% !important;
-    overflow: hidden !important;
-    max-height: unset !important;
-  }
-
-  .camera-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-
-  .slot-container {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-    padding: 16px;
+    .timestamp {
+      font-size: var(--g-kit-font-size-omega);
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+    }
   }
 
   .card-ktp {
+    position: absolute;
+    top: 50% !important;      
+    left: 50% !important;   
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 318px; 
+    aspect-ratio: 16 / 10; 
     background-color: transparent;
     border-radius: 6px;
-    position: absolute;
-    left: 10%;
-    right: 10%;
-    top: 30%;
-    bottom: 40%;
     opacity: 0.7;
-    box-shadow: 0px 30px 0px 740px rgb(1, 1, 1);
-    &.landscape {
-      left: 30%;
-      top: 10%;
-      right: 25%;
-      bottom: 20%;
-    }
-  }
-
-  .card-general {
-    width: 100%;
-    height: 360px;
-    background-color: transparent;
-    border-radius: 6px;
-    position: absolute;
-    top: 20%;
-    left: 0;
-    right: 0;
-    opacity: 0.7;
-    box-shadow: 0px 30px 0px 740px rgb(1, 1, 1);
-    &.landscape {
-      left: 30%;
-      top: 0;
-      width: 360px;
-      height: 100%;
-    }
-  }
-
-  .shutter-btn {
-    position: absolute !important;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 64px !important;
-    height: 64px !important;
-    &.landscape {
-      left: unset;
-      bottom: unset;
-      top: 30%;
-      right: 40px;
-    }
-  }
-
-  .switch-camera-btn {
-    position: absolute !important;
-    bottom: 55px;
-    right: 9%;
-    transform: translateX(-50%);
-    width: 48px !important;
-    height: 48px !important;
-    &.landscape {
-      left: unset;
-      bottom: unset;
-      top: 70%;
-      right: 55px;
-    }
-  }
-
-  .helper-text {
-    position: relative;
+    box-shadow: 0 0 0 9999px rgba(1, 1, 1, 0.7); 
     display: flex;
-    flex-direction: column;
-    margin-top: 48px;
-    text-align: center;
-    color: var(--text-white, #FFF);
-    &.landscape {
-      margin-top: unset;
-      top: 30%;
-      width: 190px;
-      text-align: left;
-    }
-    .title {
-      font-size: 20px;
-      font-style: normal;
-      font-weight: 800;
-      line-height: 30px;
-    }
-    .subtitle {
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 600;
-      line-height: 20px;
-    }
-  }
-  .footer-button {
-    position: absolute;
-    display: flex;
-    width: 100%;
-    padding: 16px;
-    flex-direction: column;
-    gap: 8px;
-    bottom: 16px;
-    .btn {
-      width: 100%;
-    }
-  }
+    justify-content: center;
+    align-items: center;
 }
+}
+
 
 .custom-file-upload__box-preview {
   z-index: 0;
@@ -799,10 +863,14 @@ const compressImg = (maxSize, dataUrl, quality = 0.7) =>
 }
 
 .imgCaptured {
-  width: 180px;
+  width: 135px;
   height: 135px;
   object-fit: cover;
   border-radius: .5rem;
+
+  &.idcard {
+    width: 180px;
+  }
 }
 
 .remove-button {

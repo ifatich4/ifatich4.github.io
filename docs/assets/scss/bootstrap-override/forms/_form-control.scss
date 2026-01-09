@@ -1,0 +1,81 @@
+.form-control {
+    caret-color: $input-caret-color;
+    line-height: $input-line-height-;
+    padding: 11px;
+    border-radius: 4px;
+
+    &:hover:not(:disabled):not([readonly]):not(:focus):not(.is-invalid):not(.is-valid) {
+        border: 1px solid $input-hover-border-color;
+    }
+
+    &:focus, &.is-invalid:focus, &.is-valid:focus {
+        box-shadow: none;
+    }
+
+
+    &.is-valid, &.is-invalid {
+        background-size: 18px 18px;
+        padding-right: 34px;
+    }
+
+    &.type-{
+        &red {
+            box-shadow: none;
+            border: 1px solid var(--g-kit-red-50) !important;
+            background-color: var(--g-kit-red-10);
+        }
+        &green {
+            box-shadow: none;
+            border: 1px solid var(--g-kit-lime-50) !important;
+            background-color: var(--g-kit-lime-10);
+        }
+        &blue {
+            box-shadow: none;
+            border: 1px solid var(--g-kit-blue-50) !important;
+            background-color: var(--g-kit-blue-10);
+        }
+        &orange {
+            box-shadow: none;
+            border: 1px solid var(--g-kit-orange-50) !important;
+            background-color: var(--g-kit-orange-10);
+        }
+    }
+}
+
+.custom-input-group-icon:has(.type-red, .type-green, .type-blue, .type-orange) {
+    border: none;
+}
+
+.form-control {
+    &.form-control[data-v-6bc7a4f2]:hover:not(:disabled):not([readonly]):not(.is-invalid):not(.is-valid).type-red {
+        box-shadow: none;
+        border: none;
+    }
+    &:focus:not(:disabled):not([readonly]):not(:focus):not(.is-invalid):not(.is-valid).type-red {
+        box-shadow: none;
+    }
+
+    &.form-control[data-v-6bc7a4f2]:hover:not(:disabled):not([readonly]):not(.is-invalid):not(.is-valid).type-green {
+        box-shadow: none;
+        border: none;
+    }
+    &:focus:not(:disabled):not([readonly]):not(:focus):not(.is-invalid):not(.is-valid).type-green {
+        box-shadow: none;
+    }
+
+    &.form-control[data-v-6bc7a4f2]:hover:not(:disabled):not([readonly]):not(.is-invalid):not(.is-valid).type-blue {
+        box-shadow: none;
+        border: none;
+    }
+    &:focus:not(:disabled):not([readonly]):not(:focus):not(.is-invalid):not(.is-valid).type-blue {
+        box-shadow: none;
+    }
+
+    &.form-control[data-v-6bc7a4f2]:hover:not(:disabled):not([readonly]):not(.is-invalid):not(.is-valid).type-orange {
+        box-shadow: none;
+        border: none;
+    }
+    &:focus:not(:disabled):not([readonly]):not(:focus):not(.is-invalid):not(.is-valid).type-orange {
+        box-shadow: none;
+    }
+}

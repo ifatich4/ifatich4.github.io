@@ -39,6 +39,7 @@ import Badge from './Badge/Badge.vue';
 import DropdownGroupItem from './Dropdown/DropdownGroupItem.vue';
 import DropdownItem from './Dropdown/DropdownItem.vue';
 import DeleteIcon from './Icons/DeleteFill.vue';
+import InputSearch from './Input/InputSearch.vue';
 
 export default {
     Accordion,
@@ -70,6 +71,7 @@ export default {
     InputPersen,
     Input,
     InputSmallDate,
+    InputSearch,
     TextArea,
     ModalComponent,
     ListGroupUnordered,

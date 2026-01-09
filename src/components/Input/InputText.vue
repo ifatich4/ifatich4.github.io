@@ -226,6 +226,12 @@
 </template>
 
 <style lang="scss" scoped>
+
+	.input-group {
+		&:has(:focus) {
+			border: 1px solid var(--g-kit-lime-50);
+		}
+	}
 	input[type="search"]::-webkit-search-cancel-button {
 		-webkit-appearance: none;
 		appearance: none;

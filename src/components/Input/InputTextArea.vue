@@ -81,6 +81,10 @@ watch(inputValue, () => {
 </template>
 
 <style scoped>
+
+  textarea:disabled {
+    color: var(--g-kit-black-60);
+  }
   .form-control {
     max-height: 115px;
     min-height: 80px;

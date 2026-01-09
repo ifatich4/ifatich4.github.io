@@ -5,7 +5,7 @@
             <label v-bind="$attrs" class="label-stepper">
                 {{ label }}
             </label>
-            <ListGroupOrdered class="stepper-list" :items="itemsWithActiveClass" :withLinks="true" />
+            <ListGroupOrdered class="stepper-list" :items="itemsWithActiveClass" :withLinks="true"  @step-click="handleStepClick" />
         </div>
     </div>
 </template>
@@ -13,7 +13,7 @@
 <script>
     import ListGroupOrdered from '../ListGroup/ListGroupOrdered.vue';
 
-    export default {
+    export default {    
         components: {
             ListGroupOrdered,
         },
@@ -37,14 +37,29 @@
                 type: Number,
                 default: 0,
             },
+            enableStepUntill: {
+                type: Number,
+                default: 0,
+            },
+        },
+        emits: ['update:activeStep'],
+        methods: {
+            handleStepClick(stepIndex) {
+                if (stepIndex <= this.enableStepUntill) {
+                    this.$emit('update:activeStep', stepIndex);
+                }
+            },
         },
         computed: {
             itemsWithActiveClass() {
                 return this.items.map((item, index) => ({
                     label: item,
-                    active: index + 1 === this.activeStep,
+                    active: this.enableStepUntill
+                    ? index + 1 <= this.enableStepUntill
+                    : index + 1 === this.activeStep,
+                    recent: index + 1 === this.activeStep,
                 }));
-            },
+            }
         },
     };
 </script>
@@ -93,6 +108,10 @@
                     &.active {
                         color: var(--g-kit-black-80);
                         cursor: pointer;
+
+                        &.recent {
+                            color: var(--g-kit-lime-50);
+                        }
                     }
                 }
             }

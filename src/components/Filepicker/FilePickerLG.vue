@@ -26,7 +26,13 @@
         class="custom-file-upload__box-input-file"
         @change="handleFileChange"
         ref="file"
-        :accept="imageOnly ? 'image/*' : '.pdf,.doc,.docx,.xlsx,.csv,image/*'"
+        :accept="
+          csvOnly
+            ? '.csv'
+            : imageOnly
+              ? 'image/*'
+              : '.pdf,.doc,.docx,.xlsx,.csv,image/*'
+        "
         multiple
         required
       />
@@ -86,6 +92,10 @@ export default {
     imageOnly: {
       type: Boolean,
       default: true,
+    },
+    csvOnly: {
+      type: Boolean,
+      default: false,
     },
     errorText: {
       type: String,

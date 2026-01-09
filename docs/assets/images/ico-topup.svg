@@ -1,0 +1,21 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle opacity="0.08" cx="24" cy="24" r="24" fill="#1868AB"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 13.5C10.5 11.8431 11.8431 10.5 13.5 10.5H25.5C27.1569 10.5 28.5 11.8431 28.5 13.5V34.5C28.5 36.1569 27.1569 37.5 25.5 37.5H13.5C11.8431 37.5 10.5 36.1569 10.5 34.5V13.5Z" fill="#1868AB"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 13.5C10.5 11.8431 11.8431 10.5 13.5 10.5H23.25C24.9069 10.5 26.25 11.8431 26.25 13.5V34.5C26.25 36.1569 24.9069 37.5 23.25 37.5H13.5C11.8431 37.5 10.5 36.1569 10.5 34.5V13.5Z" fill="#5297D1"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.5312C12 13.1333 13.1333 12 14.5312 12L14.625 12C15.0392 12 15.375 12.3358 15.375 12.75C15.375 13.1642 15.7108 13.5 16.125 13.5H20.625C21.0392 13.5 21.375 13.1642 21.375 12.75C21.375 12.3358 21.7108 12 22.125 12H22.2188C23.6167 12 24.75 13.1333 24.75 14.5312V32.8897C24.75 34.5466 23.4069 35.8897 21.75 35.8897H15C13.3431 35.8897 12 34.5466 12 32.8897V14.5312Z" fill="white"/>
+<rect x="18" y="24" width="18.75" height="13.5" rx="3" fill="#1868AB"/>
+<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="18" y="24" width="19" height="14">
+<rect x="18" y="24" width="18.75" height="13.5" rx="3" fill="white"/>
+</mask>
+<g mask="url(#mask0)">
+<rect x="15.75" y="23.25" width="18.75" height="13.5" rx="3" fill="#5297D1"/>
+</g>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M27.75 30.75C27.75 29.5074 28.7574 28.5 30 28.5H36C36.8284 28.5 37.5 29.1716 37.5 30V31.5C37.5 32.3284 36.8284 33 36 33H30C28.7574 33 27.75 31.9926 27.75 30.75Z" fill="#CC9D3F"/>
+<mask id="mask1" mask-type="alpha" maskUnits="userSpaceOnUse" x="27" y="28" width="11" height="5">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M27.75 30.75C27.75 29.5074 28.7574 28.5 30 28.5H36C36.8284 28.5 37.5 29.1716 37.5 30V31.5C37.5 32.3284 36.8284 33 36 33H30C28.7574 33 27.75 31.9926 27.75 30.75Z" fill="white"/>
+</mask>
+<g mask="url(#mask1)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M25.5 30.75C25.5 29.5074 26.5074 28.5 27.75 28.5H33.75C34.5784 28.5 35.25 29.1716 35.25 30V31.5C35.25 32.3284 34.5784 33 33.75 33H27.75C26.5074 33 25.5 31.9926 25.5 30.75Z" fill="#FFC54F"/>
+<circle cx="30" cy="30.75" r="1.5" fill="white"/>
+</g>
+</svg>

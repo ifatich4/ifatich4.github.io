@@ -4,7 +4,7 @@
     <ol class="styled-ol stepper-list">
         <div v-if="!itemsContainsString">
             <li v-for="(item, index) in processedItems" :key="index">
-                <a v-if="item.active" :class="{ active: item.active }" href="#">{{ item.label }}</a>
+                <a v-if="item.active" :class="[{ active: item.active}, {recent: item.recent}]" href="#" @click.prevent="$emit('step-click', index + 1)">{{ item.label }}</a>
                 <span v-else class="disabled">{{ item.label }}</span>
             </li>
         </div>
@@ -32,6 +32,7 @@
                 },
             },
         },
+        emits: ['step-click'],
         computed: {
             processedItems() {
                 return this.items;

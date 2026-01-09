@@ -7,7 +7,12 @@
             :checked="modelValue" 
             @change="handleChange"
         >
-        <label class="custom-toggle" :for="id"></label>
+        <label 
+            tabindex="0"
+            @keydown.enter.prevent="toggleValue" 
+            class="custom-toggle" 
+            :for="id">
+        </label>
     </div>
 </template>
 
@@ -24,10 +29,18 @@
                 default: false,
             },
         },
+        data() {
+            return {
+            isFocused: false,
+            };
+        },
         methods: {
             handleChange(event) {
                 this.$emit('update:modelValue', event.target.checked);
             },
+            toggleValue() {
+                this.$emit("update:modelValue", !this.modelValue);
+                },
         },
     };
 </script>
@@ -38,6 +51,12 @@
     display: inline-block;
 
     margin-bottom: 8px;
+
+    label {
+        &:focus {
+            outline: var(--g-kit-lime-50) auto 1px;
+        }
+    }
 }
 
 .form-check-input {
@@ -81,9 +100,5 @@
 
 .form-check-input:checked + .custom-toggle {
     background-color: #4caf50;
-}
-
-.form-check-input:checked + .custom-toggle{
-    background-color: var(--g-kit-lime-20);
 }
 </style>

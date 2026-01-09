@@ -1,8 +1,8 @@
 <template>
     <div class="radio-container">
         <BFormGroup v-for="(item, index) in items" :key="index" class="radio-column">
-            <label class="radio-content">
-                <BFormRadio :value="item.value" v-model="radioValue">{{ item.text }}</BFormRadio>
+            <label class="radio-content" >
+                <BFormRadio  @keydown.enter.prevent="radioValue = item.value" :value="item.value" v-model="radioValue">{{ item.text }}</BFormRadio>
             </label>
         </BFormGroup>
     </div>
@@ -61,11 +61,16 @@
             .form-check {
                 margin-bottom: 0px;
             }
+
+            &:has(:focus) {
+                outline: none;
+                border: 1px solid var(--g-kit-lime-50);
+            }
         }
 
         .radio-content:hover {
             color: var(--g-kit-lime-50);
-            background-color: var(--g-kit-lime-10);
+            // background-color: var(--g-kit-lime-10);
             border-color: var(--g-kit-lime-50);
         }
 
@@ -92,7 +97,7 @@
             color: var(--g-kit-black-80);
 
             &:has(input:checked) {
-                color: var(--g-kit-lime-50);
+                // color: var(--g-kit-lime-50);
                 background-color: var(--g-kit-lime-10);
                 border-color: var(--g-kit-lime-50);
             }

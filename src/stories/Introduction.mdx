@@ -1,0 +1,247 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Introduction" />
+
+<style>
+  {`
+    .welcome-container {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #00703C 0%, #005A30 100%);
+      border-radius: 16px;
+      color: white;
+      margin-bottom: 40px;
+    }
+    
+    .hero-logo {
+      width: 180px;
+      margin-bottom: 24px;
+      filter: brightness(0) invert(1);
+    }
+    
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0 0 16px 0;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin: 0;
+    }
+    
+    .version-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      margin-top: 16px;
+    }
+    
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    
+    .feature-card {
+      background: #F8FAFB;
+      border: 1px solid #E5E9EB;
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+      border-color: #00703C;
+    }
+    
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: #00703C;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+    
+    .feature-card h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+      color: #1F2933;
+    }
+    
+    .feature-card p {
+      font-size: 0.875rem;
+      color: #52606D;
+      margin: 0;
+      line-height: 1.6;
+    }
+    
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1F2933;
+      margin: 40px 0 24px 0;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #E5E9EB;
+    }
+    
+    .quick-start {
+      background: #1F2933;
+      border-radius: 12px;
+      padding: 24px;
+      color: #E5E9EB;
+      margin-bottom: 40px;
+    }
+    
+    .quick-start h3 {
+      color: white;
+      margin: 0 0 16px 0;
+      font-size: 1rem;
+    }
+    
+    .quick-start code {
+      display: block;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 16px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+    
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+    
+    .component-item {
+      background: white;
+      border: 1px solid #E5E9EB;
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      font-size: 0.875rem;
+      color: #52606D;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    
+    .component-item:hover {
+      border-color: #00703C;
+      color: #00703C;
+      background: rgba(0, 112, 60, 0.04);
+    }
+    
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      border-top: 1px solid #E5E9EB;
+      color: #6B7D8A;
+      font-size: 0.875rem;
+    }
+    
+    .footer a {
+      color: #00703C;
+      text-decoration: none;
+    }
+  `}
+</style>
+
+<div className="welcome-container">
+  <div className="hero">
+    <img className="hero-logo" src="/assets/images/logo-pegadaian.svg" alt="Pegadaian" />
+    <h1>Pegadaian UI Kit</h1>
+    <p>Modern Vue 3 Component Library for Pegadaian Digital Products</p>
+    <span className="version-badge">v0.1.13</span>
+  </div>
+
+  <div className="features">
+    <div className="feature-card">
+      <div className="feature-icon">🎨</div>
+      <h3>Consistent Design</h3>
+      <p>Components mengikuti Pegadaian Design System untuk konsistensi visual di seluruh aplikasi.</p>
+    </div>
+    <div className="feature-card">
+      <div className="feature-icon">⚡</div>
+      <h3>Vue 3 Ready</h3>
+      <p>Dibangun dengan Vue 3 Composition API, mendukung TypeScript dan modern development.</p>
+    </div>
+    <div className="feature-card">
+      <div className="feature-icon">📦</div>
+      <h3>80+ Components</h3>
+      <p>Koleksi lengkap komponen dari Button, Input, Card, Modal, Chart, hingga kompleks forms.</p>
+    </div>
+    <div className="feature-card">
+      <div className="feature-icon">🎯</div>
+      <h3>Accessible</h3>
+      <p>Mengutamakan aksesibilitas dengan proper ARIA labels dan keyboard navigation.</p>
+    </div>
+  </div>
+
+  <h2 className="section-title">🚀 Quick Start</h2>
+  <div className="quick-start">
+    <h3>Install Package</h3>
+    <code>
+{`# Install dengan npm
+npm install @pegadaian/kitvue
+
+# Atau dengan pnpm
+pnpm add @pegadaian/kitvue
+
+# Import di main.js
+import { createApp } from 'vue'
+import PegadaianUIKit from '@pegadaian/kitvue'
+import '@pegadaian/kitvue/dist/style.css'
+
+const app = createApp(App)
+app.use(PegadaianUIKit)
+app.mount('#app')`}
+    </code>
+  </div>
+
+  <h2 className="section-title">📚 Component Categories</h2>
+  <div className="component-grid">
+    <span className="component-item">🔘 Button</span>
+    <span className="component-item">📝 Input</span>
+    <span className="component-item">📋 Card</span>
+    <span className="component-item">🪟 Modal</span>
+    <span className="component-item">📊 Chart</span>
+    <span className="component-item">📑 Table</span>
+    <span className="component-item">🧭 Navbar</span>
+    <span className="component-item">📍 Tab</span>
+    <span className="component-item">🏷️ Badge</span>
+    <span className="component-item">⚠️ Alert</span>
+    <span className="component-item">✅ Checkbox</span>
+    <span className="component-item">🔘 Radio</span>
+    <span className="component-item">📅 DatePicker</span>
+    <span className="component-item">⏰ TimePicker</span>
+    <span className="component-item">📂 FilePicker</span>
+    <span className="component-item">🔽 Dropdown</span>
+  </div>
+
+  <div className="footer">
+    <p>Built with ❤️ by Pegadaian Digital Team</p>
+    <p><a href="https://pegadaian.co.id" target="_blank">pegadaian.co.id</a></p>
+  </div>
+</div>
