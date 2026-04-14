@@ -4,6 +4,15 @@ export default {
   title: 'Components/Tab/Default',
   component: TabGroup,
   tags: ['autodocs'],
+  argTypes: {
+    items: {
+      control: 'object',
+      description: 'Array of tab items with label, icon, and action',
+      table: {
+        type: { summary: 'Array<{label: string, icon: string, active: boolean, action: function}>' }
+      }
+    }
+  },
   decorators: [
     () => ({
       template: `

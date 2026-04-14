@@ -5,6 +5,24 @@ import Radio from "../components/Radio/Radio.vue";
     title: 'Components/Radio',
     component: Radio,
     tags: ['autodocs'],
+    argTypes: {
+      items: {
+        control: 'object',
+        description: 'Array of radio option objects with value and text',
+        table: {
+          type: { summary: 'Array<{value: string|number|boolean, text: string}>' },
+          defaultValue: { summary: '[]' }
+        }
+      },
+      modelValue: {
+        control: 'text',
+        description: 'Selected radio value (v-model)',
+        table: {
+          type: { summary: 'string|number|boolean' },
+          defaultValue: { summary: 'null' }
+        }
+      }
+    },
     args: {
       items: [
         { value: 'option1', text: 'Option 1' },

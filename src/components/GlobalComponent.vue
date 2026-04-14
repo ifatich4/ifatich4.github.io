@@ -125,6 +125,17 @@ const triggerValue = ref(false); // Ref untuk memicu validasi dropdown
 const caraouselModalModel = ref(0);
 const caraouselModalModel2 = ref(0);
 
+const ktpPhoto = ref('')
+const error = ref('')
+
+const handleKtpCapture = (file, key) => {
+  console.log('KTP photo:', file)
+}
+
+const handleError = (err) => {
+  error.value = 'Gagal mengakses kamera: ' + (err.message || err)
+}
+
 const testTrigger = () => {
   console.log("trigger dropdown clicked");
   triggerValue.value = true;
@@ -137,11 +148,21 @@ const handleFileDropped = (file) => {
   console.log("file droppped", file);
 };
 
+const handleFileDroppedKTP = (file) => {
+  console.log("KTP file droppped", file);
+};
+
+const handleFileDroppedGeneral = (file) => {
+  console.log("General file droppped", file);
+};
+
 const executeFetch = () => {
   console.log("execute fetch");
 };
 
 const image = ref(null)
+const ktpImage = ref(null)
+const selectedFile = ref(null)
 
 function handleCaptured(dataUrl) {
   image.value = dataUrl
@@ -653,6 +674,7 @@ import LoadAnimate from "./Modal/Load.vue";
 import DateRangePicker from "./Input/DateRangePicker.vue";
 
 import InputCamera from "./Input/InputCamera.vue";
+import InputKtp from "./Input/InputKTP.vue";
 import TabPembinaan from "./Navbar/TabPembinaan.vue";
 
 import RadioComponent from "./Radio/Radio.vue";
@@ -735,6 +757,7 @@ export default {
     InputDropdownHeader,
     DateRangePicker,
     InputCamera,
+    InputKtp,
     TabPembinaan,
     InputTimePicker,
     TabProduct,
@@ -2701,17 +2724,16 @@ export default {
               </p>
             </div>
             <div class="card-body">
-                <NewInputCamera
-                  v-model="selectedFile"
-                  @fileRemoved="handleFileDropped"
-                  @fileDropped="handleFileDropped"
-                  @errorPermission="handleCameraPermission"
-                  id="file_fotoDokumenPelunasanKur"
-                  image-placeholder="form"
-                  name="fotoFormDua"
-                  :useBottomSheet="false"
-                  :user-name="'P12344'"
-                  noteText="Foto Dokumen Pelunasan KUR Tampak Depan. Maksimal ukuran foto 1 MB/ file 20 MB. (.jpeg, .jpg, .png, .pdf)"
+              <NewInputCamera
+                v-model="selectedFile"
+                userName="P12344"
+                imagePlaceholder="general"
+                id="file_fotoDokumenPelunasanKur"
+                title="Foto Dokumen Pelunasan KUR"
+                noteText="Foto Dokumen Pelunasan KUR Tampak Depan. Maksimal ukuran foto 1 MB/ file 20 MB. (.jpeg, .jpg, .png, .pdf)"
+                @fileDropped="handleFileDroppedGeneral"
+                @fileRemoved="handleFileDroppedGeneral"
+                @errorPermission="handleCameraPermission"
               />
               <FilePickerLG
                 v-model="selectedFile"
@@ -3877,6 +3899,24 @@ export default {
               </ModalSlider>
 
               <InputCamera general />
+
+              <InputCamera 
+                v-model="ktpPhoto"
+                imagePlaceholder="idcard"
+                userName="Ahmad Wijaya"
+                :compressionMaxKb="512"
+                @fileDropped="handleKtpCapture"
+                @errorPermission="handleError"
+              />
+              <div v-if="error" class="error-message">{{ error }}</div>
+
+              <InputKtp
+                v-model="ktpPhoto"
+                userName="Ahmad Wijaya"
+                :compressionMaxKb="512"
+                @fileDropped="handleKtpCapture"
+                @errorPermission="handleError"
+              />
 
               <InputCamera
                 :compressionMaxKb="1024"

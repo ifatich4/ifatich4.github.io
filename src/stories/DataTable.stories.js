@@ -5,6 +5,22 @@ export default {
   title: 'Components/Table/DataTable',
   component: DataTable,
   tags: ['autodocs'],
+  argTypes: {
+    data: {
+      control: 'object',
+      description: 'Array of row data objects to display in table',
+      table: {
+        type: { summary: 'Array<object>' }
+      }
+    },
+    columns: {
+      control: 'object',
+      description: 'Column configuration array',
+      table: {
+        type: { summary: 'Array' }
+      }
+    }
+  },
   parameters: {
     layout: 'fullscreen',
     docs: {

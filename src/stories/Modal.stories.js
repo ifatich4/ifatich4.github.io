@@ -7,6 +7,57 @@ import Button from "../components/Button/Button.vue";
     title: 'Components/Modal/Default',
     component: ModalComponent,
     tags: ['autodocs'],
+    argTypes: {
+      title: {
+        control: 'text',
+        description: 'Modal title text',
+        table: {
+          type: { summary: 'string' },
+          defaultValue: { summary: '""' }
+        }
+      },
+      persistent: {
+        control: 'boolean',
+        description: 'Prevent closing by clicking backdrop or ESC key',
+        table: {
+          type: { summary: 'boolean' },
+          defaultValue: { summary: 'true' }
+        }
+      },
+      centered: {
+        control: 'boolean',
+        description: 'Center modal vertically on screen',
+        table: {
+          type: { summary: 'boolean' },
+          defaultValue: { summary: 'false' }
+        }
+      },
+      size: {
+        control: 'select',
+        options: ['sm', 'md', 'lg', 'xl'],
+        description: 'Modal size',
+        table: {
+          type: { summary: "'sm'|'md'|'lg'|'xl'" },
+          defaultValue: { summary: "'md'" }
+        }
+      },
+      showCloseButton: {
+        control: 'boolean',
+        description: 'Show close button in header',
+        table: {
+          type: { summary: 'boolean' },
+          defaultValue: { summary: 'true' }
+        }
+      },
+      scrollable: {
+        control: 'boolean',
+        description: 'Make modal body scrollable',
+        table: {
+          type: { summary: 'boolean' },
+          defaultValue: { summary: 'false' }
+        }
+      }
+    },
     args: {
       persistent: true,
       title: "Modal",

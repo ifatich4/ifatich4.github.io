@@ -25,6 +25,7 @@ import FilePickerLG from './Filepicker/FilePickerLG.vue';
 import FilePickerSM from './Filepicker/FilePickerSM.vue';
 import InputPersen from './Input/InputNominalEnd.vue';
 import Input from './Input/InputSmallText.vue';
+import InputKtp from './Input/InputKTP.vue';
 import TextArea from './Input/InputTextArea.vue';
 import ModalComponent from './Modal/Modal.vue';
 import InputSmallDate from './Input/InputSmallDate.vue';
@@ -70,6 +71,7 @@ export default {
     FilePickerSM,
     InputPersen,
     Input,
+    InputKtp,
     InputSmallDate,
     InputSearch,
     TextArea,
