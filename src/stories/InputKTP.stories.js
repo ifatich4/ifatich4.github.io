@@ -30,10 +30,10 @@ export default {
     },
     mode: {
       control: 'select',
-      options: ['ktp', 'global', 'preview'],
-      description: 'Input mode: KTP crop, General/global upload, or read-only preview',
+      options: ['ktp', 'general', 'preview'],
+      description: 'Input mode: KTP guidance crop (landscape output), General guidance crop (1:1 on mobile), or read-only preview',
       table: {
-        type: { summary: "'ktp' | 'global' | 'preview'" },
+        type: { summary: "'ktp' | 'general' | 'preview'" },
         defaultValue: { summary: 'ktp' }
       }
     },
@@ -157,6 +157,13 @@ export const ModeKTP = {
     blankImage: blankPlaceholderImage,
     brokenImage: brokenPlaceholderImage
   },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Mode KTP menggunakan area guidance sebagai sumber crop. Pada mobile, stream kamera tetap portrait untuk UX, tetapi hasil capture disimpan landscape mengikuti rasio KTP.'
+      }
+    }
+  },
   render: (args) => ({
     components: { InputKTP },
     setup() {
@@ -186,17 +193,24 @@ export const ModeKTP = {
 }
 
 /**
- * Mode General (internally mode='global'): camera/gallery without KTP crop guide
+ * Mode General (mode='general'): camera/gallery with 1:1 guidance on mobile
  */
 export const ModeGeneral = {
   args: {
     title: 'Upload Foto',
     userName: 'John Doe',
-    mode: 'global',
+    mode: 'general',
     compressionMaxKb: 1024,
     uniqueKey: 'story-mode-general',
     blankImage: blankPlaceholderImage,
     brokenImage: brokenPlaceholderImage
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Mode General pada mobile menampilkan helper-text dan guidance 1:1. Hasil capture di-crop dari area guidance yang terlihat, sehingga output konsisten 1:1.'
+      }
+    }
   },
   render: (args) => ({
     components: { InputKTP },
@@ -210,7 +224,7 @@ export const ModeGeneral = {
     },
     template: `
       <div style="max-width: 420px; margin: 20px;">
-        <h3>Mode General (mode='global')</h3>
+        <h3>Mode General (mode='general')</h3>
         <InputKTP
           v-model="fileSrc"
           :title="args.title"
@@ -374,8 +388,8 @@ export const AllModesSimulation = {
         </div>
 
         <div style="padding: 16px; border: 1px solid #e8e8e8; border-radius: 8px;">
-          <h4 style="margin: 0 0 12px;">Mode General (global)</h4>
-          <InputKTP v-model="generalSrc" mode="global" title="Upload Foto" userName="John Doe" uniqueKey="all-mode-general" />
+          <h4 style="margin: 0 0 12px;">Mode General</h4>
+          <InputKTP v-model="generalSrc" mode="general" title="Upload Foto" userName="John Doe" uniqueKey="all-mode-general" />
         </div>
 
         <div style="padding: 16px; border: 1px solid #e8e8e8; border-radius: 8px;">
@@ -671,7 +685,7 @@ The InputKTP component provides a user-friendly interface for capturing or uploa
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| \`mode\` | 'ktp' \| 'global' \| 'preview' | 'ktp' | Mode perilaku komponen |
+| \`mode\` | 'ktp' \| 'general' \| 'preview' | 'ktp' | Mode perilaku komponen |
 | \`compressionMaxKb\` | number | 1024 | Maximum compression size in KB |
 | \`title\` | string | "Upload Foto KTP" | Dialog title text |
 | \`userName\` | string | "unknown" | Name to display on timestamp |

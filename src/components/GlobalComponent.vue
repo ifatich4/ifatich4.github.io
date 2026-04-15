@@ -3974,12 +3974,12 @@ export default {
                 />
               </div>
 
-              <!-- InputKTP Mode: General (free upload without crop, mode=global) -->
+              <!-- InputKTP Mode: General (free upload without crop, mode=general) -->
               <div style="margin-top: 32px; border-top: 2px solid #eee; padding-top: 24px;">
                 <h4 style="margin-bottom: 16px;">InputKTP - Mode: General (upload bebas tanpa crop)</h4>
                 <InputKtp
                   v-model="globalModePhoto"
-                  mode="global"
+                  mode="general"
                   title="Upload Foto"
                   userName="Ahmad Wijaya"
                   uniqueKey="global-mode"
