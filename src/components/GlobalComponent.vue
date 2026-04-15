@@ -19,6 +19,7 @@ import { BButton, BCarousel, BCarouselSlide } from 'bootstrap-vue-next'
 import InputSearch from "./Input/InputSearch.vue";
 import InputSearchQR from "./Input/InputSearchQR.vue";
 import LineChart from "./Chart/LineChart.vue";
+import previewFilledImage from "@/assets/images/image-banner1.png";
 
 const testValue = ref("test value");
 const { scrollTo } = useScrollTo();
@@ -128,12 +129,51 @@ const caraouselModalModel2 = ref(0);
 const ktpPhoto = ref('')
 const error = ref('')
 
+// Mode: KTP (with crop & guidance)
+const ktpModePhoto = ref('')
+const handleKtpModeCapture = (file, key) => {
+  console.log('KTP mode photo:', file, 'key:', key)
+}
+
+// Mode: Global (free upload without crop)
+const globalModePhoto = ref('')
+const handleGlobalModeCapture = (file, key) => {
+  console.log('Global mode photo:', file, 'key:', key)
+}
+
+// Mode: Preview (read-only)
+const previewModeFilledPhoto = ref(previewFilledImage)
+
+// Preview Mode - Simulation: Broken Image (invalid URL)
+const previewModeBrokenPhoto = ref('https://invalid-domain-12345-broken-image-url.com/image-broken.jpg')
+
+// Preview Mode - Simulation: Blank (empty, akan tampilkan blank_img.svg)
+const previewModeBlankPhoto = ref('')
+
+const useGeneralForPreviewFilled = () => {
+  previewModeFilledPhoto.value = globalModePhoto.value || previewFilledImage
+}
+
+const resetPreviewFilledDefault = () => {
+  previewModeFilledPhoto.value = previewFilledImage
+}
+
+watch(globalModePhoto, (value) => {
+  if (value) {
+    previewModeFilledPhoto.value = value
+  }
+})
+
 const handleKtpCapture = (file, key) => {
   console.log('KTP photo:', file)
 }
 
 const handleError = (err) => {
   error.value = 'Gagal mengakses kamera: ' + (err.message || err)
+}
+
+const handleFileRemoved = (key) => {
+  console.log('File removed for key:', key)
 }
 
 const testTrigger = () => {
@@ -3917,6 +3957,81 @@ export default {
                 @fileDropped="handleKtpCapture"
                 @errorPermission="handleError"
               />
+
+              <!-- InputKTP Mode: KTP (with crop & guidance) -->
+              <div style="margin-top: 32px; border-top: 2px solid #eee; padding-top: 24px;">
+                <h4 style="margin-bottom: 16px;">InputKTP - Mode: KTP (dengan crop & guidance)</h4>
+                <InputKtp
+                  v-model="ktpModePhoto"
+                  mode="ktp"
+                  title="Upload Foto KTP"
+                  userName="Ahmad Wijaya"
+                  uniqueKey="ktp-mode"
+                  :compressionMaxKb="512"
+                  @fileDropped="handleKtpModeCapture"
+                  @fileRemoved="handleFileRemoved"
+                  @errorPermission="handleError"
+                />
+              </div>
+
+              <!-- InputKTP Mode: General (free upload without crop, mode=global) -->
+              <div style="margin-top: 32px; border-top: 2px solid #eee; padding-top: 24px;">
+                <h4 style="margin-bottom: 16px;">InputKTP - Mode: General (upload bebas tanpa crop)</h4>
+                <InputKtp
+                  v-model="globalModePhoto"
+                  mode="global"
+                  title="Upload Foto"
+                  userName="Ahmad Wijaya"
+                  uniqueKey="global-mode"
+                  :compressionMaxKb="1024"
+                  @fileDropped="handleGlobalModeCapture"
+                  @fileRemoved="handleFileRemoved"
+                  @errorPermission="handleError"
+                />
+              </div>
+
+              <!-- InputKTP Mode: Preview (read-only) -->
+              <div style="margin-top: 32px; border-top: 2px solid #eee; padding-top: 24px;">
+                <h4 style="margin-bottom: 16px;">InputKTP - Mode: Preview (filled, blank, broken)</h4>
+                <div style="margin-bottom: 24px;">
+                  <button @click="useGeneralForPreviewFilled" style="padding: 8px 16px; background: #198754; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    Sinkronkan Filled dari General
+                  </button>
+                  <button @click="resetPreviewFilledDefault" style="padding: 8px 16px; background: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 8px;">
+                    Reset Filled ke Default
+                  </button>
+                </div>
+
+                <!-- Preview mode - filled state -->
+                <div style="padding: 16px; background: #f8f9fa; border-radius: 8px; margin-bottom: 24px;">
+                  <p style="margin: 0; font-weight: bold; margin-bottom: 12px;">Preview Mode - Filled (ada foto valid)</p>
+                  <InputKtp
+                    v-model="previewModeFilledPhoto"
+                    mode="preview"
+                    userName="Ahmad Wijaya"
+                  />
+                </div>
+
+                <!-- Preview mode - blank state -->
+                <div style="padding: 16px; background: #f8f9fa; border-radius: 8px; margin-bottom: 24px;">
+                  <p style="margin: 0; font-weight: bold; margin-bottom: 12px;">Preview Mode - Blank (tidak ada foto, menampilkan blank_img.svg)</p>
+                  <InputKtp
+                    v-model="previewModeBlankPhoto"
+                    mode="preview"
+                    userName="Ahmad Wijaya"
+                  />
+                </div>
+
+                <!-- Preview mode - broken image (invalid URL) -->
+                <div style="padding: 16px; background: #fff3cd; border-radius: 8px; margin-bottom: 24px;">
+                  <p style="margin: 0; font-weight: bold; margin-bottom: 12px;">Preview Mode - Broken Image (URL invalid, menampilkan broken_img.svg)</p>
+                  <InputKtp
+                    v-model="previewModeBrokenPhoto"
+                    mode="preview"
+                    userName="Ahmad Wijaya"
+                  />
+                </div>
+              </div>
 
               <InputCamera
                 :compressionMaxKb="1024"

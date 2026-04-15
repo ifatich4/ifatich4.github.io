@@ -3,6 +3,8 @@
     import { ref, defineEmits, defineOptions, defineModel, defineProps, computed, watch, reactive, onMounted, nextTick } from 'vue'
     import Button from '../Button/Button.vue'
     import { BModal, BOffcanvas } from 'bootstrap-vue-next'
+    import blankImage from '../../assets/images/blank_img.svg'
+    import brokenImage from '../../assets/images/broken_img.svg'
 
     defineOptions({
         name: 'InputKtp',
@@ -35,10 +37,60 @@
             type: String,
             default: 'unknown'
         },
+        /**
+         * Mode component: 'ktp' (normal upload/camera), 'global' (free upload without crop), 'preview' (read-only)
+         */
+        mode: {
+            type: String,
+            default: 'ktp',
+            validator: (value) => ['ktp', 'global', 'preview'].includes(value)
+        },
+        /**
+         * Path to blank image (shown when no image in preview mode)
+         */
+        blankImage: {
+            type: String,
+            required: false,
+            default: blankImage
+        },
+        /**
+         * Path to broken image (shown when image fails to load in preview mode)
+         */
+        brokenImage: {
+            type: String,
+            required: false,
+            default: brokenImage
+        },
     })
 
     const emit = defineEmits(['fileDropped', 'fileRemoved', 'errorPermission'])
     const fileSrc = defineModel()
+    const imageSource = ref('camera') // 'camera' or 'gallery'
+    const imageState = ref('loaded') // 'loaded' or 'broken'
+    const isRealImageLoaded = ref(false)
+    
+    // Computed: Display image source dengan fallback ke placeholder
+    const displayImageSrc = computed(() => {
+        if (props.mode === 'preview') {
+            // Mode preview:
+            // 1. Jika broken → tampilkan broken placeholder
+            // 2. Jika ada fileSrc → tampilkan image
+            // 3. Jika kosong → tampilkan blank placeholder
+            if (imageState.value === 'broken') return props.brokenImage || ''
+            if (fileSrc.value) return fileSrc.value
+            return props.blankImage || ''
+        }
+        // Mode KTP/Global: hanya tampilkan fileSrc
+        return fileSrc.value || ''
+    })
+
+    // Computed: Check if currently showing placeholder (not real image)
+    const isImagePlaceholder = computed(() => {
+        if (props.mode !== 'preview') return false
+        if (imageState.value === 'broken') return true
+        if (!fileSrc.value) return true
+        return false
+    })
 
     // ---------------------------------------------------------------------------
     // Responsive: auto-detect mobile via matchMedia, NOT props
@@ -85,10 +137,18 @@
         audio: false,
     }))
 
-    const helperText = {
-        title: 'Foto KTP',
-        message: 'Pastikan KTP berada di area foto yang ditentukan dan data terlihat jelas.'
-    }
+    const helperText = computed(() => {
+        if (props.mode === 'global') {
+            return {
+                title: 'Ambil Foto',
+                message: 'Ambil foto dengan posisi yang jelas dan terang.'
+            }
+        }
+        return {
+            title: 'Foto KTP',
+            message: 'Pastikan KTP berada di area foto yang ditentukan dan data terlihat jelas.'
+        }
+    })
 
     watch(() => screenSize.potrait, async () => {
         if (cameraIsReady.value) {
@@ -96,6 +156,62 @@
             startCamera()
         }
     })
+
+    watch(() => fileSrc.value, () => {
+        // Reset load marker every time bound source changes.
+        isRealImageLoaded.value = false
+        previewDialog.value = false
+
+        if (props.mode === 'preview') {
+            imageState.value = 'loaded'
+        }
+    })
+
+    const normalizeImageSrc = (src = '') => {
+        if (!src) return ''
+
+        try {
+            return new URL(src, window.location.origin).pathname
+        } catch {
+            return src.split('?')[0]
+        }
+    }
+
+    const isPlaceholderImageSrc = (src = '') => {
+        const normalizedSrc = normalizeImageSrc(src)
+        const normalizedBroken = normalizeImageSrc(props.brokenImage)
+        const normalizedBlank = normalizeImageSrc(props.blankImage)
+
+        return Boolean(normalizedSrc) && (normalizedSrc === normalizedBroken || normalizedSrc === normalizedBlank)
+    }
+
+    const getEventImageSrc = (event) => event?.target?.currentSrc || event?.target?.src || ''
+
+    // Image error handler — jika gambar real gagal load di preview mode, fallback ke broken placeholder
+    const handleImageError = (event) => {
+        const failedSrc = getEventImageSrc(event)
+
+        // Placeholder gagal load tidak perlu ubah state agar tidak looping.
+        if (isPlaceholderImageSrc(failedSrc)) return
+
+        isRealImageLoaded.value = false
+
+        if (props.mode === 'preview') {
+            imageState.value = 'broken'
+            previewDialog.value = false
+        }
+    }
+
+    // Image load success handler — hanya tandai loaded untuk gambar real
+    const handleImageLoad = (event) => {
+        const loadedSrc = getEventImageSrc(event)
+
+        // Jangan reset state saat yang load adalah placeholder.
+        if (isPlaceholderImageSrc(loadedSrc)) return
+
+        imageState.value = 'loaded'
+        isRealImageLoaded.value = true
+    }
 
     // ---------------------------------------------------------------------------
     // Utility helpers
@@ -185,7 +301,7 @@
     }
 
     // ---------------------------------------------------------------------------
-    // Snap — KTP crop (idcard mode)
+    // Snap — KTP crop (idcard mode) OR full frame (global mode)
     // ---------------------------------------------------------------------------
     const handleCameraSnap = () => {
         const videoEl = video.value
@@ -196,23 +312,33 @@
         const canvas = document.createElement('canvas')
         const ctx = canvas.getContext('2d')
 
-        // KTP crop: 25% width × 35% height of video frame
-        let guideW = videoW * 0.25
-        let guideH = videoH * 0.35
-        const scale = isMobile.value ? 1 : 2
-        guideW *= scale
-        guideH *= scale
-
-        const startX = (videoW - guideW) / 2
-        const startY = (videoH - guideH) / 2
-
         const outputScale = window.devicePixelRatio || 10
-        canvas.width = guideW * outputScale
-        canvas.height = guideH * outputScale
 
-        ctx.imageSmoothingEnabled = false
-        ctx.imageSmoothingQuality = 'high'
-        ctx.drawImage(videoEl, startX, startY, guideW, guideH, 0, 0, canvas.width, canvas.height)
+        // Global mode: capture full frame without crop
+        if (props.mode === 'global') {
+            canvas.width = videoW * outputScale
+            canvas.height = videoH * outputScale
+            ctx.imageSmoothingEnabled = false
+            ctx.imageSmoothingQuality = 'high'
+            ctx.drawImage(videoEl, 0, 0, videoW, videoH, 0, 0, canvas.width, canvas.height)
+        } else {
+            // KTP mode: crop to KTP area (25% width × 35% height)
+            let guideW = videoW * 0.25
+            let guideH = videoH * 0.35
+            const scale = isMobile.value ? 1 : 2
+            guideW *= scale
+            guideH *= scale
+
+            const startX = (videoW - guideW) / 2
+            const startY = (videoH - guideH) / 2
+
+            canvas.width = guideW * outputScale
+            canvas.height = guideH * outputScale
+
+            ctx.imageSmoothingEnabled = false
+            ctx.imageSmoothingQuality = 'high'
+            ctx.drawImage(videoEl, startX, startY, guideW, guideH, 0, 0, canvas.width, canvas.height)
+        }
 
         snappedCameraPict.value = canvas.toDataURL('image/png')
         stopCamera()
@@ -222,10 +348,14 @@
     // Source chooser actions
     // ---------------------------------------------------------------------------
     const fileSourceChooserDialogClick = () => {
+        // Prevent upload in preview mode
+        if (props.mode === 'preview') return
         if (!fileSrc.value) fileSourceChooserDialog.value = true
     }
 
     const handleSourceCameraClick = () => {
+        // Prevent camera in preview mode
+        if (props.mode === 'preview') return
         if (deviceList.value.length === 0) {
             emit('errorPermission', 'No device ready for take image')
             return
@@ -236,6 +366,8 @@
     }
 
     const handleSourceGalleryClick = () => {
+        // Prevent gallery in preview mode
+        if (props.mode === 'preview') return
         fileInput.value.click()
         fileSourceChooserDialog.value = false
     }
@@ -246,18 +378,32 @@
     const handleFilePicked = async (event) => {
         const file = event.target.files[0]
         if (!file) return
+        
+        // Reset state untuk image baru
+        imageState.value = 'loaded'
+        isRealImageLoaded.value = false
+        
         const reader = new FileReader()
         reader.readAsDataURL(file)
         reader.onload = async () => {
             fileSrc.value = reader.result
+            imageSource.value = 'gallery'
             const compressedImg = await compressImg(props.compressionMaxKb, reader.result)
             emit('fileDropped', compressedImg, props.uniqueKey)
         }
     }
 
     const handleRemoveFileClick = () => {
+        // Prevent remove in preview mode
+        if (props.mode === 'preview') return
+        
+        // Reset state
+        imageState.value = 'loaded'
+        isRealImageLoaded.value = false
+        
         fileSrc.value = ''
         snappedCameraPict.value = ''
+        imageSource.value = 'camera'
         emit('fileRemoved', props.uniqueKey)
     }
 
@@ -265,7 +411,12 @@
     // Camera chosen / retake
     // ---------------------------------------------------------------------------
     const handleCameraChosen = async () => {
+        // Reset state untuk image baru
+        imageState.value = 'loaded'
+        isRealImageLoaded.value = false
+        
         fileSrc.value = snappedCameraPict.value
+        imageSource.value = 'camera'
         const compressedImg = await compressImg(props.compressionMaxKb, snappedCameraPict.value)
         emit('fileDropped', compressedImg, props.uniqueKey)
         cameraDialog.value = false
@@ -283,15 +434,17 @@
 
     const handleRetakePhotoClick = async () => {
         snappedCameraPict.value = ''
-        // Retake from preview modal: close preview, open camera again
+
         if (fileSrc.value) {
-            fileSrc.value = ''
+            // Dipanggil dari preview modal (foto sudah ada):
+            // Reset foto lalu buka source chooser agar user bisa pilih Galeri atau Kamera
+            fileSrc.value       = ''
             previewDialog.value = false
             await nextTick()
-            cameraDialog.value = true
-            await nextTick()
-            startCamera()
+            fileSourceChooserDialog.value = true
         } else {
+            // Dipanggil dari dalam modal kamera setelah snap (belum konfirmasi):
+            // Langsung restart kamera untuk ambil ulang
             await nextTick()
             startCamera()
         }
@@ -301,7 +454,12 @@
     // Preview modal
     // ---------------------------------------------------------------------------
     const openPreview = () => {
-        if (fileSrc.value) previewDialog.value = true
+        if (!fileSrc.value) return
+        if (isImagePlaceholder.value) return
+        if (imageState.value === 'broken') return
+        if (!isRealImageLoaded.value) return
+
+        previewDialog.value = true
     }
 
     // Timestamp helper used in camera view
@@ -328,21 +486,21 @@
     ==================================================================== -->
     <section>
         <div class="custom-file-upload" @click="fileSourceChooserDialogClick">
-            <!-- Empty state -->
-            <div v-if="!fileSrc" class="custom-file-upload__box-input" :id="`${$attrs.id}_openDialogChooser`">
+            <!-- Empty state: tampilkan hanya jika displayImageSrc kosong (tidak ada real photo, blank, atau broken) -->
+            <div v-if="!displayImageSrc" class="custom-file-upload__box-input" :id="`${$attrs.id}_openDialogChooser`" :class="{ 'disabled': props.mode === 'preview' }" :style="{ pointerEvents: props.mode === 'preview' ? 'none' : 'auto', opacity: props.mode === 'preview' ? 0.6 : 1 }">
                 <span class="custom-file-upload__box-input-icon">
                     <img src="../../assets/images/ico-image-upload.svg" alt="Upload Icon" />
                 </span>
                 <input type="file" ref="fileInput" style="display: none" accept="image/*" @change="handleFilePicked"
-                    :id="$attrs.id" />
+                    :id="$attrs.id" :disabled="props.mode === 'preview'" />
             </div>
 
-            <!-- Preview thumbnail — clickable to open preview modal -->
+            <!-- Preview thumbnail — tampilkan jika ada displayImageSrc (fileSrc real photo OR blank/broken image) -->
             <div v-else class="custom-file-upload__box-preview d-block" id="box-preview-image">
-                <img ref="imgElement" :src="fileSrc" alt="Foto KTP" class="imgCaptured idcard" @click.stop="openPreview"
-                    :id="`${$attrs.id}_img`" />
-                <img @click.stop="handleRemoveFileClick" v-if="fileSrc" :id="`${$attrs.id}_removeFile`"
-                    class="close-img" src="../../assets/icon/cross.svg" alt="Hapus Foto" />
+                <img ref="imgElement" :src="displayImageSrc" alt="Preview" class="imgCaptured idcard" :class="{ 'img-contain': imageSource === 'gallery' }" @click.stop="openPreview" @error="handleImageError" @load="handleImageLoad"
+                    :id="`${$attrs.id}_img`" :style="{ cursor: isRealImageLoaded ? 'pointer' : 'default' }" />
+                <img v-if="fileSrc && props.mode !== 'preview'" @click.stop="handleRemoveFileClick" :id="`${$attrs.id}_removeFile`"
+                    class="close-img" src="../../assets/icon/cross.svg" alt="Hapus Foto" height="24" width="24" />
             </div>
         </div>
 
@@ -355,9 +513,9 @@
     Source chooser — BOffcanvas (mobile) / BModal (desktop)
     ==================================================================== -->
     <section v-if="isMobile">
-        <BOffcanvas v-model="fileSourceChooserDialog" placement="bottom" bodyScrolling="true" noCloseOnBackdrop>
+        <BOffcanvas v-model="fileSourceChooserDialog" placement="bottom" bodyScrolling="true" noCloseOnBackdrop class="bottomsheetSourceChooser">
             <template #title>{{ props.title }}</template>
-            <ul class="list-group list-group-flush px-3">
+            <ul class="list-group list-group-flush p-3">
                 <li style="height: 56px" @click="handleSourceGalleryClick"
                     class="list-group-item d-flex justify-content-between align-items-center" :id="`${$attrs.id}_file`">
                     Galeri
@@ -424,15 +582,15 @@
                 <!-- Overlay: helper text di atas, card-ktp di tengah, buttons di bawah -->
                 <div class="overlay-container" :class="!screenSize.potrait ? 'landscape' : ''">
 
-                    <!-- Helper text (portrait: di atas card | landscape: di kiri) -->
-                    <div class="helper-text landscape" :class="!screenSize.potrait ? 'landscape' : ''">
+                    <!-- Helper text (portrait: di atas card | landscape: di kiri) - hide in global mode -->
+                    <div v-if="props.mode !== 'global'" class="helper-text landscape" :class="!screenSize.potrait ? 'landscape' : ''">
                         <div class="rect"></div>
                         <div class="title">{{ helperText.title }}</div>
                         <div class="subtitle">{{ helperText.message }}</div>
                     </div>
 
-                    <!-- Card KTP guide -->
-                    <div id="cameraGuidance" class="card-ktp" :class="!screenSize.potrait ? 'landscape' : ''"></div>
+                    <!-- Card KTP guide - hide in global mode -->
+                    <div v-if="props.mode !== 'global'" id="cameraGuidance" class="card-ktp" :class="!screenSize.potrait ? 'landscape' : ''"></div>
 
                     <!-- Bottom actions: shutter + switch -->
                     <div class="bottom-actions" :class="!screenSize.potrait ? 'landscape' : ''" v-if="cameraIsReady">
@@ -474,12 +632,12 @@
                 <video class="video" ref="video" autoplay></video>
             </div>
             <div class="slot-container">
-                <div class="helper-text landscape">
+                <div v-if="props.mode !== 'global'" class="helper-text landscape">
                     <div class="rect"></div>
                     <div class="title">{{ helperText.title }}</div>
                     <div class="subtitle">{{ helperText.message }}</div>
                 </div>
-                <div id="cameraGuidance" class="card-ktp"></div>
+                <div v-if="props.mode !== 'global'" id="cameraGuidance" class="card-ktp"></div>
                 <img v-if="cameraIsReady" @click="handleCameraSnap" src="../../assets/icon/shutter-button.svg"
                     alt="Take Image" :id="`${$attrs.id}_cameraSnap`" class="shutter-btn" />
             </div>
@@ -506,23 +664,23 @@
        Preview modal — shown when clicking thumbnail in file picker
        BModal (desktop) / BOffcanvas bottom (mobile)
     ==================================================================== -->
-    <div v-if="fileSrc">
+    <div v-if="fileSrc && previewDialog">
         <!-- DESKTOP: preview in modal -->
-        <BModal v-if="!isMobile" v-model="previewDialog" title="Lihat Foto KTP" size="lg"
+        <BModal v-if="!isMobile" v-model="previewDialog" :title="props.mode === 'preview' ? 'Lihat' : 'Lihat Foto'" size="lg"
             body-class="p-0 m-0 remove-overflow" dialog-class="preview-modal-content" header-class="preview-modal-title"
             hide-footer centered>
             <div>
                 <div class="preview-container p-3">
                     <div class="img-wrapper">
-                        <img :src="fileSrc" alt="Preview Gambar KTP" class="img-preview" />
-                        <div class="timestamp">
+                        <img :src="displayImageSrc" alt="Preview" class="img-preview" :class="{ 'img-contain': imageSource === 'gallery' }" />
+                        <div v-if="props.mode !== 'preview' || fileSrc" class="timestamp">
                             <div>{{ props.userName }}</div>
                             <div>{{ nowFormatted() }}</div>
                         </div>
                     </div>
                 </div>
-                <div class="footer-button">
-                    <Button @click="handleRetakePhotoClick" type="neutral" label="Ambil Ulang Foto"
+                <div class="footer-button" v-if="props.mode !== 'preview'">
+                    <Button @click="handleRetakePhotoClick" type="neutral" label="Ganti Foto"
                         :id="`${$attrs.id}_previewRetake`" class="w-100" />
                 </div>
             </div>
@@ -531,18 +689,18 @@
         <!-- MOBILE: preview in bottom offcanvas -->
         <BOffcanvas v-else v-model="previewDialog" placement="bottom" noCloseOnBackdrop
             class="preview-offcanvas preview-mobile">
-            <template #title>Lihat Foto KTP</template>
+            <template #title>{{ props.mode === 'preview' ? 'Lihat' : 'Lihat Foto' }}</template>
             <div class="preview-container">
                 <div class="img-wrapper">
-                    <img :src="fileSrc" alt="Preview Gambar KTP" class="img-preview" />
-                    <div class="timestamp">
+                    <img :src="displayImageSrc" alt="Preview" class="img-preview" :class="{ 'img-contain': imageSource === 'gallery' }" />
+                    <div v-if="props.mode !== 'preview' || fileSrc" class="timestamp">
                         <div>{{ props.userName }}</div>
                         <div>{{ nowFormatted() }}</div>
                     </div>
                 </div>
             </div>
-            <div class="footer-button">
-                <Button @click="handleRetakePhotoClick" type="neutral" label="Ambil Ulang Foto"
+            <div class="footer-button" v-if="props.mode !== 'preview'">
+                <Button @click="handleRetakePhotoClick" type="neutral" label="Ganti Foto"
                     :id="`${$attrs.id}_previewRetake`" class="w-100" />
             </div>
         </BOffcanvas>
@@ -1005,6 +1163,7 @@
 
         .img-wrapper {
             position: relative;
+            border: 1px solid var(--g-kit-black-20);
             border-radius: 8px;
             overflow: hidden;
             line-height: 0;
@@ -1016,6 +1175,10 @@
                 border-radius: 8px;
                 aspect-ratio: 16 / 10;
                 display: block;
+
+                &.img-contain {
+                    object-fit: contain;
+                }
             }
 
             .timestamp {
@@ -1043,6 +1206,12 @@
         }
     }
 
+    .offcanvas.bottomsheetSourceChooser {
+        .offcanvas-body {
+            padding: 0 !important;
+        }
+    }
+
     .preview-offcanvas {
 
         &.preview-mobile {
@@ -1058,6 +1227,7 @@
                     .img-wrapper {
                         position: relative;
                         border-radius: 8px;
+                        border: 1px solid var(--g-kit-black-20);
                         overflow: hidden;
                         line-height: 0;
 
@@ -1068,6 +1238,10 @@
                             border-radius: 8px;
                             aspect-ratio: 16 / 10;
                             display: block;
+
+                            &.img-contain {
+                                object-fit: contain;
+                            }
                         }
 
                         .timestamp {
@@ -1110,7 +1284,12 @@
             height: auto;
             object-fit: contain;
             border-radius: 8px;
+            border: 1px solid var(--g-kit-black-20);
             aspect-ratio: 16 / 10;
+
+            &.img-contain {
+                object-fit: contain;
+            }
         }
 
         .footer-button {
@@ -1152,6 +1331,14 @@
         }
     }
 
+    .custom-file-upload__box-input {
+        &.disabled {
+            opacity: 0.6;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+    }
+
     .imgCaptured {
         width: 135px;
         height: 135px;
@@ -1160,8 +1347,12 @@
 
         &.idcard {
             width: 180px;
-            aspect-ratio: 16 / 10;
-            height: auto;
+            height: 120px;
+        }
+
+        &.img-contain {
+            object-fit: contain;
+            border: 1px solid var(--g-kit-black-20);
         }
     }
 

@@ -191,6 +191,41 @@ import { Meta } from '@storybook/blocks';
       margin: 0;
       line-height: 1.6;
     }
+
+    /* Update Highlight Section */
+    .update-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    .update-card {
+      background: linear-gradient(135deg, var(--pgd-white) 0%, var(--pgd-gold-10) 100%);
+      border: 1px solid var(--pgd-gold-40);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(216, 181, 109, 0.12);
+    }
+
+    .update-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--pgd-black-80);
+      margin: 0 0 12px 0;
+    }
+
+    .update-card p,
+    .update-card ul {
+      font-size: 0.875rem;
+      color: var(--pgd-black-60);
+      line-height: 1.6;
+    }
+
+    .update-card ul {
+      margin: 0;
+      padding-left: 18px;
+    }
     
     /* Section Title */
     .section-title {
@@ -607,6 +642,38 @@ import { Meta } from '@storybook/blocks';
     </div>
   </div>
 
+  {/* What's New */}
+  <h2 className="section-title">✨ What&apos;s New</h2>
+  <div className="update-grid">
+    <div className="update-card">
+      <h3>InputKTP modes</h3>
+      <p>InputKTP sekarang mendukung tiga mode utama untuk kebutuhan berbeda.</p>
+      <ul>
+        <li><strong>KTP</strong> untuk crop + guidance kamera.</li>
+        <li><strong>General</strong> untuk upload bebas tanpa crop.</li>
+        <li><strong>Preview</strong> untuk read-only state.</li>
+      </ul>
+    </div>
+    <div className="update-card">
+      <h3>Preview states</h3>
+      <p>Mode preview sekarang menampilkan tiga state yang jelas dan aman.</p>
+      <ul>
+        <li><strong>Filled</strong> untuk gambar valid.</li>
+        <li><strong>Blank</strong> untuk placeholder kosong.</li>
+        <li><strong>Broken</strong> untuk fallback saat gambar gagal load.</li>
+      </ul>
+    </div>
+    <div className="update-card">
+      <h3>Robust fallback</h3>
+      <p>Placeholder image tidak lagi memicu retry loop atau preview yang tidak semestinya.</p>
+      <ul>
+        <li>Retry logic disederhanakan.</li>
+        <li>Broken image tidak membuka preview.</li>
+        <li>Body modal preview fokus ke gambar saja.</li>
+      </ul>
+    </div>
+  </div>
+
   {/* Quick Start */}
   <h2 className="section-title">🚀 Quick Start</h2>
   <div className="quick-start">
@@ -938,6 +1005,16 @@ import { Button, InputText, Card } from '@pegadaian/kitvue'`}
   {/* Changelog */}
   <h2 className="section-title">📝 Changelog</h2>
   <div className="changelog">
+    <div className="changelog-item">
+      <span className="changelog-version">v0.1.13-6</span>
+      <span className="changelog-date">April 2026</span>
+      <ul>
+        <li>✨ Updated Introduction page to document InputKTP KTP / General / Preview modes</li>
+        <li>🖼️ Added preview state coverage for filled, blank, and broken image cases</li>
+        <li>🛡️ Simplified broken image fallback and removed preview retry loops</li>
+        <li>📚 Synced landing page content with the latest Storybook demos</li>
+      </ul>
+    </div>
     <div className="changelog-item">
       <span className="changelog-version">v0.1.13-5</span>
       <span className="changelog-date">January 2025</span>

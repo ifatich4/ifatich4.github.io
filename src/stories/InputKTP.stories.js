@@ -1,5 +1,10 @@
 import InputKTP from '../components/Input/InputKTP.vue'
 import { ref } from 'vue'
+import previewFilledImage from '../assets/images/image-banner1.png'
+import blankPlaceholderImage from '../assets/images/blank_img.svg'
+import brokenPlaceholderImage from '../assets/images/broken_img.svg'
+
+const invalidPreviewImageUrl = 'https://invalid-domain-12345-broken-image-url.com/image-broken.jpg'
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 export default {
@@ -21,6 +26,15 @@ export default {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'unknown' }
+      }
+    },
+    mode: {
+      control: 'select',
+      options: ['ktp', 'global', 'preview'],
+      description: 'Input mode: KTP crop, General/global upload, or read-only preview',
+      table: {
+        type: { summary: "'ktp' | 'global' | 'preview'" },
+        defaultValue: { summary: 'ktp' }
       }
     },
     compressionMaxKb: {
@@ -47,6 +61,22 @@ export default {
         defaultValue: { summary: 'undefined' }
       }
     },
+    blankImage: {
+      control: 'text',
+      description: 'Blank placeholder image shown in preview mode when value is empty',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'built-in blank_img.svg' }
+      }
+    },
+    brokenImage: {
+      control: 'text',
+      description: 'Broken placeholder image shown in preview mode when image fails to load',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'built-in broken_img.svg' }
+      }
+    },
     modelValue: {
       control: 'text',
       description: 'V-model binding for the image data URL',
@@ -59,9 +89,12 @@ export default {
   args: {
     title: 'Upload Foto KTP',
     userName: 'John Doe',
+    mode: 'ktp',
     compressionMaxKb: 1024,
     error: undefined,
-    uniqueKey: 'ktp-input-1'
+    uniqueKey: 'ktp-input-1',
+    blankImage: blankPlaceholderImage,
+    brokenImage: brokenPlaceholderImage
   }
 }
 
@@ -73,9 +106,12 @@ export const Default = {
   args: {
     title: 'Upload Foto KTP',
     userName: 'John Doe',
+    mode: 'ktp',
     compressionMaxKb: 1024,
     error: undefined,
-    uniqueKey: 'ktp-input-1'
+    uniqueKey: 'ktp-input-1',
+    blankImage: blankPlaceholderImage,
+    brokenImage: brokenPlaceholderImage
   },
   render: (args) => ({
     components: { InputKTP },
@@ -93,13 +129,290 @@ export const Default = {
           v-model="fileSrc"
           :title="args.title"
           :userName="args.userName"
+          :mode="args.mode"
           :compressionMaxKb="args.compressionMaxKb"
           :error="args.error"
           :uniqueKey="args.uniqueKey"
+          :blankImage="args.blankImage"
+          :brokenImage="args.brokenImage"
           @fileDropped="(file) => console.log('File dropped:', file)"
           @fileRemoved="() => console.log('File removed')"
           @errorPermission="(err) => console.log('Permission error:', err)"
         />
+      </div>
+    `
+  })
+}
+
+/**
+ * Mode KTP (default): camera with KTP guidance and crop area
+ */
+export const ModeKTP = {
+  args: {
+    title: 'Upload Foto KTP',
+    userName: 'John Doe',
+    mode: 'ktp',
+    compressionMaxKb: 1024,
+    uniqueKey: 'story-mode-ktp',
+    blankImage: blankPlaceholderImage,
+    brokenImage: brokenPlaceholderImage
+  },
+  render: (args) => ({
+    components: { InputKTP },
+    setup() {
+      const fileSrc = ref('')
+
+      return {
+        args,
+        fileSrc
+      }
+    },
+    template: `
+      <div style="max-width: 420px; margin: 20px;">
+        <h3>Mode KTP</h3>
+        <InputKTP
+          v-model="fileSrc"
+          :title="args.title"
+          :userName="args.userName"
+          :mode="args.mode"
+          :compressionMaxKb="args.compressionMaxKb"
+          :uniqueKey="args.uniqueKey"
+          :blankImage="args.blankImage"
+          :brokenImage="args.brokenImage"
+        />
+      </div>
+    `
+  })
+}
+
+/**
+ * Mode General (internally mode='global'): camera/gallery without KTP crop guide
+ */
+export const ModeGeneral = {
+  args: {
+    title: 'Upload Foto',
+    userName: 'John Doe',
+    mode: 'global',
+    compressionMaxKb: 1024,
+    uniqueKey: 'story-mode-general',
+    blankImage: blankPlaceholderImage,
+    brokenImage: brokenPlaceholderImage
+  },
+  render: (args) => ({
+    components: { InputKTP },
+    setup() {
+      const fileSrc = ref('')
+
+      return {
+        args,
+        fileSrc
+      }
+    },
+    template: `
+      <div style="max-width: 420px; margin: 20px;">
+        <h3>Mode General (mode='global')</h3>
+        <InputKTP
+          v-model="fileSrc"
+          :title="args.title"
+          :userName="args.userName"
+          :mode="args.mode"
+          :compressionMaxKb="args.compressionMaxKb"
+          :uniqueKey="args.uniqueKey"
+          :blankImage="args.blankImage"
+          :brokenImage="args.brokenImage"
+        />
+      </div>
+    `
+  })
+}
+
+/**
+ * Preview mode with valid image value
+ */
+export const PreviewFilled = {
+  args: {
+    title: 'Lihat Foto',
+    userName: 'John Doe',
+    mode: 'preview',
+    uniqueKey: 'story-preview-filled',
+    blankImage: blankPlaceholderImage,
+    brokenImage: brokenPlaceholderImage
+  },
+  render: (args) => ({
+    components: { InputKTP },
+    setup() {
+      const fileSrc = ref(previewFilledImage)
+
+      return {
+        args,
+        fileSrc
+      }
+    },
+    template: `
+      <div style="max-width: 420px; margin: 20px;">
+        <h3>Preview Filled</h3>
+        <InputKTP
+          v-model="fileSrc"
+          :title="args.title"
+          :userName="args.userName"
+          :mode="args.mode"
+          :uniqueKey="args.uniqueKey"
+          :blankImage="args.blankImage"
+          :brokenImage="args.brokenImage"
+        />
+      </div>
+    `
+  })
+}
+
+/**
+ * Preview mode with empty value -> blank placeholder
+ */
+export const PreviewBlank = {
+  args: {
+    title: 'Lihat Foto',
+    userName: 'John Doe',
+    mode: 'preview',
+    uniqueKey: 'story-preview-blank',
+    blankImage: blankPlaceholderImage,
+    brokenImage: brokenPlaceholderImage
+  },
+  render: (args) => ({
+    components: { InputKTP },
+    setup() {
+      const fileSrc = ref('')
+
+      return {
+        args,
+        fileSrc
+      }
+    },
+    template: `
+      <div style="max-width: 420px; margin: 20px;">
+        <h3>Preview Blank</h3>
+        <InputKTP
+          v-model="fileSrc"
+          :title="args.title"
+          :userName="args.userName"
+          :mode="args.mode"
+          :uniqueKey="args.uniqueKey"
+          :blankImage="args.blankImage"
+          :brokenImage="args.brokenImage"
+        />
+      </div>
+    `
+  })
+}
+
+/**
+ * Preview mode with invalid image value -> broken placeholder
+ */
+export const PreviewBroken = {
+  args: {
+    title: 'Lihat Foto',
+    userName: 'John Doe',
+    mode: 'preview',
+    uniqueKey: 'story-preview-broken',
+    blankImage: blankPlaceholderImage,
+    brokenImage: brokenPlaceholderImage
+  },
+  render: (args) => ({
+    components: { InputKTP },
+    setup() {
+      const fileSrc = ref(invalidPreviewImageUrl)
+
+      return {
+        args,
+        fileSrc
+      }
+    },
+    template: `
+      <div style="max-width: 420px; margin: 20px;">
+        <h3>Preview Broken</h3>
+        <InputKTP
+          v-model="fileSrc"
+          :title="args.title"
+          :userName="args.userName"
+          :mode="args.mode"
+          :uniqueKey="args.uniqueKey"
+          :blankImage="args.blankImage"
+          :brokenImage="args.brokenImage"
+        />
+      </div>
+    `
+  })
+}
+
+/**
+ * Full simulation: KTP, General, Preview Filled, Preview Blank, Preview Broken
+ */
+export const AllModesSimulation = {
+  render: () => ({
+    components: { InputKTP },
+    setup() {
+      const ktpSrc = ref('')
+      const generalSrc = ref('')
+      const previewFilledSrc = ref(previewFilledImage)
+      const previewBlankSrc = ref('')
+      const previewBrokenSrc = ref(invalidPreviewImageUrl)
+
+      return {
+        ktpSrc,
+        generalSrc,
+        previewFilledSrc,
+        previewBlankSrc,
+        previewBrokenSrc,
+        blankPlaceholderImage,
+        brokenPlaceholderImage
+      }
+    },
+    template: `
+      <div style="padding: 20px; display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+        <div style="padding: 16px; border: 1px solid #e8e8e8; border-radius: 8px;">
+          <h4 style="margin: 0 0 12px;">Mode KTP</h4>
+          <InputKTP v-model="ktpSrc" mode="ktp" title="Upload Foto KTP" userName="John Doe" uniqueKey="all-mode-ktp" />
+        </div>
+
+        <div style="padding: 16px; border: 1px solid #e8e8e8; border-radius: 8px;">
+          <h4 style="margin: 0 0 12px;">Mode General (global)</h4>
+          <InputKTP v-model="generalSrc" mode="global" title="Upload Foto" userName="John Doe" uniqueKey="all-mode-general" />
+        </div>
+
+        <div style="padding: 16px; border: 1px solid #e8e8e8; border-radius: 8px;">
+          <h4 style="margin: 0 0 12px;">Preview Filled</h4>
+          <InputKTP
+            v-model="previewFilledSrc"
+            mode="preview"
+            userName="John Doe"
+            uniqueKey="all-mode-preview-filled"
+            :blankImage="blankPlaceholderImage"
+            :brokenImage="brokenPlaceholderImage"
+          />
+        </div>
+
+        <div style="padding: 16px; border: 1px solid #e8e8e8; border-radius: 8px;">
+          <h4 style="margin: 0 0 12px;">Preview Blank</h4>
+          <InputKTP
+            v-model="previewBlankSrc"
+            mode="preview"
+            userName="John Doe"
+            uniqueKey="all-mode-preview-blank"
+            :blankImage="blankPlaceholderImage"
+            :brokenImage="brokenPlaceholderImage"
+          />
+        </div>
+
+        <div style="padding: 16px; border: 1px solid #e8e8e8; border-radius: 8px;">
+          <h4 style="margin: 0 0 12px;">Preview Broken</h4>
+          <InputKTP
+            v-model="previewBrokenSrc"
+            mode="preview"
+            userName="John Doe"
+            uniqueKey="all-mode-preview-broken"
+            :blankImage="blankPlaceholderImage"
+            :brokenImage="brokenPlaceholderImage"
+          />
+        </div>
       </div>
     `
   })
@@ -358,11 +671,14 @@ The InputKTP component provides a user-friendly interface for capturing or uploa
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| \`mode\` | 'ktp' \| 'global' \| 'preview' | 'ktp' | Mode perilaku komponen |
 | \`compressionMaxKb\` | number | 1024 | Maximum compression size in KB |
 | \`title\` | string | "Upload Foto KTP" | Dialog title text |
 | \`userName\` | string | "unknown" | Name to display on timestamp |
 | \`error\` | string/object | undefined | Error message to display |
 | \`uniqueKey\` | string/number | undefined | Unique identifier for input |
+| \`blankImage\` | string | built-in blank_img.svg | Placeholder saat preview kosong |
+| \`brokenImage\` | string | built-in broken_img.svg | Placeholder saat image gagal load |
 | \`modelValue\` | string | "" | V-model for image data URL |
 
 ### Events
