@@ -39,6 +39,13 @@
             default: 'unknown'
         },
         /**
+         * Show timestamp overlay on captured/preview image
+         */
+        timestamp: {
+            type: Boolean,
+            default: false
+        },
+        /**
          * Mode component: 'ktp' (normal upload/camera), 'general' (free upload without crop), 'preview' (read-only)
          */
         mode: {
@@ -705,7 +712,7 @@
         <template v-else>
             <div class="snap-preview-body">
                 <div class="snap-preview-container">
-                    <div class="timestamp">
+                    <div v-if="props.timestamp" class="timestamp">
                         <div>{{ props.userName }}</div>
                         <div>{{ nowFormatted() }}</div>
                     </div>
@@ -743,7 +750,7 @@
 
         <div v-else>
             <div class="preview-container" :class="isGeneralMode ? 'general' : 'idcard'">
-                <div class="timestamp">
+                <div v-if="props.timestamp" class="timestamp">
                     <div>{{ props.userName }}</div>
                     <div>{{ nowFormatted() }}</div>
                 </div>
@@ -771,7 +778,7 @@
                 <div class="preview-container p-3">
                     <div class="img-wrapper">
                         <img :src="displayImageSrc" alt="Preview" class="img-preview" :class="{ 'img-contain': imageSource === 'gallery' || isGeneralMode, 'general': isGeneralMode }" />
-                        <div v-if="props.mode !== 'preview' || fileSrc" class="timestamp">
+                        <div v-if="props.timestamp && (props.mode !== 'preview' || fileSrc)" class="timestamp">
                             <div>{{ props.userName }}</div>
                             <div>{{ nowFormatted() }}</div>
                         </div>
@@ -791,7 +798,7 @@
             <div class="preview-container">
                 <div class="img-wrapper">
                     <img :src="displayImageSrc" alt="Preview" class="img-preview" :class="{ 'img-contain': imageSource === 'gallery' || isGeneralMode, 'general': isGeneralMode }" />
-                    <div v-if="props.mode !== 'preview' || fileSrc" class="timestamp">
+                    <div v-if="props.timestamp && (props.mode !== 'preview' || fileSrc)" class="timestamp">
                         <div>{{ props.userName }}</div>
                         <div>{{ nowFormatted() }}</div>
                     </div>

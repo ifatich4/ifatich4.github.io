@@ -28,6 +28,14 @@ export default {
         defaultValue: { summary: 'unknown' }
       }
     },
+    timestamp: {
+      control: 'boolean',
+      description: 'Show timestamp overlay on captured and preview images',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' }
+      }
+    },
     mode: {
       control: 'select',
       options: ['ktp', 'general', 'preview'],
@@ -89,6 +97,7 @@ export default {
   args: {
     title: 'Upload Foto KTP',
     userName: 'John Doe',
+    timestamp: false,
     mode: 'ktp',
     compressionMaxKb: 1024,
     error: undefined,
@@ -129,6 +138,7 @@ export const Default = {
           v-model="fileSrc"
           :title="args.title"
           :userName="args.userName"
+          :timestamp="args.timestamp"
           :mode="args.mode"
           :compressionMaxKb="args.compressionMaxKb"
           :error="args.error"
@@ -181,6 +191,7 @@ export const ModeKTP = {
           v-model="fileSrc"
           :title="args.title"
           :userName="args.userName"
+          :timestamp="args.timestamp"
           :mode="args.mode"
           :compressionMaxKb="args.compressionMaxKb"
           :uniqueKey="args.uniqueKey"
@@ -229,6 +240,7 @@ export const ModeGeneral = {
           v-model="fileSrc"
           :title="args.title"
           :userName="args.userName"
+          :timestamp="args.timestamp"
           :mode="args.mode"
           :compressionMaxKb="args.compressionMaxKb"
           :uniqueKey="args.uniqueKey"
@@ -269,6 +281,7 @@ export const PreviewFilled = {
           v-model="fileSrc"
           :title="args.title"
           :userName="args.userName"
+          :timestamp="args.timestamp"
           :mode="args.mode"
           :uniqueKey="args.uniqueKey"
           :blankImage="args.blankImage"
@@ -308,6 +321,7 @@ export const PreviewBlank = {
           v-model="fileSrc"
           :title="args.title"
           :userName="args.userName"
+          :timestamp="args.timestamp"
           :mode="args.mode"
           :uniqueKey="args.uniqueKey"
           :blankImage="args.blankImage"
@@ -347,6 +361,7 @@ export const PreviewBroken = {
           v-model="fileSrc"
           :title="args.title"
           :userName="args.userName"
+          :timestamp="args.timestamp"
           :mode="args.mode"
           :uniqueKey="args.uniqueKey"
           :blankImage="args.blankImage"
