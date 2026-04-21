@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { defineProps, computed, useSlots, ref, onUnmounted, h, render } from 'vue'
+import { computed, useSlots, ref, onUnmounted, h, render } from 'vue'
 import { Line } from 'vue-chartjs'
 import {
   Chart as ChartJS,

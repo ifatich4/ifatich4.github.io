@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineModel, ref } from 'vue'
+import { ref } from 'vue'
 
 const props = defineProps({
   item: { type: Object, required: true },

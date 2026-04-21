@@ -1,14 +1,9 @@
 <script setup>
 /* eslint-disable */
 import {
-  defineOptions,
   ref,
-  defineModel,
   watch,
   computed,
-  defineProps,
-  defineEmits,
-  defineExpose,
 } from "vue";
 import DateRangePicker from "./DateRangePicker.vue";
 import {

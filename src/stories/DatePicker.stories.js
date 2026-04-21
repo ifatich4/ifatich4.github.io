@@ -1,8 +1,10 @@
 import { ref } from "vue";
 import InputSmallDate from "../components/Input/InputSmallDate.vue";
 
+const currentYear = new Date().getFullYear();
+
 export default {
-  title: "Components/DatePicker/Default",
+  title: "Components/DatePicker/InputSmallDate",
   component: InputSmallDate,
   tags: ["autodocs"],
   decorators: [
@@ -22,11 +24,13 @@ export default {
     classes: { control: "text" },
     modelValue: { control: "text" },
     selectedYear: { control: "number" },
+    maxYear: { control: "number" },
     addClass: { control: "text" },
     maxDate: { control: "text" },
     minDate: { control: "text" },
     maxDaysFromToday: { control: "number" },
     minDaysFromToday: { control: "number" },
+    disableFutureDates: { control: "boolean" },
     error: { control: "text" },
     datePosition: { control: "text" },
     formatType: { control: "select", options: ["date", "short"] },
@@ -36,11 +40,11 @@ export default {
     placeholder: "Pilih tanggal",
     disabled: false,
     required: false,
-    selectedYear: new Date().getFullYear(),
-    maxDate: "2025-01-20",
-    minDate : "2025-12-01",
-    modelValue: "selectedDate",
+    selectedYear: currentYear,
+    maxYear: currentYear + 3,
+    modelValue: null,
     formatType: "date",
+    disableFutureDates: false,
   },
 };
 
@@ -55,11 +59,17 @@ export const DatePicker = {
       <InputSmallDate 
         v-bind="args" 
         v-model="selectedDate"
-        :maxDate="maxDate"
-        :minDate="minDate"
       />
     `,
   }),
+};
+
+export const CustomMaxYear = {
+  args: {
+    selectedYear: currentYear,
+    maxYear: currentYear + 10,
+  },
+  render: DatePicker.render,
 };
 
 

@@ -1,10 +1,6 @@
 <script setup>
 	// Import necessary functions from Vue
 	import {
-		defineExpose,
-		defineOptions,
-		defineProps,
-		defineEmits,
 		ref,
 		watch
 	} from 'vue'

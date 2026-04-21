@@ -1,6 +1,6 @@
 <script setup>
 /* eslint-disable */
-import { ref, defineEmits, defineOptions, defineModel, defineProps, computed, watch, reactive, onMounted } from 'vue'
+import { ref, computed, watch, reactive, onMounted } from 'vue'
 import Button from '../Button/Button.vue'
 import { BModal, BOffcanvas } from 'bootstrap-vue-next'
 

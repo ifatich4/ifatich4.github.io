@@ -1,5 +1,5 @@
 <script setup>
-import { defineOptions, defineProps, defineModel } from 'vue'
+
 import { BModal, BButton, BCarousel, BCarouselSlide, BOffcanvas } from 'bootstrap-vue-next'
 import {ref , onMounted, onUnmounted, watch} from 'vue'
 

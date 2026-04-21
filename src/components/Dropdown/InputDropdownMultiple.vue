@@ -1,6 +1,6 @@
 <script setup>
     /* eslint-disable */
-    import { computed, defineOptions, defineProps, ref, defineEmits, useAttrs } from 'vue'
+    import { computed, ref, useAttrs } from 'vue'
     import { BDropdown, BDropdownItem, BFormInput, BSpinner, BOffcanvas } from 'bootstrap-vue-next'
 
     defineOptions({
@@ -389,7 +389,6 @@
 
         .dropdown-menu {
             padding-block: 16px;
-            padding-inline: 0px;
 
             &.show {
                 max-height: 358px !important;

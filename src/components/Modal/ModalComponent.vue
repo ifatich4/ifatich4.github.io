@@ -1,5 +1,5 @@
 <script setup>
-import { defineOptions, defineProps, defineModel } from 'vue'
+
 import { BModal, BButton } from 'bootstrap-vue-next'
 
 defineOptions({ name: 'ModalComponent' })

@@ -48,7 +48,7 @@
 <script setup>
 import InputText from "../Input/InputText.vue";
 import ItemSideNav from "./ItemSideNav.vue";
-import { defineProps, ref, computed, defineModel } from "vue";
+import { ref, computed } from "vue";
 
 const model = defineModel() 
 

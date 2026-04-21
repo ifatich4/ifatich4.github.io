@@ -646,6 +646,24 @@ import { Meta } from '@storybook/blocks';
   <h2 className="section-title">✨ What&apos;s New</h2>
   <div className="update-grid">
     <div className="update-card">
+      <h3>Date picker improvements</h3>
+      <p>InputSmallDate dan CalendarDropdown sekarang punya kontrol bulan/tahun yang lebih fleksibel dan konsisten.</p>
+      <ul>
+        <li>Header kalender sekarang bisa klik <strong>bulan</strong> dan <strong>tahun</strong> secara terpisah.</li>
+        <li>InputSmallDate kini mendukung <strong>showMonthMenu</strong> untuk pemilihan bulan langsung.</li>
+        <li>Styling month/year menu disamakan antara InputSmallDate dan CalendarDropdown.</li>
+      </ul>
+    </div>
+    <div className="update-card">
+      <h3>Configurable max year</h3>
+      <p>Rentang tahun sekarang dapat dikustomisasi lewat props tanpa mengubah source komponen.</p>
+      <ul>
+        <li>Menambahkan props <strong>maxYear</strong> di InputSmallDate dan CalendarDropdown.</li>
+        <li>Default <strong>maxYear</strong> adalah <strong>tahun sekarang + 3</strong>.</li>
+        <li>Storybook sudah menyediakan kontrol dan contoh <strong>CustomMaxYear</strong>.</li>
+      </ul>
+    </div>
+    <div className="update-card">
       <h3>InputKTP modes</h3>
       <p>InputKTP sekarang mendukung tiga mode utama untuk kebutuhan berbeda.</p>
       <ul>
@@ -679,7 +697,11 @@ import { Meta } from '@storybook/blocks';
   <div className="quick-start">
     <h3>Installation & Setup</h3>
     <code>
+
+
 {`# Install dengan pnpm / npm / yarn
+npm config set registry https://artifactory.pegadaian.co.id/repository/npm-group-1/
+
 pnpm add @pegadaian/kitvue
 
 # Import di main.js
@@ -1005,6 +1027,17 @@ import { Button, InputText, Card } from '@pegadaian/kitvue'`}
   {/* Changelog */}
   <h2 className="section-title">📝 Changelog</h2>
   <div className="changelog">
+    <div className="changelog-item">
+      <span className="changelog-version">v0.1.13-7</span>
+      <span className="changelog-date">April 2026</span>
+      <ul>
+        <li>📅 Added month selector support in InputSmallDate (desktop and mobile)</li>
+        <li>⚙️ Added configurable <strong>maxYear</strong> prop for InputSmallDate and CalendarDropdown</li>
+        <li>🎨 Aligned month/year menu styling between InputSmallDate and CalendarDropdown</li>
+        <li>📚 Updated Storybook stories with <strong>maxYear</strong> controls and <strong>CustomMaxYear</strong> examples</li>
+        <li>🔗 Added in-card triggers on <strong>What&apos;s New</strong> to open related component docs and stories directly</li>
+      </ul>
+    </div>
     <div className="changelog-item">
       <span className="changelog-version">v0.1.13-6</span>
       <span className="changelog-date">April 2026</span>

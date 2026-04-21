@@ -8,8 +8,8 @@
         </ul>
     </div>
 </template>
-<script lang="ts" setup>
-import { defineProps } from 'vue'
+<script setup>
+
 const props = defineProps({
     src: {
         type: String,

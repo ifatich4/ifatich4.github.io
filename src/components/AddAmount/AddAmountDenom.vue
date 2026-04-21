@@ -67,7 +67,7 @@
 
 <script setup>
 import AddAmountCounter from "./AddAmountCounter.vue"
-import { defineProps, defineEmits } from "vue"
+
 import Button from "../Button/Button.vue"
 
 const props = defineProps({

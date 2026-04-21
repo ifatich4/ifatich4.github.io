@@ -213,7 +213,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, nextTick, defineProps, defineEmits } from 'vue';
+import { ref, computed, watch, nextTick } from 'vue';
 import { BOffcanvas } from 'bootstrap-vue-next';
 
 const props = defineProps({

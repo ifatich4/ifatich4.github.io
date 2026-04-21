@@ -1,6 +1,6 @@
 <script setup>
 /* eslint-disable */
-import { defineOptions, defineEmits, defineProps, ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 
 defineOptions({ name: 'InputTextArea', inheritAttrs: false })
 

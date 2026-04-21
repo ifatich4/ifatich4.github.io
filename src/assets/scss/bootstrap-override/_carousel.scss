@@ -66,6 +66,13 @@
     }
 }
 
+@function ternary($condition, $if-true, $if-false) {
+    @if $condition {
+        @return $if-true;
+    }
+    @return $if-false;
+}
+
 .carousel-control-prev,
 .carousel-control-next {
     position: absolute;
@@ -97,13 +104,13 @@
 
 .carousel-control-prev {
     left: 80px;
-    background-image: if($enable-gradients, linear-gradient(90deg, rgba($black, .25), rgba($black, .001)), null);
+    background-image: ternary($enable-gradients, linear-gradient(90deg, rgba($black, .25), rgba($black, .001)), null);
 }
 
 .carousel-control-next {
     left: 160px;
     right: unset;
-    background-image: if($enable-gradients, linear-gradient(270deg, rgba($black, .25), rgba($black, .001)), null);
+    background-image: ternary($enable-gradients, linear-gradient(270deg, rgba($black, .25), rgba($black, .001)), null);
 }
 
 // Icons for within

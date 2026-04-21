@@ -40,7 +40,7 @@
 
 <script setup>
 /* eslint-disable */
-import {defineProps} from 'vue'
+
 import Tooltip from "../Tooltip/TooltipComponent.vue";
 
 const props = defineProps({
@@ -134,11 +134,11 @@ const getIndicatorValue = (value) => {
     opacity: 1 ;
 }
 
-::v-deep .bs-tooltip-bottom .tooltip-arrow::before {
+:deep(.bs-tooltip-bottom .tooltip-arrow::before) {
     border-bottom-color: white ;
 }
 
-::v-deep .custom-tooltip .tooltip-inner {
+:deep(.custom-tooltip .tooltip-inner) {
     background-color: white ;
     color: var(--g-kit-black-60) ;
     border: 1px solid #ced4da ;

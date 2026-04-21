@@ -2,11 +2,6 @@
     import {
         computed
     } from 'vue'
-    import {
-        defineOptions,
-        defineProps,
-        defineEmits
-    } from 'vue'
 
     defineOptions({
         name: 'TablePagination'

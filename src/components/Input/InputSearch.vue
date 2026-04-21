@@ -1,5 +1,5 @@
 <script setup>
-	import { defineOptions, defineProps, defineEmits, ref, watch, computed } from "vue";	
+	import { ref, watch, computed } from "vue";	
 
 	defineOptions({
 		name: "InputSearch",

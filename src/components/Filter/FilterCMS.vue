@@ -30,7 +30,7 @@
     </div>
 </template>
 <script setup>
-    import {ref, onMounted, defineProps, defineEmits} from 'vue'
+    import {ref, onMounted} from 'vue'
 
     const isClicked = ref(true)
     const filtersRef = ref(null)

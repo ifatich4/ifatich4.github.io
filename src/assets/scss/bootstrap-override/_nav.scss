@@ -1,3 +1,10 @@
+@function ternary($condition, $if-true, $if-false) {
+    @if $condition {
+        @return $if-true;
+    }
+    @return $if-false;
+}
+
 .nav-link {
     display: block;
     padding: .25rem .75rem;
@@ -5,7 +12,7 @@
     line-height: var(--g-kit-line-height-omicron);
     font-weight: var(--g-kit-font-weight-normal);
     color: $black-40;
-    text-decoration: if($link-decoration == none, null, none);
+    text-decoration: ternary($link-decoration == none, null, none);
     transition: all .4s;
 
     svg {
@@ -18,7 +25,7 @@
 
     &:hover, &:focus {
         color: $success;
-        text-decoration: if($link-hover-decoration == underline, none, null);
+        text-decoration: ternary($link-hover-decoration == underline, none, null);
     }
 
     &:focus svg {

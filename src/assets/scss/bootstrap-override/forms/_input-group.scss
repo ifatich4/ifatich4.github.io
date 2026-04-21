@@ -1,10 +1,13 @@
+@use "sass:map";
+@use "sass:string";
+
 $icon-height: 24px;
 $form-control-in-right-icon-wrapper-padding-right: calc($icon-height + (($icon-height / 2) + 1px) + ($icon-height / 3));
 
 $validation-messages: "";
 
-@each $state in map-keys($form-validation-states) {
-    $validation-messages: $validation-messages + ":not(."+ unquote($state) + "-tooltip)"+ ":not(."+ unquote($state) + "-feedback)";
+@each $state in map.keys($form-validation-states) {
+    $validation-messages: $validation-messages + ":not(."+ string.unquote($state) + "-tooltip)"+ ":not(."+ string.unquote($state) + "-feedback)";
 }
 
 .group-input{

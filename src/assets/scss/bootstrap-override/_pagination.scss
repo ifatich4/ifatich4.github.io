@@ -1,3 +1,10 @@
+@function ternary($condition, $if-true, $if-false) {
+    @if $condition {
+        @return $if-true;
+    }
+    @return $if-false;
+}
+
 .pagination {
     // scss-docs-start pagination-css-vars
     @include rfs($pagination-font-size, --#{$prefix}pagination-font-size);
@@ -36,7 +43,7 @@
     align-items: center;
     @include font-size(var(--#{$prefix}pagination-font-size));
     color: var(--#{$prefix}pagination-color);
-    text-decoration: if($link-decoration==none, null, none);
+    text-decoration: ternary($link-decoration==none, null, none);
     background-color: var(--#{$prefix}pagination-bg);
     border: var(--#{$prefix}pagination-border-width) solid var(--#{$prefix}pagination-border-color);
     @include transition($pagination-transition);
@@ -46,7 +53,7 @@
     &:hover {
         z-index: 2;
         color: var(--#{$prefix}pagination-active-color);
-        text-decoration: if($link-hover-decoration==underline, none, null);
+        text-decoration: ternary($link-hover-decoration==underline, none, null);
         @include gradient-bg(var(--#{$prefix}pagination-active-bg));
         border-color: var(--#{$prefix}pagination-hover-border-color);
     }

@@ -1976,8 +1976,7 @@ export default {
       </BerandaHeader>
       <LoadAnimate v-model="isSelected"/>
 
-        <HeaderCMS 
-          :subMenu="subMenuCMS"/>
+      <HeaderCMS :subMenu="subMenuCMS"/>
 
       <div class="row">
         <div class="col-lg-6">
@@ -2132,33 +2131,41 @@ export default {
             </div>
             <div class="card-body">
               <CalendarDropdown
+                title="Calendar Dropdown Component"
                 v-model="selectedDate"
                 id="birthdate"
+                :maxYear="2030"
                 placeholder="Pilih Tanggal Lahir"
               />
 
               <CalendarDropdown
+                title="Calendar Dropdown Component 2"
                 v-model="selectedDate"
                 id="birthdate"
                 placeholder="Pilih Tanggal Lahir"
+                :maxYear="2031"
                 alignment="end"
               />
 
               <InputSmallDate
+                title="Input Small Date Component"
                 v-model="selectedDate"
                 id="birthdate"
                 placeholder="Pilih Tanggal Lahirrrr"
                 maxDaysFromToday="10"
+                :maxYear="2032"
               />
 
               <InputSmallDate
+                title="Input Small Date Component 2"
                 v-model="selectedDate"
                 :title="'Tanggal Lahirr'"
                 :placeholder="'Pilih tanggal'"
                 :disabled="false"
                 :required="true"
-                :maxDate="'2025-03-20'"
-                :minDate="'2025-03-01'"
+                :maxDate="'2026-06-20'"
+                :minDate="'2026-04-01'"
+                :maxYear="2033"
                 @buttomSheetShown="handleBottomSheetShown"
               />
 
@@ -2173,6 +2180,7 @@ export default {
               />
 
               <TestPicker
+                title="Test Picker"
                 v-model="selectedDate"
                 id="birthdate"
                 placeholder="davin Tanggal Lahir"

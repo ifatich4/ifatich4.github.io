@@ -24,7 +24,6 @@ import {
   h,
   render,
   useSlots,
-  defineProps,
 } from "vue";
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement);

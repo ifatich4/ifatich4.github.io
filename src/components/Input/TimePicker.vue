@@ -1,6 +1,6 @@
 <script setup>
 /* eslint-disable */
-import { ref, defineProps, defineModel } from "vue";
+import { ref } from "vue";
 
 import Button from "../Button/Button.vue";
 

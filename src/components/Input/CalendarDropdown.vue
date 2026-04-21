@@ -258,6 +258,10 @@
                 type: Number,
                 default: new Date().getFullYear()
             },
+            maxYear: {
+                type: Number,
+                default: () => new Date().getFullYear() + 3
+            },
             addClass: {
                 type: String
             },
@@ -422,11 +426,10 @@
                 return weeks;
             },
             years() {
-                let startYear = this.selectedYear || this.currentYear
-                startYear += 3
+                const maxYear = this.maxYear
                 const endYear = this.selectedYear - 125
                 const years = []
-                for (let year = startYear; year >= endYear; year--) {
+                for (let year = maxYear; year >= endYear; year--) {
                     years.push(year)
                 }
                 return years

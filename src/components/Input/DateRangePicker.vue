@@ -39,7 +39,7 @@
 
 <script setup>
 import CalendarDropdown from './CalendarDropdown.vue';
-import { computed, defineProps } from 'vue'
+import { computed } from 'vue'
 
 const startDate = defineModel('startDate') // eslint-disable-line
 const endDate = defineModel('endDate') // eslint-disable-line

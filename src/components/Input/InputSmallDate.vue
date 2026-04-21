@@ -57,10 +57,13 @@
                   alt=""
                 />
               </button>
-              <div class="d-flex justify-content-center border-0">
-                <span class="month-year-text" @click="toggleYearMenu">{{
-                  formattedMonthYear
-                }}</span>
+              <div class="flex gap-2">
+                <div class="d-flex justify-content-center border-0">
+                  <span :class="['month-year-text', { active: showMonthMenu }]" @click="toggleMonthMenu">{{ formattedMonth }}</span>
+                </div>
+                <div class="d-flex justify-content-center border-0">
+                  <span :class="['month-year-text', { active: showYearMenu }]" @click="toggleYearMenu">{{ formattedYear }}</span>
+                </div>
               </div>
               <button @click="nextMonth">
                 <img
@@ -84,6 +87,21 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div v-if="showMonthMenu" class="month">
+          <div class="year-menu" ref="monthMenu">
+            <button
+              v-for="month in monthsShort"
+              :key="month"
+              :class="{ active: isSelectedMonth(month) }"
+              @click="selectMonth(month)"
+              :data-month="month"
+              ref="monthMenus"
+            >
+              {{ month }}
+            </button>
           </div>
         </div>
 
@@ -148,10 +166,13 @@
                     alt=""
                   />
                 </button>
-                <div class="d-flex justify-content-center border-0">
-                  <span class="month-year-text" @click="toggleYearMenu">{{
-                    formattedMonthYear
-                  }}</span>
+                <div class="flex gap-2">
+                  <div class="d-flex justify-content-center border-0">
+                    <span :class="['month-year-text', { active: showMonthMenu }]" @click="toggleMonthMenu">{{ formattedMonth }}</span>
+                  </div>
+                  <div class="d-flex justify-content-center border-0">
+                    <span :class="['month-year-text', { active: showYearMenu }]" @click="toggleYearMenu">{{ formattedYear }}</span>
+                  </div>
                 </div>
                 <button @click="nextMonth">
                   <img
@@ -175,6 +196,21 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div v-if="showMonthMenu" class="month">
+            <div class="year-menu month" ref="monthMenuMobile">
+              <button
+                v-for="month in monthsShort"
+                :key="month"
+                :class="{ active: isSelectedMonth(month) }"
+                @click="selectMonth(month)"
+                :data-month="month"
+                ref="monthMenus"
+              >
+                {{ month }}
+              </button>
             </div>
           </div>
 
@@ -240,6 +276,10 @@ export default {
       type: Number,
       default: new Date().getFullYear()
     },
+    maxYear: {
+      type: Number,
+      default: () => new Date().getFullYear() + 3
+    },
     addClass: {
       type: String
     },
@@ -282,6 +322,7 @@ export default {
       showDatePickerOffcanvas: false,
       showCalendar: false,
       showYearMenu: false,
+      showMonthMenu: false,
       currentMonth: new Date().getMonth() + 1,
       currentYear: new Date().getFullYear(),
       days: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
@@ -298,6 +339,20 @@ export default {
         'Oktober',
         'November',
         'Desember'
+      ],
+      monthsShort: [
+        'JAN',
+        'FEB',
+        'MAR',
+        'APR',
+        'MEI',
+        'JUN',
+        'JUL',
+        'AGU',
+        'SEP',
+        'OKT',
+        'NOV',
+        'DES'
       ]
     }
   },
@@ -310,8 +365,11 @@ export default {
         this.$emit('update:modelValue', value)
       }
     },
-    formattedMonthYear() {
-      return `${this.months[this.currentMonth - 1]} ${this.currentYear}`
+    formattedMonth() {
+      return `${this.months[this.currentMonth - 1]}`
+    },
+    formattedYear() {
+      return `${this.currentYear}`
     },
     calendar() {
       const firstDayOfMonth = new Date(
@@ -372,11 +430,10 @@ export default {
       return weeks;
     },
     years() {
-      let startYear = this.selectedYear || this.currentYear
-      startYear += 3
+      const maxYear = this.maxYear
       const endYear = this.selectedYear - 125
       const years = []
-      for (let year = startYear; year >= endYear; year--) {
+      for (let year = maxYear; year >= endYear; year--) {
         years.push(year)
       }
       return years
@@ -391,32 +448,63 @@ export default {
     }
   },
   methods: {
+    toggleMonthMenu() {
+      this.showMonthMenu = !this.showMonthMenu
+      if (this.showMonthMenu) {
+        this.showYearMenu = false
+      }
+
+      this.$nextTick(() => {
+        if (this.showMonthMenu) {
+          this.scrollToSelectedMonth()
+        }
+      })
+    },
     toggleYearMenu() {
-      this.showYearMenu = !this.showYearMenu;
+      this.showYearMenu = !this.showYearMenu
+      if (this.showYearMenu) {
+        this.showMonthMenu = false
+      }
 
       this.$nextTick(() => {
         if (this.showYearMenu) {
-          this.scrollToSelectedYear();
+          this.scrollToSelectedYear()
         }
-      });
+      })
     },
     scrollToSelectedYear() {
-      const yearMenu = this.$refs.yearMenu;
-      const selectedYear = this.currentYear;
+      const yearMenu = this.$refs.yearMenu
+      const selectedYear = this.currentYear
 
       if (yearMenu) {
-        const selectedYearElement = yearMenu.querySelector(`[data-year="${selectedYear}"]`);
+        const selectedYearElement = yearMenu.querySelector(`[data-year="${selectedYear}"]`)
         if (selectedYearElement) {
-          const selectedYearOffsetTop = selectedYearElement.offsetTop;
-          const menuHeight = yearMenu.clientHeight;
-          const selectedYearHeight = selectedYearElement.clientHeight;
-          yearMenu.scrollTop = selectedYearOffsetTop - menuHeight / 2 + selectedYearHeight / 2;
+          const selectedYearOffsetTop = selectedYearElement.offsetTop
+          const menuHeight = yearMenu.clientHeight
+          const selectedYearHeight = selectedYearElement.clientHeight
+          yearMenu.scrollTop = selectedYearOffsetTop - menuHeight / 2 + selectedYearHeight / 2
+        }
+      }
+    },
+    scrollToSelectedMonth() {
+      const monthMenu = this.$refs.monthMenu || this.$refs.monthMenuMobile
+      const selectedMonthShort = this.monthsShort[this.currentMonth - 1]
+
+      if (monthMenu) {
+        const selectedMonthElement = monthMenu.querySelector(`[data-month="${selectedMonthShort}"]`)
+        if (selectedMonthElement) {
+          const selectedMonthOffsetTop = selectedMonthElement.offsetTop
+          const menuHeight = monthMenu.clientHeight
+          const selectedMonthHeight = selectedMonthElement.clientHeight
+          monthMenu.scrollTop = selectedMonthOffsetTop - menuHeight / 2 + selectedMonthHeight / 2
         }
       }
     },
     toggleOffCanvas() {
       this.showDatePickerOffcanvas = !this.showDatePickerOffcanvas
       this.showCalendar = !this.showCalendar
+      this.showYearMenu = false
+      this.showMonthMenu = false
       if (this.showDatePickerOffcanvas) {
         this.showCalendar = true
       } else {
@@ -426,6 +514,7 @@ export default {
     },
     showDatePicker() {
       this.showYearMenu = false
+      this.showMonthMenu = false
       this.showCalendar = !this.showCalendar
       this.resetMonthYear()
     },
@@ -485,6 +574,16 @@ export default {
     selectYear(year) {
       this.currentYear = year
       this.showYearMenu = false
+      this.showMonthMenu = false
+      this.updateCalendar()
+    },
+    selectMonth(month) {
+      const monthIndex = this.monthsShort.indexOf(month)
+      if (monthIndex !== -1) {
+        this.currentMonth = monthIndex + 1
+      }
+      this.showYearMenu = false
+      this.showMonthMenu = false
       this.updateCalendar()
     },
 
@@ -493,6 +592,10 @@ export default {
     },
     isSelectedYear(year) {
       return year === this.currentYear
+    },
+    isSelectedMonth(month) {
+      const monthIndex = this.monthsShort.indexOf(month)
+      return monthIndex !== -1 && monthIndex === (this.currentMonth - 1)
     },
     isSelectedDate(date) {
       if (!date || !this.selectedDate) return false;
@@ -704,6 +807,7 @@ export default {
   .appearance-none {
     -webkit-appearance: none;
     -moz-appearance: none;
+    appearance: none;
     text-indent: unset;
     text-overflow: unset;
     font-size: var(--g-kit-font-size-lambda);
@@ -722,6 +826,10 @@ export default {
   .month-year-text {
     color: var(--g-kit-lime-50) !important;
   }
+
+  .month-year-text.active {
+    color: var(--g-kit-black-50) !important;
+  }
   
   .datepicker span:hover {
     color: var(--g-kit-lime-50);
@@ -736,7 +844,8 @@ export default {
     outline: none;
   }
   
-  .year {
+  .year,
+  .month {
     position: absolute;
     z-index: 1080;
     background-color: white;
@@ -769,13 +878,15 @@ export default {
     line-height: var(--g-kit-line-height-lambda);
     font-weight: var(--g-kit-font-weight-normal);
     color: var(--g-kit-black-80);
+    min-width: 82px;
   }
   
   .year-menu button:hover {
     color: var(--g-kit-lime-50);
   }
   
-  .year button.active {
+  .year button.active,
+  .month button.active {
     background-color: var(--g-kit-lime-50);
     color: white;
     border-radius: 8px;
@@ -839,15 +950,19 @@ export default {
       font-size: var(--g-kit-font-size-lambda);
       line-height: var(--g-kit-line-height-lambda);
       font-weight: var(--g-kit-font-weight-normal);
+      min-width: 92px;
+      max-height: 50px;
     }
   
     .year,
+    .month,
     .card {
       width: 100% !important;
       filter: none;
     }
   
-    .year {
+    .year,
+    .month {
       top: 60px;
       height: -webkit-fill-available;
       border-bottom: 0px;
@@ -855,6 +970,11 @@ export default {
   
     .year-menu {
       margin-bottom: 0;
+    }
+
+    .year-menu.month {
+      gap: 1.5rem;
+      top: 0px;
     }
   
     .datepicker {

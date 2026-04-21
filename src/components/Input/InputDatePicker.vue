@@ -1,5 +1,5 @@
 <script setup>
-import { defineOptions, defineProps, ref, computed, defineEmits } from 'vue'
+import { ref, computed } from 'vue'
 
 const DAYS = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab']
 const MONTHS = [

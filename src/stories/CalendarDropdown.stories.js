@@ -1,6 +1,8 @@
 import { ref } from "vue";
 import CalendarDropdown from "../components/Input/CalendarDropdown.vue";
 
+const currentYear = new Date().getFullYear();
+
 export default {
   title: "Components/DatePicker/CalendarDropdown",
   component: CalendarDropdown,
@@ -20,6 +22,7 @@ export default {
     classes: { control: "text" },
     modelValue: { control: "text" },
     selectedYear: { control: "number" },
+    maxYear: { control: "number" },
     addClass: { control: "text" },
     maxDate: { control: "text" },
     minDate: { control: "text" },
@@ -30,19 +33,20 @@ export default {
     disableFutureDates : { control: "boolean"},
     flexWidth : { control: "boolean"},
     noSlash : { control: "boolean"},
-    alingment: {control: "select", options: ['start', 'center', 'end']},
+    alignment: {control: "select", options: ["start", "center", "end"]},
   },
   args: {
     title: "Tanggal Lahir",
     placeholder: "Pilih tanggal",
     disabled: false,
     required: false,
-    selectedYear: new Date().getFullYear(),
-    modelValue: "selectedDate",
+    selectedYear: currentYear,
+    maxYear: currentYear + 3,
+    modelValue: null,
     formatType: "date",
     noSlash: true,
     flexWidth: false,
-    alingment: 'start',
+    alignment: "start",
     disableFutureDates: false
   },
 };
@@ -61,6 +65,14 @@ export const DatePickerDropdown = {
       />
     `,
   }),
+};
+
+export const CustomMaxYear = {
+  args: {
+    selectedYear: currentYear,
+    maxYear: currentYear + 10,
+  },
+  render: DatePickerDropdown.render,
 };
 
 

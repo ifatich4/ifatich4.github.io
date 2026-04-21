@@ -16,7 +16,6 @@ import {
 } from 'chart.js'
 import {
   computed,
-  defineProps,
   onUnmounted,
   h,
   render,

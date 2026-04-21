@@ -1,6 +1,6 @@
 <script setup>
 // Import necessary functions from Vue
-import { defineOptions, defineProps, defineEmits, ref, watch } from "vue";
+import { ref, watch } from "vue";
 
 // Define component options
 defineOptions({

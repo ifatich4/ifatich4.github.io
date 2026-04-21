@@ -34,7 +34,7 @@
 
   <script setup>
     /* eslint-disable */
-    import { defineProps, computed, ref } from 'vue'
+    import { computed, ref } from 'vue'
     const props = defineProps({
         class: String,
         style: String,

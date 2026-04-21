@@ -16,7 +16,6 @@ import {
   h,
   render,
   useSlots,
-  defineProps,
 } from "vue";
 
 ChartJS.defaults.font.family = getComputedStyle(document.body).fontFamily;

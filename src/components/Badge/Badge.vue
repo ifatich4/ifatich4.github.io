@@ -1,8 +1,12 @@
 <template>
     <span class="badge" :class="[`badge-${type}`]">{{ label }}</span>
 </template>
-<script setup lang="ts">
-    const props = defineProps({
+<script setup>
+    // eslint-disable-next-line vue/multi-word-component-names
+    defineOptions({
+      name: 'Badge'
+    })
+    defineProps({
         type: {
             type: String,
             default: "primary"

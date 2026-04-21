@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-import { ref, defineModel } from "vue";
+import { ref } from "vue";
 import Button from "../Button/Button.vue";
 
 

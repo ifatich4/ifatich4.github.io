@@ -1,5 +1,5 @@
 <script setup>
-import { defineOptions, defineProps, defineEmits } from 'vue';
+
 import { ref, watch, nextTick } from 'vue';
 import InputText from './InputText.vue';
 
