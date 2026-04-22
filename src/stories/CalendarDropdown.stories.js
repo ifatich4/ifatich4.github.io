@@ -41,7 +41,7 @@ export default {
     disabled: false,
     required: false,
     selectedYear: currentYear,
-    maxYear: currentYear + 3,
+    maxYear: 3,
     modelValue: null,
     formatType: "date",
     noSlash: true,
@@ -70,7 +70,7 @@ export const DatePickerDropdown = {
 export const CustomMaxYear = {
   args: {
     selectedYear: currentYear,
-    maxYear: currentYear + 10,
+    maxYear: 10,
   },
   render: DatePickerDropdown.render,
 };

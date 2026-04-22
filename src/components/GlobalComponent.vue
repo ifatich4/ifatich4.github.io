@@ -2134,7 +2134,7 @@ export default {
                 title="Calendar Dropdown Component"
                 v-model="selectedDate"
                 id="birthdate"
-                :maxYear="2030"
+                :maxYear="4"
                 placeholder="Pilih Tanggal Lahir"
               />
 
@@ -2143,7 +2143,7 @@ export default {
                 v-model="selectedDate"
                 id="birthdate"
                 placeholder="Pilih Tanggal Lahir"
-                :maxYear="2031"
+                :maxYear="5"
                 alignment="end"
               />
 
@@ -2153,7 +2153,7 @@ export default {
                 id="birthdate"
                 placeholder="Pilih Tanggal Lahirrrr"
                 maxDaysFromToday="10"
-                :maxYear="2032"
+                :maxYear="6"
               />
 
               <InputSmallDate
@@ -2165,7 +2165,7 @@ export default {
                 :required="true"
                 :maxDate="'2026-06-20'"
                 :minDate="'2026-04-01'"
-                :maxYear="2033"
+                :maxYear="7"
                 @buttomSheetShown="handleBottomSheetShown"
               />
 

@@ -659,7 +659,8 @@ import { Meta } from '@storybook/blocks';
       <p>Rentang tahun sekarang dapat dikustomisasi lewat props tanpa mengubah source komponen.</p>
       <ul>
         <li>Menambahkan props <strong>maxYear</strong> di InputSmallDate dan CalendarDropdown.</li>
-        <li>Default <strong>maxYear</strong> adalah <strong>tahun sekarang + 3</strong>.</li>
+        <li>Isi <strong>maxYear</strong> menggunakan offset tahun dari tahun berjalan (contoh: <strong>10</strong> berarti +10 tahun).</li>
+        <li>Default <strong>maxYear</strong> adalah <strong>3</strong> (setara tahun sekarang + 3).</li>
         <li>Storybook sudah menyediakan kontrol dan contoh <strong>CustomMaxYear</strong>.</li>
       </ul>
     </div>

@@ -276,9 +276,13 @@ export default {
       type: Number,
       default: new Date().getFullYear()
     },
+    /**
+     * Year offset from current year.
+     * Example: 10 means current year + 10.
+     */
     maxYear: {
       type: Number,
-      default: () => new Date().getFullYear() + 3
+      default: 3
     },
     addClass: {
       type: String
@@ -430,7 +434,8 @@ export default {
       return weeks;
     },
     years() {
-      const maxYear = this.maxYear
+      const maxYearOffset = Number(this.maxYear)
+      const maxYear = new Date().getFullYear() + (Number.isFinite(maxYearOffset) ? maxYearOffset : 0)
       const endYear = this.selectedYear - 125
       const years = []
       for (let year = maxYear; year >= endYear; year--) {
