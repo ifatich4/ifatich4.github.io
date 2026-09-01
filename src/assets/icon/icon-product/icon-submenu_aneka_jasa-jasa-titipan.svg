@@ -1,0 +1,40 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon product/Sub-Menu/Aneka Jasa/Jasa Titipan">
+<g id="Group">
+<g id="Group 4">
+<g id="Group 6">
+<rect id="Rectangle" x="8" y="8" width="32" height="32" rx="4" fill="#1868AB"/>
+<rect id="Rectangle_2" x="11" y="11" width="26" height="26" rx="3" fill="#5297D1"/>
+<mask id="mask0_801_4622" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="11" y="11" width="26" height="26">
+<rect id="Rectangle_3" x="11" y="11" width="26" height="26" rx="3" fill="white"/>
+</mask>
+<g mask="url(#mask0_801_4622)">
+</g>
+</g>
+</g>
+</g>
+<g id="Group 107">
+<path id="Rectangle_4" fill-rule="evenodd" clip-rule="evenodd" d="M17 19.5094C17 18.9195 17.3698 18.3928 17.9247 18.1926L23.5247 16.1715C23.8319 16.0607 24.1681 16.0607 24.4753 16.1715L30.0753 18.1926C30.6302 18.3928 31 18.9195 31 19.5094V24.8421C31 24.8421 30.6846 27.5594 28.8125 29.4737C27.3118 31.0082 25.1245 31.7059 24.3158 31.9224C24.1082 31.9779 23.8936 31.9727 23.6872 31.9127C22.7594 31.6427 20.0095 30.7616 18.75 29.4737C17.2219 27.9111 17 24.8421 17 24.8421V19.5094Z" fill="#CC9D3F"/>
+<path id="Rectangle_5" fill-rule="evenodd" clip-rule="evenodd" d="M18 20.0473C18 19.5445 18.3134 19.0951 18.7852 18.9213L23.5852 17.1528C23.8529 17.0542 24.1471 17.0542 24.4148 17.1528L29.2148 18.9213C29.6866 19.0951 30 19.5445 30 20.0473V24.7368C30 24.7368 29.7296 27.1145 28.125 28.7895C26.5204 30.4645 24 31 24 31C24 31 20.8098 30.1567 19.5 28.7895C18.1902 27.4222 18 24.7368 18 24.7368V20.0473Z" fill="#FFC54F"/>
+<path id="Vector 32 (Stroke)" fill-rule="evenodd" clip-rule="evenodd" d="M27.8924 21.2079C28.3024 21.618 28.3024 22.2828 27.8924 22.6929L23.6924 26.8929C23.2823 27.3029 22.6175 27.3029 22.2075 26.8929L20.1075 24.7929C19.6974 24.3828 19.6974 23.718 20.1075 23.3079C20.5175 22.8979 21.1823 22.8979 21.5924 23.3079L22.9499 24.6655L26.4075 21.2079C26.8175 20.7979 27.4823 20.7979 27.8924 21.2079Z" fill="white"/>
+</g>
+<g id="Group 3">
+<rect id="Rectangle_6" x="39" y="15" width="4" height="5" rx="1" transform="rotate(90 39 15)" fill="#0B4270"/>
+<mask id="mask1_801_4622" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="34" y="15" width="5" height="4">
+<rect id="Rectangle_7" x="39" y="15" width="4" height="5" rx="1" transform="rotate(90 39 15)" fill="white"/>
+</mask>
+<g mask="url(#mask1_801_4622)">
+<rect id="Rectangle_8" x="38" y="15" width="4" height="4" rx="1" transform="rotate(90 38 15)" fill="#0F5895"/>
+</g>
+</g>
+<g id="Group 2">
+<rect id="Rectangle Copy" x="39" y="29" width="4" height="5" rx="1" transform="rotate(90 39 29)" fill="#0B4270"/>
+<mask id="mask2_801_4622" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="34" y="29" width="5" height="4">
+<rect id="Rectangle Copy_2" x="39" y="29" width="4" height="5" rx="1" transform="rotate(90 39 29)" fill="white"/>
+</mask>
+<g mask="url(#mask2_801_4622)">
+<rect id="Rectangle Copy_3" x="38" y="29" width="4" height="4" rx="1" transform="rotate(90 38 29)" fill="#0F5895"/>
+</g>
+</g>
+</g>
+</svg>

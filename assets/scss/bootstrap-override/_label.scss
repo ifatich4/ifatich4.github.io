@@ -1,0 +1,66 @@
+$icon-path: url(../images/icon-crown.svg) no-repeat center;
+
+.pgd-status,
+.pgd-status-green,
+.pgd-status-blue,
+.pgd-status-red,
+.pgd-status-yellow {
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    font-size: var(--g-kit-font-size-omega);
+    line-height: var(--g-kit-line-height-omega);
+    font-weight: var(--g-kit-font-weight-bold);
+    padding: 3px 10px;
+    width: fit-content;
+
+    .icon-label,
+    img {
+        height: 20px;
+        margin-right: 10px;
+        width: 20px;
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+
+    .icon-label {
+        -webkit-mask: $icon-path;
+        mask: $icon-path;
+    }
+}
+
+.pgd-status-green {
+    color: $text-green;
+    background-color: $lime-10;
+
+    .icon-label {
+        background-color: $text-green;
+    }
+}
+
+.pgd-status-blue {
+    background-color: $blue-10;
+    color: $info;
+
+    .icon-label {
+        background-color: $info;
+    }
+}
+
+.pgd-status-red {
+    background-color: $red-10;
+    color: $red-50;
+
+    .icon-label {
+        background-color: $red-50;
+    }
+}
+
+.pgd-status-yellow {
+    background-color: $yellow-10;
+    color: $yellow-50;
+
+    .icon-label {
+        background-color: $yellow-50;
+    }
+}

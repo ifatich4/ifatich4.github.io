@@ -1,0 +1,32 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon product/Sub-Menu/Pembayaran &#38; Topup/1.Topup &#38; Payment">
+<g id="Group">
+<g id="HP">
+<path id="Rectangle" fill-rule="evenodd" clip-rule="evenodd" d="M6 9C6 7.34315 7.34315 6 9 6H27C28.6569 6 30 7.34315 30 9V39C30 40.6569 28.6569 42 27 42H9C7.34315 42 6 40.6569 6 39V9Z" fill="#1868AB"/>
+<path id="Rectangle_2" fill-rule="evenodd" clip-rule="evenodd" d="M6 9C6 7.34315 7.34315 6 9 6H24C25.6569 6 27 7.34315 27 9V39C27 40.6569 25.6569 42 24 42H9C7.34315 42 6 40.6569 6 39V9Z" fill="#5297D1"/>
+<path id="Rectangle_3" fill-rule="evenodd" clip-rule="evenodd" d="M8 11C8 9.34314 9.34315 8 11 8L11.5 8C12.0523 8 12.5 8.44772 12.5 9C12.5 9.55228 12.9477 10 13.5 10H19.5C20.0523 10 20.5 9.55228 20.5 9C20.5 8.44772 20.9477 8 21.5 8H22C23.6569 8 25 9.34315 25 11V36.8529C25 38.5098 23.6569 39.8529 22 39.8529H11C9.34315 39.8529 8 38.5098 8 36.8529V11Z" fill="white"/>
+</g>
+<g id="Dompet">
+<g id="Group 2">
+<rect id="Rectangle_4" x="16" y="24" width="25" height="18" rx="3" fill="#1868AB"/>
+<mask id="mask0_0_11248" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="16" y="24" width="25" height="18">
+<rect id="Rectangle_5" x="16" y="24" width="25" height="18" rx="3" fill="white"/>
+</mask>
+<g mask="url(#mask0_0_11248)">
+<rect id="Rectangle_6" x="13" y="23" width="25" height="18" rx="3" fill="#5297D1"/>
+</g>
+</g>
+<g id="Group 3">
+<path id="Rectangle_7" fill-rule="evenodd" clip-rule="evenodd" d="M29 33C29 31.3431 30.3431 30 32 30H40.5C41.3284 30 42 30.6716 42 31.5V34.5C42 35.3284 41.3284 36 40.5 36H32C30.3431 36 29 34.6569 29 33Z" fill="#CC9D3F"/>
+<mask id="mask1_0_11248" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="29" y="30" width="13" height="6">
+<path id="Rectangle_8" fill-rule="evenodd" clip-rule="evenodd" d="M29 33C29 31.3431 30.3431 30 32 30H40.5C41.3284 30 42 30.6716 42 31.5V34.5C42 35.3284 41.3284 36 40.5 36H32C30.3431 36 29 34.6569 29 33Z" fill="white"/>
+</mask>
+<g mask="url(#mask1_0_11248)">
+<path id="Rectangle_9" fill-rule="evenodd" clip-rule="evenodd" d="M26 33C26 31.3431 27.3431 30 29 30H37.5C38.3284 30 39 30.6716 39 31.5V34.5C39 35.3284 38.3284 36 37.5 36H29C27.3431 36 26 34.6569 26 33Z" fill="#FFC54F"/>
+<circle id="Oval" cx="32" cy="33" r="2" fill="white"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>

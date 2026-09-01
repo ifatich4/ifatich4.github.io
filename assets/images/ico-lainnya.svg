@@ -1,0 +1,37 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle opacity="0.05" cx="24" cy="24" r="24" fill="url(#paint0_linear)"/>
+<rect x="12" y="12" width="10.5" height="10.5" rx="4" fill="#00883E"/>
+<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="12" y="12" width="11" height="11">
+<rect x="12" y="12" width="10.5" height="10.5" rx="4" fill="white"/>
+</mask>
+<g mask="url(#mask0)">
+<rect x="10.5" y="11.25" width="10.5" height="10.5" rx="4" fill="#00AB4E"/>
+</g>
+<rect x="25.5" y="12" width="10.5" height="10.5" rx="4" fill="#00883E"/>
+<mask id="mask1" mask-type="alpha" maskUnits="userSpaceOnUse" x="25" y="12" width="11" height="11">
+<rect x="25.5" y="12" width="10.5" height="10.5" rx="4" fill="white"/>
+</mask>
+<g mask="url(#mask1)">
+<rect x="24" y="11.25" width="10.5" height="10.5" rx="4" fill="#00AB4E"/>
+</g>
+<rect x="25.5" y="25.5" width="10.5" height="10.5" rx="4" fill="#00883E"/>
+<mask id="mask2" mask-type="alpha" maskUnits="userSpaceOnUse" x="25" y="25" width="11" height="11">
+<rect x="25.5" y="25.5" width="10.5" height="10.5" rx="4" fill="white"/>
+</mask>
+<g mask="url(#mask2)">
+<rect x="24" y="24.75" width="10.5" height="10.5" rx="4" fill="#00AB4E"/>
+</g>
+<rect x="12" y="25.5" width="10.5" height="10.5" rx="4" fill="#00883E"/>
+<mask id="mask3" mask-type="alpha" maskUnits="userSpaceOnUse" x="12" y="25" width="11" height="11">
+<rect x="12" y="25.5" width="10.5" height="10.5" rx="4" fill="white"/>
+</mask>
+<g mask="url(#mask3)">
+<rect x="10.5" y="24.75" width="10.5" height="10.5" rx="4" fill="#00AB4E"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear" x1="0" y1="0" x2="0" y2="48" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00AB4E"/>
+<stop offset="1" stop-color="#00AB4E"/>
+</linearGradient>
+</defs>
+</svg>

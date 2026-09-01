@@ -1,0 +1,42 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon product/Sub-Menu/all">
+<g id="Group 148">
+<g id="Group">
+<rect id="Rectangle" x="8" y="8" width="14" height="14" rx="4" fill="#00883E"/>
+<mask id="mask0_0_11636" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="14" height="14">
+<rect id="Rectangle_2" x="8" y="8" width="14" height="14" rx="4" fill="white"/>
+</mask>
+<g mask="url(#mask0_0_11636)">
+<rect id="Rectangle_3" x="6" y="7" width="14" height="14" rx="4" fill="#00AB4E"/>
+</g>
+</g>
+<g id="Group Copy">
+<rect id="Rectangle_4" x="26" y="8" width="14" height="14" rx="4" fill="#00883E"/>
+<mask id="mask1_0_11636" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="26" y="8" width="14" height="14">
+<rect id="Rectangle_5" x="26" y="8" width="14" height="14" rx="4" fill="white"/>
+</mask>
+<g mask="url(#mask1_0_11636)">
+<rect id="Rectangle_6" x="24" y="7" width="14" height="14" rx="4" fill="#00AB4E"/>
+</g>
+</g>
+<g id="Group Copy 2">
+<rect id="Rectangle_7" x="26" y="26" width="14" height="14" rx="4" fill="#00883E"/>
+<mask id="mask2_0_11636" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="26" y="26" width="14" height="14">
+<rect id="Rectangle_8" x="26" y="26" width="14" height="14" rx="4" fill="white"/>
+</mask>
+<g mask="url(#mask2_0_11636)">
+<rect id="Rectangle_9" x="24" y="25" width="14" height="14" rx="4" fill="#00AB4E"/>
+</g>
+</g>
+<g id="Group Copy 3">
+<rect id="Rectangle_10" x="8" y="26" width="14" height="14" rx="4" fill="#00883E"/>
+<mask id="mask3_0_11636" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="26" width="14" height="14">
+<rect id="Rectangle_11" x="8" y="26" width="14" height="14" rx="4" fill="white"/>
+</mask>
+<g mask="url(#mask3_0_11636)">
+<rect id="Rectangle_12" x="6" y="25" width="14" height="14" rx="4" fill="#00AB4E"/>
+</g>
+</g>
+</g>
+</g>
+</svg>

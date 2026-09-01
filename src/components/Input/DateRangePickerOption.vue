@@ -1,0 +1,470 @@
+<script setup>
+/* eslint-disable */
+import {
+  ref,
+  watch,
+  computed,
+} from "vue";
+import DateRangePicker from "./DateRangePicker.vue";
+import {
+  BDropdownItem,
+  BDropdownItemButton,
+  BOffcanvas,
+  BFormRadioGroup,
+  BFormRadio,
+} from "bootstrap-vue-next";
+import Dropdown from "../Dropdown/InputDropdown.vue";
+
+defineOptions({ name: "DateRangePickerOption", inheritAttrs: false });
+const emit = defineEmits(["buttomSheetShown"]);
+
+const dateRangeDisabled = computed(() =>
+  SELECTED_PRESET.value === "ANY" || SELECTED_PRESET.value === "ALL" ? false : true
+);
+const props = defineProps({
+  title: {},
+  error: {},
+  preset: {
+    default: [
+      {
+        label: "7 Hari Terakhir",
+        value: "7",
+      },
+      {
+        label: "30 Hari Terakhir",
+        value: "30",
+      },
+    ],
+  },
+  showAll: {
+    type: Boolean,
+    default: false,
+  },
+  showAny: {
+    default: true,
+  },
+  useBottomSheet: {
+    type: Boolean,
+    default: false,
+  },
+  placeholder: {
+    type: String,
+    default: "Pilih rentang tanggal",
+  },
+  firstLabel: {
+    type: String,
+    default: "Dari",
+  },
+  secondLabel: {
+    type: String,
+    default: "Hingga",
+  },
+  separator: {
+    type: Boolean,
+    default: false,
+  },
+  flexWidth: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * remove slash from in out of range date
+   */
+  noSlash: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const startDate = defineModel("startDate");
+const endDate = defineModel("endDate");
+const allDate = defineModel("allDate");
+const showOffcanvas = ref(false);
+
+const SELECTED_PRESET = ref(allDate.value ? "ALL" : "ANY");
+
+const getDateString = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
+const getFormattedDateString = (dateString) => {
+  if (!dateString || typeof dateString !== "string" || dateString === "Semua") return "";
+  const [year, month, day] = dateString.split("-");
+  return `${day}/${month}/${year}`;
+};
+
+const valueString = computed(() => {
+  if (allDate.value) {
+    return "Semua";
+  } else if (startDate.value && endDate.value) {
+    return `${getFormattedDateString(startDate.value)} - ${getFormattedDateString(endDate.value)}`;
+  } else {
+    return "";
+  }
+});
+
+watch(SELECTED_PRESET, () => {
+  if (SELECTED_PRESET.value === "ANY") {
+    startDate.value = "";
+    endDate.value = "";
+    allDate.value = false
+    return;
+  }else if (SELECTED_PRESET.value === "ALL") {
+    startDate.value = "";
+    endDate.value = "";
+    allDate.value = true
+    handleShown(false)
+    return;
+  }
+  allDate.value = false
+  const todaysDate = new Date();
+  const previousDate = new Date();
+  previousDate.setDate(todaysDate.getDate() - parseInt(SELECTED_PRESET.value));
+  startDate.value = getDateString(previousDate);
+  endDate.value = getDateString(todaysDate);
+  if (SELECTED_PRESET.value !== "ANY") handleShown(false);
+});
+
+watch([startDate, endDate], () => {
+  if (SELECTED_PRESET.value === "ANY" && startDate.value && endDate.value)
+    handleShown(false);
+});
+
+const handleShown = (value) => {
+  if (props.useBottomSheet) {
+    showOffcanvas.value = value;
+    emit("buttomSheetShown", value);
+  }
+};
+
+const resetToPreset = (presetValue) => {
+  SELECTED_PRESET.value = presetValue;
+};
+
+defineExpose({
+  resetToPreset
+});
+</script>
+
+<template>
+  <div class="date-picker-option group-input">
+    <div class="label-container">
+      <label class="form-label"> {{ props.title }} </label>
+    </div>
+    <Dropdown
+      :disabled="$attrs.disabled"
+      :id="$attrs.id"
+      class="input-filter"
+      :show-menu="!props.useBottomSheet"
+      @shown="handleShown(true)"
+    >
+      <template #button-content>
+        <p
+          class="overflow-hidden my-auto text-ellipsis"
+          :style="[
+            valueString ? 'color: #252528 !important' : '',
+            !valueString ? 'color: #939597 !important' : '',
+          ]"
+        >
+          {{ valueString || props.placeholder }}
+        </p>
+      </template>
+      <div v-if="!props.useBottomSheet" class="desktop" @click.prevent.stop>
+        <!-- Tampilkan pilihan "Semua" -->
+        <div
+          v-if="props.showAll"
+          class="preset-btn mb-2"
+          :class="{ 'preset-btn--selected': SELECTED_PRESET === 'ALL' }"
+        >
+          <BDropdownItem>
+            <BDropdownItemButton
+              class="overflow-hidden"
+              buttonClass="d-flex align-items-center"
+              @click.stop="SELECTED_PRESET = 'ALL'"
+            >
+              <div
+                class="btn-identifier"
+                :class="{
+                  'btn-identifier--selected': SELECTED_PRESET === 'ALL',
+                }"
+              >
+                &nbsp;
+              </div>
+              Semua
+            </BDropdownItemButton>
+          </BDropdownItem>
+        </div>
+
+        <div
+          v-for="(preset, idx) in props.preset"
+          :key="preset.value"
+          class="preset-btn"
+          :class="{
+            'preset-btn--selected': SELECTED_PRESET === preset.value,
+            'mt-2': idx > 0,
+          }"
+        >
+          <BDropdownItem>
+            <BDropdownItemButton
+              class="overflow-hidden"
+              buttonClass="d-flex align-items-center"
+              @click.stop="SELECTED_PRESET = preset.value"
+            >
+              <div
+                class="btn-identifier"
+                :class="{
+                  'btn-identifier--selected': SELECTED_PRESET === preset.value,
+                }"
+              >
+                &nbsp;
+              </div>
+              {{ preset.label }}
+            </BDropdownItemButton>
+          </BDropdownItem>
+        </div>
+
+        <div
+          v-if="props.showAny"
+          class="preset-btn mt-2"
+          :class="{ 'preset-btn--selected': SELECTED_PRESET === 'ANY' }"
+        >
+          <BDropdownItem>
+            <BDropdownItemButton
+              class="overflow-hidden"
+              buttonClass="d-flex align-items-center"
+              @click.stop="SELECTED_PRESET = 'ANY'"
+            >
+              <div
+                class="btn-identifier"
+                :class="{
+                  'btn-identifier--selected': SELECTED_PRESET === 'ANY',
+                }"
+              >
+                &nbsp;
+              </div>
+              Rentang Waktu
+            </BDropdownItemButton>
+          </BDropdownItem>
+        </div>
+
+        <DateRangePicker
+          v-if="SELECTED_PRESET !== 'ALL'"
+          :flexWidth="props.flexWidth"
+          v-model:start-date="startDate"
+          v-model:end-date="endDate"
+          class="mt-4"
+          @click.stop
+          :disabled="dateRangeDisabled"
+          :firstLabel="props.firstLabel"
+          :secondLabel="props.secondLabel"
+          :separator="props.separator"
+          :no-slash="props.noSlash"
+        />
+      </div>
+
+      <BOffcanvas
+        class="mobile"
+        v-if="props.useBottomSheet"
+        v-model="showOffcanvas"
+        placement="bottom"
+        bodyScrolling="true"
+        @click.stop
+        @hidden="handleShown(false)"
+      >
+        <template #title>Pilih Waktu</template>
+        <div
+          v-if="props.showAll"
+          class="preset-btn mb-2"
+          :class="{ 'preset-btn--selected': SELECTED_PRESET === 'ALL' }"
+          @click.stop="SELECTED_PRESET = 'ALL'"
+        >
+          <BFormRadio
+            class="btn-identifier d-flex align-items-center"
+            :class="{
+              'btn-identifier--selected': SELECTED_PRESET === 'ALL',
+            }"
+            style="margin-top: auto"
+            v-model="SELECTED_PRESET"
+            :value="'ALL'"
+            :id="$attrs.id + '-preset-all'"
+            @click.stop
+            >Semua</BFormRadio
+          >
+        </div>
+        <div
+          v-for="(preset, idx) in props.preset"
+          :key="preset.value"
+          class="preset-btn"
+          :class="{
+            'preset-btn--selected': SELECTED_PRESET === preset.value,
+            'mt-2': idx > 0,
+          }"
+           @click.stop="SELECTED_PRESET = preset.value"
+        >
+          <BFormRadio
+            style="margin-top: auto"
+            class="btn-identifier d-flex align-items-center"
+            :class="{
+              'btn-identifier--selected': SELECTED_PRESET === preset.value,
+            }"
+            v-model="SELECTED_PRESET"
+            :value="preset.value"
+            :id="$attrs.id + '-preset-' + preset.value"
+            >{{ preset.label }}</BFormRadio
+          >
+        </div>
+        <div
+          v-if="props.showAny"
+          class="preset-btn mt-2"
+          :class="{ 'preset-btn--selected': SELECTED_PRESET === 'ANY' }"
+          @click.stop="SELECTED_PRESET = 'ANY'"
+        >
+          <BFormRadio
+            class="btn-identifier d-flex align-items-center"
+            :class="{
+              'btn-identifier--selected': SELECTED_PRESET === 'ANY',
+            }"
+            style="margin-top: auto"
+            v-model="SELECTED_PRESET"
+            :value="'ANY'"
+            :id="$attrs.id + '-preset-any'"
+            @click.stop
+            >Rentang Waktu</BFormRadio
+          >
+        </div>
+        <DateRangePicker
+          v-if="SELECTED_PRESET !== 'ALL'"
+          v-model:start-date="startDate"
+          v-model:end-date="endDate"
+          class="mt-4"
+          @click.stop
+          :disabled="dateRangeDisabled"
+          :firstLabel="props.firstLabel"
+          :secondLabel="props.secondLabel"
+          :separator="props.separator"
+          :no-slash="props.noSlash"
+        />
+      </BOffcanvas>
+    </Dropdown>
+    <div class="error-text">{{ props.error }}</div>
+  </div>
+</template>
+
+<style lang="scss">
+
+.date-picker-option {
+  .dropdown-menu.show li {
+      padding-inline: 0px;
+
+      &:has(:focus) {
+          background-color: transparent;
+      }
+  }
+  .desktop {
+    .calendar-input {
+      margin-bottom: 0px;
+    }
+  }
+}
+.input-filter {
+  .dropdown-menu {
+      padding: 16px;
+      &.show {
+        overflow: visible !important;
+        max-height: fit-content !important;
+      }
+  }
+}
+.preset-btn {
+  padding: 12px;
+  border-radius: 0.5rem;
+  border: 1px solid lightgrey;
+  background-color: transparent;
+  border-color: lightgray;
+
+  &--selected {
+    background-color: rgba(0, 255, 0, 0.15);
+    border-color: green;
+  }
+
+  .form-check {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+
+    .btn-identifier {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .form-check-input:checked[type=radio] {
+      background-color: transparent;
+      background-image: none;
+      border: 6px solid var(--g-kit-lime-50);
+    }
+  }
+
+  & .dropdown-item {
+    margin-top: 0 !important;
+    gap: .5rem;
+
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: transparent !important;
+    }
+  }
+}
+
+.btn-identifier {
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  border: 2px solid grey;
+  margin: none;
+  display: flex;
+
+  &--selected {
+      border: 5.5px solid var(--g-kit-lime-50);
+  }
+}
+
+.mobile {
+  .offcanvas-body {
+    padding-top: 1rem !important;
+    padding-inline: 1rem !important;
+
+    .date-range-picker.with-separator {
+      > :first-child{
+        width: 100%;
+      }
+
+      > :last-child{
+        width: 100%;
+      }
+    }
+  }
+}
+
+.desktop {
+  .date-range-picker.with-separator {
+      > :first-child{
+        width: 100%;
+      }
+
+      > :last-child{
+        width: 100%;
+      }
+
+      .custom-width {
+        min-width: 0 !important;
+      }
+    }
+
+}
+
+</style>

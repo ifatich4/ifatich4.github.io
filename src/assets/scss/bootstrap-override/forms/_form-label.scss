@@ -1,0 +1,12 @@
+.form-label {
+    line-height: 20px;
+    font-size: 14px;
+    &__mandatory {
+        margin-left: .25rem;
+        display: none;
+    }
+    img{
+        width: 1rem;
+        vertical-align: sub;
+    }
+}
